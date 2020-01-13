@@ -1,4 +1,4 @@
-// import {getMenuMarkup} from './components/menu';
+import { getMovieCardMarkup } from "./components/card";
 // import {getFiltersMarkup} from './components/filters';
 // import {getEditEventFormMarkup} from './components/edit-event-form';
 // import {getDaysListMarkup} from './components/days-list';
@@ -11,6 +11,9 @@
 const renderComponent = (element, componentMarkup, position = `beforeend`) => {
   element.insertAdjacentHTML(position, componentMarkup);
 };
+
+const mainContainer = document.querySelector(`main`);
+renderComponent(mainContainer, getMovieCardMarkup);
 
 // const renderCards = (element, numCardsToRender) => {
 //   for (let i = 0; i < numCardsToRender; i++) {
