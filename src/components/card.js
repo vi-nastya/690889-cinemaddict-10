@@ -1,3 +1,4 @@
+// TODO: class
 export const getMovieCardMarkup = () => {
   return `<article class="film-card">
   <h3 class="film-card__title">The Dance of Life</h3>
