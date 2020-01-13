@@ -13,7 +13,7 @@ const renderComponent = (element, componentMarkup, position = `beforeend`) => {
 };
 
 const mainContainer = document.querySelector(`main`);
-renderComponent(mainContainer, getMovieCardMarkup);
+renderComponent(mainContainer, getMovieCardMarkup());
 
 // const renderCards = (element, numCardsToRender) => {
 //   for (let i = 0; i < numCardsToRender; i++) {
