@@ -1,7 +1,7 @@
 # Личный проект «Киноман» [![Build status][travis-image]][travis-url]
 
-* Студент: [Настя Виденеева](https://up.htmlacademy.ru/ecmascript/10/user/690889).
-* Наставник: `Неизвестно`.
+- Студент: [Настя Виденеева](https://up.htmlacademy.ru/ecmascript/10/user/690889).
+- Наставник: Нет.
 
 ---
 
