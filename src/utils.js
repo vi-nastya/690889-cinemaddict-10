@@ -52,4 +52,12 @@ export class AbstractComponent {
   getTemplate() {
     throw new Error(`Abstract method not implemented: getTemplate`);
   }
+
+  show() {
+    this.getElement().classList.remove(`visually-hidden`);
+  }
+
+  hide() {
+    this.getElement().classList.add(`visually-hidden`);
+  }
 }
