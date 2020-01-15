@@ -7,9 +7,9 @@ import { ContentContainer } from "./components/content-container";
 import { ShowMoreButton } from "./components/show-more-button";
 import { films } from "./mocks/films";
 import { UserTitle } from "./components/user-title";
-import { Position, render } from "./utils";
+import { Position, render, unrender } from "./utils";
 
-const NUM_FILMS = 5;
+const NUM_FILMS = 3;
 
 // calculates data for user stats based on films
 // TODO: update and move to utils
@@ -54,11 +54,40 @@ const commentedFilmsContainer = document.querySelectorAll(
   `.films-list__container`
 )[2];
 
-render(filmsContainer, new FilmCard(films[0]).getElement(), Position.BEFOREEND);
-render(filmsContainer, new FilmCard(films[1]).getElement(), Position.BEFOREEND);
+for (let i = 0; i < NUM_FILMS; i++) {
+  const film = new FilmCard(films[i]);
+  const filmDetails = new FilmDetails(films[i]);
+
+  const renderFilmDetails = () => {
+    render(mainContainer, filmDetails.getElement());
+    const closeDetailsButton = filmDetails
+      .getElement()
+      .querySelector(`.film-details__close-btn`);
+    closeDetailsButton.addEventListener(`click`, () => {
+      unrender(filmDetails.getElement());
+    });
+  };
+
+  // TODO: find cover img, title, num comments, add event handlers
+  const filmCover = film.getElement().querySelector(`.film-card__poster`);
+  const filmTitle = film.getElement().querySelector(`.film-card__title`);
+  const filmComments = film.getElement().querySelector(`.film-card__comments`);
+
+  filmCover.addEventListener(`click`, renderFilmDetails);
+  // TODO: onclick - render popup
+
+  // TODO: hide popup =  remove from DOM
+
+  render(filmsContainer, film.getElement(), Position.BEFOREEND);
+}
+
+// TODO: get top rated, get most commented
 
 // TODO: condition
 render(filmsList, new ShowMoreButton().getElement(), Position.BEFOREEND);
 
+render(topFilmsContainer, new FilmCard(films[0]).getElement());
+render(topFilmsContainer, new FilmCard(films[2]).getElement());
+render(commentedFilmsContainer, new FilmCard(films[1]).getElement());
 // render details popup
 // render(filmsContainer, new FilmDetails(films[2]).getElement());
