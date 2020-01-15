@@ -13,7 +13,6 @@ export class ContentContainer extends AbstractComponent {
       <div class="films-list__container">
       </div>
 
-      <button class="films-list__show-more">Show more</button>
     </section>
 
     <section class="films-list--extra">
