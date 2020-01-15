@@ -1,5 +1,6 @@
 import { FilmCard } from "./components/film-card";
 import { films } from "./mocks/films";
+import { UserTitle } from "./components/user-title";
 // import {getFiltersMarkup} from './components/filters';
 // import {getEditEventFormMarkup} from './components/edit-event-form';
 // import {getDaysListMarkup} from './components/days-list';
@@ -9,9 +10,25 @@ import { films } from "./mocks/films";
 
 // const NUM_CARDS = 3;
 
+// calculates data for user stats based on films
+// TODO: update and move to utils
+const getUserTitle = (movies) => {
+  return {
+    title: `fan`,
+    watchlist: 10,
+    history: 2,
+    favorites: 5
+  };
+};
+
 const renderComponent = (element, componentMarkup, position = `beforeend`) => {
   element.insertAdjacentHTML(position, componentMarkup);
 };
+const headerContainer = document.querySelector(`header`);
+// TODO: render search
+if (films.length > 0) {
+  // TODO: render user title
+}
 
 const mainContainer = document.querySelector(`main`);
 renderComponent(mainContainer, new FilmCard(films[0]).getTemplate());
