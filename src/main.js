@@ -1,4 +1,5 @@
 import { FilmCard } from "./components/film-card";
+import { films } from "./mocks/films";
 // import {getFiltersMarkup} from './components/filters';
 // import {getEditEventFormMarkup} from './components/edit-event-form';
 // import {getDaysListMarkup} from './components/days-list';
@@ -13,7 +14,7 @@ const renderComponent = (element, componentMarkup, position = `beforeend`) => {
 };
 
 const mainContainer = document.querySelector(`main`);
-renderComponent(mainContainer, new FilmCard().getTemplate());
+renderComponent(mainContainer, new FilmCard(films[0]).getTemplate());
 
 // const renderCards = (element, numCardsToRender) => {
 //   for (let i = 0; i < numCardsToRender; i++) {
