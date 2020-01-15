@@ -1,5 +1,43 @@
-export const getDetailsMarkup = () => {
-  return `<section class="film-details">
+import { AbstractComponent } from "../utils";
+
+const getCommentMarkup = (comment) => {
+  return `<li class="film-details__comment">
+  <span class="film-details__comment-emoji">
+    <img src="./images/emoji/${comment.emoji}.png" width="55" height="55" alt="emoji">
+  </span>
+  <div>
+    <p class="film-details__comment-text">${comment.text}</p>
+    <p class="film-details__comment-info">
+      <span class="film-details__comment-author">${comment.author}</span>
+      <span class="film-details__comment-day">2 days ago</span>
+      <button class="film-details__comment-delete">Delete</button>
+    </p>
+  </div>
+</li>`;
+};
+
+export class FilmDetails extends AbstractComponent {
+  constructor(filmData) {
+    super();
+    this._title = filmData.filmInfo.title;
+    this._rating = filmData.filmInfo.totalRating;
+    this._description = filmData.filmInfo.description;
+    // TODO: format
+    this._year = filmData.filmInfo.release.date;
+    this._country = filmData.filmInfo.release.releaseCountry;
+    // TODO: format
+    this._duration = filmData.filmInfo.runtime;
+    // TODO: handle multiple genres
+    this._genres = filmData.filmInfo.genre;
+    this._poster = filmData.filmInfo.poster;
+    this._numComments = filmData.comments.length;
+    this._director = filmData.filmInfo.director;
+    this._actors = filmData.filmInfo.actors;
+    this._writers = filmData.filmInfo.writers;
+  }
+
+  getTemplate() {
+    return `<section class="film-details">
   <form class="film-details__inner" action="" method="get">
     <div class="form-details__top-container">
       <div class="film-details__close">
@@ -15,27 +53,27 @@ export const getDetailsMarkup = () => {
         <div class="film-details__info">
           <div class="film-details__info-head">
             <div class="film-details__title-wrap">
-              <h3 class="film-details__title">The Great Flamarion</h3>
+              <h3 class="film-details__title">${this._title}</h3>
               <p class="film-details__title-original">Original: The Great Flamarion</p>
             </div>
 
             <div class="film-details__rating">
-              <p class="film-details__total-rating">8.9</p>
+              <p class="film-details__total-rating">${this._rating}</p>
             </div>
           </div>
 
           <table class="film-details__table">
             <tr class="film-details__row">
               <td class="film-details__term">Director</td>
-              <td class="film-details__cell">Anthony Mann</td>
+              <td class="film-details__cell">${this._director}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Writers</td>
-              <td class="film-details__cell">Anne Wigton, Heinz Herald, Richard Weil</td>
+              <td class="film-details__cell">${this._writers.join(`, `)}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Actors</td>
-              <td class="film-details__cell">Erich von Stroheim, Mary Beth Hughes, Dan Duryea</td>
+              <td class="film-details__cell">${this._actors.join(`, `)}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Release Date</td>
@@ -43,23 +81,23 @@ export const getDetailsMarkup = () => {
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Runtime</td>
-              <td class="film-details__cell">1h 18m</td>
+              <td class="film-details__cell">${this._duration}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Country</td>
-              <td class="film-details__cell">USA</td>
+              <td class="film-details__cell">${this._country}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Genres</td>
               <td class="film-details__cell">
-                <span class="film-details__genre">Drama</span>
-                <span class="film-details__genre">Film-Noir</span>
-                <span class="film-details__genre">Mystery</span></td>
+                ${this._genres.map(
+                  (el) => `<span class="film-details__genre">${el}</span>`
+                )}</td>
             </tr>
           </table>
 
           <p class="film-details__film-description">
-            The film opens following a murder at a cabaret in Mexico City in 1936, and then presents the events leading up to it in flashback. The Great Flamarion (Erich von Stroheim) is an arrogant, friendless, and misogynous marksman who displays his trick gunshot act in the vaudeville circuit. His show features a beautiful assistant, Connie (Mary Beth Hughes) and her drunken husband Al (Dan Duryea), Flamarion's other assistant. Flamarion falls in love with Connie, the movie's femme fatale, and is soon manipulated by her into killing her no good husband during one of their acts.
+            ${this._description}
           </p>
         </div>
       </div>
@@ -168,4 +206,5 @@ export const getDetailsMarkup = () => {
     </div>
   </form>
 </section>`;
-};
+  }
+}

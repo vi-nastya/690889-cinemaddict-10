@@ -16,7 +16,7 @@ export const films = [
         releaseCountry: `Finland`
       },
       runtime: 77,
-      genre: [`Comedy`],
+      genre: [`Comedy`, `Drama`],
       description: `Oscar-winning film, a war drama about two young people, from the creators of timeless classic \`Nu, Pogodi!\` and \`Alice in Wonderland\`, with the best fight scenes since Bruce Lee.`
     },
     userDetails: {

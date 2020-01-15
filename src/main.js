@@ -1,4 +1,5 @@
 import { FilmCard } from "./components/film-card";
+import { FilmDetails } from "./components/film-details";
 import { Search } from "./components/search";
 import { Menu } from "./components/menu";
 import { Sort } from "./components/sort";
@@ -59,23 +60,5 @@ render(filmsContainer, new FilmCard(films[1]).getElement(), Position.BEFOREEND);
 // TODO: condition
 render(filmsList, new ShowMoreButton().getElement(), Position.BEFOREEND);
 
-// const renderCards = (element, numCardsToRender) => {
-//   for (let i = 0; i < numCardsToRender; i++) {
-//     renderComponent(element, getDayCardMarkup());
-//   }
-// };
-
-// const tripInfoContainer = document.querySelector(`.trip-info`);
-// const menuHeader = document.querySelector(`.trip-controls h2`);
-// const filtersHeader = document.querySelectorAll(`.trip-controls h2`)[1];
-// const tripEventsContainer = document.querySelector(`.trip-events`);
-
-// renderComponent(tripInfoContainer, getTripInfoMarkup(), `afterbegin`);
-// renderComponent(menuHeader, getMenuMarkup(), `afterend`);
-// renderComponent(filtersHeader, getFiltersMarkup(), `afterend`);
-// renderComponent(tripEventsContainer, getTripSortMarkup());
-// renderComponent(tripEventsContainer, getEditEventFormMarkup());
-// renderComponent(tripEventsContainer, getDaysListMarkup());
-
-// const daysContainer = document.querySelector(`.trip-days`);
-// renderCards(daysContainer, NUM_CARDS);
+// render details popup
+// render(filmsContainer, new FilmDetails(films[2]).getElement());
