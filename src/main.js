@@ -68,15 +68,13 @@ for (let i = 0; i < NUM_FILMS; i++) {
     });
   };
 
-  // TODO: find cover img, title, num comments, add event handlers
   const filmCover = film.getElement().querySelector(`.film-card__poster`);
   const filmTitle = film.getElement().querySelector(`.film-card__title`);
   const filmComments = film.getElement().querySelector(`.film-card__comments`);
 
   filmCover.addEventListener(`click`, renderFilmDetails);
-  // TODO: onclick - render popup
-
-  // TODO: hide popup =  remove from DOM
+  filmTitle.addEventListener(`click`, renderFilmDetails);
+  filmComments.addEventListener(`click`, renderFilmDetails);
 
   render(filmsContainer, film.getElement(), Position.BEFOREEND);
 }
