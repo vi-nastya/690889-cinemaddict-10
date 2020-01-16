@@ -43,7 +43,7 @@ if (films.length > 0) {
 
 // RENDER MAIN SECTION
 render(mainContainer, new Menu().getElement(), Position.BEFOREEND);
-render(mainContainer, new Sort().getElement(), Position.BEFOREEND);
+//render(mainContainer, new Sort().getElement(), Position.BEFOREEND);
 
 if (films.length === 0) {
   render(

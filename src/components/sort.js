@@ -13,9 +13,9 @@ export class Sort extends AbstractComponent {
 
   getTemplate() {
     return `<ul class="sort">
-    <li><a href="#" data-sort-type="${SortType.DEFAULT} class="sort__button sort__button--active">Sort by default</a></li>
-    <li><a href="#" data-sort-type="${SortType.DATE} class="sort__button">Sort by date</a></li>
-    <li><a href="#" data-sort-type="${SortType.RATING} class="sort__button">Sort by rating</a></li>
+    <li><a href="#" data-sort-type="${SortType.DEFAULT}" class="sort__button sort__button--active">Sort by default</a></li>
+    <li><a href="#" data-sort-type="${SortType.DATE}" class="sort__button">Sort by date</a></li>
+    <li><a href="#" data-sort-type="${SortType.RATING}" class="sort__button">Sort by rating</a></li>
   </ul>`;
   }
 
@@ -28,6 +28,7 @@ export class Sort extends AbstractComponent {
       }
 
       const sortType = evt.target.dataset.sortType;
+      console.log("SORT CLICK: ", sortType);
 
       if (this._currenSortType === sortType) {
         return;
