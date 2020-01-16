@@ -18,4 +18,24 @@ export class Sort extends AbstractComponent {
     <li><a href="#" data-sort-type="${SortType.RATING} class="sort__button">Sort by rating</a></li>
   </ul>`;
   }
+
+  setSortTypeChangeHandler(handler) {
+    this.getElement().addEventListener(`click`, (evt) => {
+      evt.preventDefault();
+
+      if (evt.target.tagName !== `A`) {
+        return;
+      }
+
+      const sortType = evt.target.dataset.sortType;
+
+      if (this._currenSortType === sortType) {
+        return;
+      }
+
+      this._currenSortType = sortType;
+
+      handler(this._currenSortType);
+    });
+  }
 }
