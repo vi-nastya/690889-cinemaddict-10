@@ -7,9 +7,10 @@ import { SortType, Sort } from "./components/sort";
 const SHOWING_FILMS_COUNT = 5;
 
 export class PageController {
-  constructor(container) {
+  constructor(container, filmsData) {
     this._container = container;
     this._showingFilmsCount = SHOWING_FILMS_COUNT;
+    this._filmsData = filmsData;
 
     this._sortComponent = new Sort();
 
@@ -23,7 +24,7 @@ export class PageController {
     // this._tasksModel.setFilterChangeHandler(this._onFilterChange);
   }
 
-  render(filmsData) {
+  renderFilms() {
     // TODO: get topRated and mostCommented
 
     render(
@@ -47,8 +48,8 @@ export class PageController {
     )[2];
 
     for (let i = 0; i < NUM_FILMS; i++) {
-      const film = new FilmCard(filmsData[i]);
-      const filmDetails = new FilmDetails(filmsData[i]);
+      const film = new FilmCard(this._filmsData[i]);
+      const filmDetails = new FilmDetails(this._filmsData[i]);
 
       const renderFilmDetails = () => {
         render(this._container, filmDetails.getElement());
@@ -85,9 +86,12 @@ export class PageController {
     // TODO: condition
     render(filmsList, new ShowMoreButton().getElement(), Position.BEFOREEND);
 
-    render(topFilmsContainer, new FilmCard(filmsData[0]).getElement());
-    render(topFilmsContainer, new FilmCard(filmsData[2]).getElement());
-    render(commentedFilmsContainer, new FilmCard(filmsData[1]).getElement());
+    render(topFilmsContainer, new FilmCard(this._filmsData[0]).getElement());
+    render(topFilmsContainer, new FilmCard(this._filmsData[2]).getElement());
+    render(
+      commentedFilmsContainer,
+      new FilmCard(this._filmsData[1]).getElement()
+    );
   }
 
   _onSortTypeChange(sortType) {
@@ -111,7 +115,7 @@ export class PageController {
     }
 
     //this._removeFilms();
-    this._render(sortedFilms);
+    this.renderFilms(sortedFilms);
 
     // if (sortType === SortType.DEFAULT) {
     //   this._renderLoadMoreButton();

@@ -59,6 +59,6 @@ if (films.length === 0) {
   );
 
   const filmsContainer = mainContainer.querySelector(`.films`);
-  const pageController = new PageController(filmsContainer);
-  pageController.render(films);
+  const pageController = new PageController(filmsContainer, films);
+  pageController.renderFilms();
 }
