@@ -207,4 +207,22 @@ export class FilmDetails extends AbstractComponent {
   </form>
 </section>`;
   }
+
+  setOnWatchlistButtonClick(handler) {
+    this.getElement()
+      .querySelector(`.film-details__control-label--watchlist`)
+      .addEventListener(`click`, handler);
+  }
+
+  setOnWatchedButtonClick(handler) {
+    this.getElement()
+      .querySelector(`.film-details__control-label--watched`)
+      .addEventListener(`click`, handler);
+  }
+
+  setOnFavoriteButtonClick(handler) {
+    this.getElement()
+      .querySelector(`.film-details__control-label--favorite`)
+      .addEventListener(`click`, handler);
+  }
 }

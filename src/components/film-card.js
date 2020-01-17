@@ -34,4 +34,22 @@ export class FilmCard extends AbstractComponent {
     </form>
   </article>`;
   }
+
+  setOnWatchlistButtonClick(handler) {
+    this.getElement()
+      .querySelector(`.film-card__controls-item--add-to-watchlist`)
+      .addEventListener(`click`, handler);
+  }
+
+  setOnWatchedButtonClick(handler) {
+    this.getElement()
+      .querySelector(`.film-card__controls-item--mark-as-watched`)
+      .addEventListener(`click`, handler);
+  }
+
+  setOnFavoriteButtonClick(handler) {
+    this.getElement()
+      .querySelector(`.film-card__controls-item--favorite`)
+      .addEventListener(`click`, handler);
+  }
 }
