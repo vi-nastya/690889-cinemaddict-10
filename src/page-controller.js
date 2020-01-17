@@ -13,6 +13,8 @@ export class PageController {
     this._filmsData = filmsData;
 
     this._sortComponent = new Sort();
+    this._noFilmsComponent = null; // TODO
+    this._showMoreButtonComponent = new ShowMoreButton();
 
     // this._onDataChange = this._onDataChange.bind(this);
     this._onSortTypeChange = this._onSortTypeChange.bind(this);
@@ -84,7 +86,11 @@ export class PageController {
     // TODO: get top rated, get most commented
 
     // TODO: condition
-    render(filmsList, new ShowMoreButton().getElement(), Position.BEFOREEND);
+    render(
+      filmsList,
+      this._showMoreButtonComponent.getElement(),
+      Position.BEFOREEND
+    );
 
     render(topFilmsContainer, new FilmCard(this._filmsData[0]).getElement());
     render(topFilmsContainer, new FilmCard(this._filmsData[2]).getElement());
