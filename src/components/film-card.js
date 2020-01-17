@@ -1,5 +1,11 @@
 import { AbstractComponent } from "../utils";
 
+const getButtonMarkup = (buttonClass, buttonText, isActive) => {
+  return `<button class="film-card__controls-item button film-card__controls-item--${buttonClass} ${
+    isActive ? `film-card__controls-item--active` : ``
+  }">${buttonText}</button>`;
+};
+
 export class FilmCard extends AbstractComponent {
   constructor(filmData) {
     super();
@@ -13,6 +19,10 @@ export class FilmCard extends AbstractComponent {
     this._genre = filmData.filmInfo.genre[0];
     this._poster = filmData.filmInfo.poster;
     this._numComments = filmData.comments.length;
+
+    this._watched = filmData.userDetails.alreadyWatched;
+    this._watchlist = filmData.userDetails.watchList;
+    this._favorite = filmData.userDetails.favorite;
   }
 
   getTemplate() {
@@ -28,9 +38,9 @@ export class FilmCard extends AbstractComponent {
     <p class="film-card__description">Burlesque comic Ralph "Skid" Johnson (Skelly), and specialty dancer Bonny Lee King (Carroll), end up together on a cold, rainy night at a tr…</p>
     <a class="film-card__comments">${this._numComments} comments</a>
     <form class="film-card__controls">
-      <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist">Add to watchlist</button>
-      <button class="film-card__controls-item button film-card__controls-item--mark-as-watched">Mark as watched</button>
-      <button class="film-card__controls-item button film-card__controls-item--favorite">Mark as favorite</button>
+    ${getButtonMarkup(`add-to-watchlist`, `Add to watchlist`, this._watchlist)}
+    ${getButtonMarkup(`mark-as-watched`, `Mark as watched`, this._watched)}
+    ${getButtonMarkup(`favorite`, `Mark as favorite`, this._favorite)}
     </form>
   </article>`;
   }
