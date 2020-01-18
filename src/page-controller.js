@@ -30,8 +30,13 @@ const renderCard = (container, cardData) => {
   render(container, film.getElement(), Position.BEFOREEND);
 };
 
-const renderCards = (container, cardsData) => {
-  cardsData.forEach((card) => renderCard(container, card));
+const renderCards = (container, cardsData, onDataChange) => {
+  // cardsData.forEach((card) => renderCard(container, card));
+  return cardsData.map((card) => {
+    const movieController = new MovieController(container, onDataChange);
+    movieController.render(card);
+    return movieController;
+  });
 };
 
 export class PageController {
@@ -39,6 +44,8 @@ export class PageController {
     this._container = container;
     this._showingFilmsCount = SHOWING_FILMS_COUNT;
     this._filmsData = filmsData;
+
+    this._renderedCards = [];
 
     this._sortComponent = new Sort();
     this._noFilmsComponent = null; // TODO
@@ -65,8 +72,6 @@ export class PageController {
       Position.AFTERBEGIN
     );
 
-    const NUM_FILMS = 3;
-
     const filmsList = this._container.querySelectorAll(`.films-list`)[0];
 
     const filmsContainer = this._container.querySelectorAll(
@@ -79,33 +84,7 @@ export class PageController {
       `.films-list__container`
     )[2];
 
-    // for (let i = 0; i < NUM_FILMS; i++) {
-    //   const film = new FilmCard(filmsData[i]);
-    //   const filmDetails = new FilmDetails(filmsData[i]);
-
-    //   const renderFilmDetails = () => {
-    //     render(document.querySelector(`body`), filmDetails.getElement());
-    //     filmDetails.setCloseButtonClickHandler(() => {
-    //       document.querySelector(`body`).removeChild(filmDetails.getElement());
-    //     });
-
-    //     document.addEventListener(`keydown`, (evt) => {
-    //       if (evt.keyCode === 27) {
-    //         document
-    //           .querySelector(`body`)
-    //           .removeChild(filmDetails.getElement());
-    //       }
-    //     });
-    //   };
-
-    //   // add event listeners for FilmCard (open FilmDetails)
-    //   film.setDetailsOpenClickHandler(renderFilmDetails);
-
-    //   render(filmsContainer, film.getElement(), Position.BEFOREEND);
-    // }
-
-    renderCards(filmsContainer, filmsData);
-    // TODO: get top rated, get most commented
+    this._renderedCards = renderCards(filmsContainer, filmsData);
 
     // TODO: button logic
     render(
@@ -114,8 +93,9 @@ export class PageController {
       Position.BEFOREEND
     );
 
-    renderCards(topFilmsContainer, filmsData.slice(0, 2));
-    renderCards(commentedFilmsContainer, filmsData.slice(2, 4));
+    // TODO: get top rated, get most commented
+    //renderCards(topFilmsContainer, filmsData.slice(0, 2));
+    //renderCards(commentedFilmsContainer, filmsData.slice(2, 4));
   }
 
   _onSortTypeChange(sortType) {

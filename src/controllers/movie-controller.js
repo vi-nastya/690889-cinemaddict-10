@@ -41,7 +41,7 @@ export class MovieController {
 
     // Popup -> close
     this._filmDetailsComponent.setCloseButtonClickHandler(
-      this._changePopupToCard()
+      this._changePopupToCard
     );
 
     // TODO: handle FilmCard button clicks (call onDataChange)
@@ -61,7 +61,7 @@ export class MovieController {
 
   _changeCardToPopup() {
     // TODO: onViewChange (make sure only one popup is showed at a time)
-    render(this._bodyElement, this._filmDetailsComponent);
+    render(this._bodyElement, this._filmDetailsComponent.getElement());
     this._mode = Mode.POPUP;
   }
 }
