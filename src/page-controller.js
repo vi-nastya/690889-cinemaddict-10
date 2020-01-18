@@ -63,13 +63,16 @@ export class PageController {
           this._container.removeChild(filmDetails.getElement());
         });
 
-        this._container.addEventListener(`keydown`, (evt) => {
+        document.querySelector(`body`).addEventListener(`keydown`, (evt) => {
           if (evt.keyCode === 27) {
-            this._container.removeChild(filmDetails.getElement());
+            document
+              .querySelector(`body`)
+              .removeChild(filmDetails.getElement());
           }
         });
       };
 
+      // add event listeners for FilmCard (open FilmDetails)
       const filmCover = film.getElement().querySelector(`.film-card__poster`);
       const filmTitle = film.getElement().querySelector(`.film-card__title`);
       const filmComments = film
