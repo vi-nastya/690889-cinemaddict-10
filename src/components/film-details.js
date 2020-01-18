@@ -208,21 +208,27 @@ export class FilmDetails extends AbstractComponent {
 </section>`;
   }
 
-  setOnWatchlistButtonClick(handler) {
+  setWatchlistButtonClickHandler(handler) {
     this.getElement()
       .querySelector(`.film-details__control-label--watchlist`)
       .addEventListener(`click`, handler);
   }
 
-  setOnWatchedButtonClick(handler) {
+  setWatchedButtonClickHandler(handler) {
     this.getElement()
       .querySelector(`.film-details__control-label--watched`)
       .addEventListener(`click`, handler);
   }
 
-  setOnFavoriteButtonClick(handler) {
+  setFavoriteButtonClickHandler(handler) {
     this.getElement()
       .querySelector(`.film-details__control-label--favorite`)
+      .addEventListener(`click`, handler);
+  }
+
+  setCloseButtonClickHandler(handler) {
+    this.getElement()
+      .querySelector(`.film-details__close-btn`)
       .addEventListener(`click`, handler);
   }
 }

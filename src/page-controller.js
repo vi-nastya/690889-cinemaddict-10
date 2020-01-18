@@ -55,11 +55,7 @@ export class PageController {
 
       const renderFilmDetails = () => {
         render(document.querySelector(`body`), filmDetails.getElement());
-        const closeDetailsButton = filmDetails
-          .getElement()
-          .querySelector(`.film-details__close-btn`);
-
-        closeDetailsButton.addEventListener(`click`, () => {
+        filmDetails.setCloseButtonClickHandler(() => {
           document.querySelector(`body`).removeChild(filmDetails.getElement());
         });
 
@@ -73,14 +69,14 @@ export class PageController {
       };
 
       // add event listeners for FilmCard (open FilmDetails)
-      film.setOnDetailsOpenClick(renderFilmDetails);
+      film.setDetailsOpenClickHandler(renderFilmDetails);
 
       render(filmsContainer, film.getElement(), Position.BEFOREEND);
     }
 
     // TODO: get top rated, get most commented
 
-    // TODO: condition
+    // TODO: button logic
     render(
       filmsList,
       this._showMoreButtonComponent.getElement(),

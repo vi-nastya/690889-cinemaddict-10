@@ -45,25 +45,25 @@ export class FilmCard extends AbstractComponent {
   </article>`;
   }
 
-  setOnWatchlistButtonClick(handler) {
+  setWatchlistButtonClickHandler(handler) {
     this.getElement()
       .querySelector(`.film-card__controls-item--add-to-watchlist`)
       .addEventListener(`click`, handler);
   }
 
-  setOnWatchedButtonClick(handler) {
+  setWatchedButtonClickHandler(handler) {
     this.getElement()
       .querySelector(`.film-card__controls-item--mark-as-watched`)
       .addEventListener(`click`, handler);
   }
 
-  setOnFavoriteButtonClick(handler) {
+  setFavoriteButtonClickHandler(handler) {
     this.getElement()
       .querySelector(`.film-card__controls-item--favorite`)
       .addEventListener(`click`, handler);
   }
 
-  setOnDetailsOpenClick(handler) {
+  setDetailsOpenClickHandler(handler) {
     const poster = this.getElement().querySelector(`.film-card__poster`);
     const title = this.getElement().querySelector(`.film-card__title`);
     const comments = this.getElement().querySelector(`.film-card__comments`);
