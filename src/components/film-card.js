@@ -62,4 +62,14 @@ export class FilmCard extends AbstractComponent {
       .querySelector(`.film-card__controls-item--favorite`)
       .addEventListener(`click`, handler);
   }
+
+  setOnDetailsOpenClick(handler) {
+    const poster = this.getElement().querySelector(`.film-card__poster`);
+    const title = this.getElement().querySelector(`.film-card__title`);
+    const comments = this.getElement().querySelector(`.film-card__comments`);
+
+    [poster, title, comments].forEach((item) =>
+      item.addEventListener(`click`, handler)
+    );
+  }
 }

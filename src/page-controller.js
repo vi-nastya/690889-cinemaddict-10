@@ -54,16 +54,16 @@ export class PageController {
       const filmDetails = new FilmDetails(filmsData[i]);
 
       const renderFilmDetails = () => {
-        render(this._container, filmDetails.getElement());
+        render(document.querySelector(`body`), filmDetails.getElement());
         const closeDetailsButton = filmDetails
           .getElement()
           .querySelector(`.film-details__close-btn`);
 
         closeDetailsButton.addEventListener(`click`, () => {
-          this._container.removeChild(filmDetails.getElement());
+          document.querySelector(`body`).removeChild(filmDetails.getElement());
         });
 
-        document.querySelector(`body`).addEventListener(`keydown`, (evt) => {
+        document.addEventListener(`keydown`, (evt) => {
           if (evt.keyCode === 27) {
             document
               .querySelector(`body`)
@@ -73,15 +73,7 @@ export class PageController {
       };
 
       // add event listeners for FilmCard (open FilmDetails)
-      const filmCover = film.getElement().querySelector(`.film-card__poster`);
-      const filmTitle = film.getElement().querySelector(`.film-card__title`);
-      const filmComments = film
-        .getElement()
-        .querySelector(`.film-card__comments`);
-
-      filmCover.addEventListener(`click`, renderFilmDetails);
-      filmTitle.addEventListener(`click`, renderFilmDetails);
-      filmComments.addEventListener(`click`, renderFilmDetails);
+      film.setOnDetailsOpenClick(renderFilmDetails);
 
       render(filmsContainer, film.getElement(), Position.BEFOREEND);
     }
