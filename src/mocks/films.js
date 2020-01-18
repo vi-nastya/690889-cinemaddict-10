@@ -33,26 +33,26 @@ export const films = [
     filmInfo: {
       title: `A Little Pony Without The Carpet`,
       alternativeTitle: `Laziness Who Sold Themselves`,
-      totalRating: 5.3,
+      totalRating: 7.1,
       poster: `images/posters/made-for-each-other.png`,
       ageRating: 0,
       director: `Tom Ford`,
       writers: [`Takeshi Kitano`],
       actors: [`Morgan Freeman`],
       release: {
-        date: 1475924187819,
+        date: 1478244187819,
         releaseCountry: `Finland`
       },
-      runtime: 77,
+      runtime: 104,
       genre: [`Comedy`],
       description: `Oscar-winning film, a war drama about two young people, from the creators of timeless classic \`Nu, Pogodi!\` and \`Alice in Wonderland\`, with the best fight scenes since Bruce Lee.`
     },
     userDetails: {
-      personalRating: 9,
+      personalRating: 2,
       watchlist: false,
       alreadyWatched: true,
       watchingDate: `2019-05-11T16:12:32.554Z`,
-      favorite: false
+      favorite: true
     }
   },
   {
@@ -61,14 +61,14 @@ export const films = [
     filmInfo: {
       title: `A Little Pony Without The Carpet`,
       alternativeTitle: `Laziness Who Sold Themselves`,
-      totalRating: 5.3,
+      totalRating: 2.3,
       poster: `images/posters/made-for-each-other.png`,
       ageRating: 0,
       director: `Tom Ford`,
       writers: [`Takeshi Kitano`],
       actors: [`Morgan Freeman`],
       release: {
-        date: 1475924187819,
+        date: 1420324187819,
         releaseCountry: `Finland`
       },
       runtime: 77,
@@ -77,8 +77,8 @@ export const films = [
     },
     userDetails: {
       personalRating: 9,
-      watchlist: false,
-      alreadyWatched: true,
+      watchlist: true,
+      alreadyWatched: false,
       watchingDate: `2019-05-11T16:12:32.554Z`,
       favorite: false
     }

@@ -26,7 +26,7 @@ export class PageController {
     // this._tasksModel.setFilterChangeHandler(this._onFilterChange);
   }
 
-  renderFilms() {
+  renderFilms(filmsData) {
     // TODO: get topRated and mostCommented
 
     render(
@@ -50,8 +50,8 @@ export class PageController {
     )[2];
 
     for (let i = 0; i < NUM_FILMS; i++) {
-      const film = new FilmCard(this._filmsData[i]);
-      const filmDetails = new FilmDetails(this._filmsData[i]);
+      const film = new FilmCard(filmsData[i]);
+      const filmDetails = new FilmDetails(filmsData[i]);
 
       const renderFilmDetails = () => {
         render(this._container, filmDetails.getElement());
@@ -92,12 +92,9 @@ export class PageController {
       Position.BEFOREEND
     );
 
-    render(topFilmsContainer, new FilmCard(this._filmsData[0]).getElement());
-    render(topFilmsContainer, new FilmCard(this._filmsData[2]).getElement());
-    render(
-      commentedFilmsContainer,
-      new FilmCard(this._filmsData[1]).getElement()
-    );
+    render(topFilmsContainer, new FilmCard(filmsData[0]).getElement());
+    render(topFilmsContainer, new FilmCard(filmsData[2]).getElement());
+    render(commentedFilmsContainer, new FilmCard(filmsData[1]).getElement());
   }
 
   _onSortTypeChange(sortType) {
