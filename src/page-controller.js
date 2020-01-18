@@ -131,4 +131,8 @@ export class PageController {
     //this._showedTaskControllers.forEach((taskController) => taskController.destroy());
     //this._showedTaskControllers = [];
   }
+
+  _onDataChange(oldFilmData, newFilmData) {
+    // TODO call render() from movieController for given data
+  }
 }

@@ -3,10 +3,12 @@ import { FilmDetails } from "../components/film-details";
 import { render } from "../utils";
 
 export class MovieController {
-  constructor(container) {
+  constructor(container, onDataChange) {
     this._container = container;
     this._filmComponent = null;
     this._filmDetailsComponent = null;
+
+    this._onDataChange = onDataChange;
   }
 
   render(filmData) {
