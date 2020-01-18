@@ -3,8 +3,36 @@ import { FilmCard } from "./components/film-card";
 import { FilmDetails } from "./components/film-details";
 import { Position, render, unrender, remove } from "./utils";
 import { SortType, Sort } from "./components/sort";
+import { MovieController } from "./controllers/movie-controller";
 
 const SHOWING_FILMS_COUNT = 5;
+
+const renderCard = (container, cardData) => {
+  const film = new FilmCard(cardData);
+  const filmDetails = new FilmDetails(cardData);
+
+  const renderFilmDetails = () => {
+    render(document.querySelector(`body`), filmDetails.getElement());
+    filmDetails.setCloseButtonClickHandler(() => {
+      document.querySelector(`body`).removeChild(filmDetails.getElement());
+    });
+
+    document.addEventListener(`keydown`, (evt) => {
+      if (evt.keyCode === 27) {
+        document.querySelector(`body`).removeChild(filmDetails.getElement());
+      }
+    });
+  };
+
+  // add event listeners for FilmCard (open FilmDetails)
+  film.setDetailsOpenClickHandler(renderFilmDetails);
+
+  render(container, film.getElement(), Position.BEFOREEND);
+};
+
+const renderCards = (container, cardsData) => {
+  cardsData.forEach((card) => renderCard(container, card));
+};
 
 export class PageController {
   constructor(container, filmsData) {
@@ -24,6 +52,8 @@ export class PageController {
 
     this._sortComponent.setSortTypeChangeHandler(this._onSortTypeChange);
     // this._tasksModel.setFilterChangeHandler(this._onFilterChange);
+
+    this._onDataChange = this._onDataChange.bind(this);
   }
 
   renderFilms(filmsData) {
@@ -49,31 +79,32 @@ export class PageController {
       `.films-list__container`
     )[2];
 
-    for (let i = 0; i < NUM_FILMS; i++) {
-      const film = new FilmCard(filmsData[i]);
-      const filmDetails = new FilmDetails(filmsData[i]);
+    // for (let i = 0; i < NUM_FILMS; i++) {
+    //   const film = new FilmCard(filmsData[i]);
+    //   const filmDetails = new FilmDetails(filmsData[i]);
 
-      const renderFilmDetails = () => {
-        render(document.querySelector(`body`), filmDetails.getElement());
-        filmDetails.setCloseButtonClickHandler(() => {
-          document.querySelector(`body`).removeChild(filmDetails.getElement());
-        });
+    //   const renderFilmDetails = () => {
+    //     render(document.querySelector(`body`), filmDetails.getElement());
+    //     filmDetails.setCloseButtonClickHandler(() => {
+    //       document.querySelector(`body`).removeChild(filmDetails.getElement());
+    //     });
 
-        document.addEventListener(`keydown`, (evt) => {
-          if (evt.keyCode === 27) {
-            document
-              .querySelector(`body`)
-              .removeChild(filmDetails.getElement());
-          }
-        });
-      };
+    //     document.addEventListener(`keydown`, (evt) => {
+    //       if (evt.keyCode === 27) {
+    //         document
+    //           .querySelector(`body`)
+    //           .removeChild(filmDetails.getElement());
+    //       }
+    //     });
+    //   };
 
-      // add event listeners for FilmCard (open FilmDetails)
-      film.setDetailsOpenClickHandler(renderFilmDetails);
+    //   // add event listeners for FilmCard (open FilmDetails)
+    //   film.setDetailsOpenClickHandler(renderFilmDetails);
 
-      render(filmsContainer, film.getElement(), Position.BEFOREEND);
-    }
+    //   render(filmsContainer, film.getElement(), Position.BEFOREEND);
+    // }
 
+    renderCards(filmsContainer, filmsData);
     // TODO: get top rated, get most commented
 
     // TODO: button logic
@@ -83,9 +114,8 @@ export class PageController {
       Position.BEFOREEND
     );
 
-    render(topFilmsContainer, new FilmCard(filmsData[0]).getElement());
-    render(topFilmsContainer, new FilmCard(filmsData[2]).getElement());
-    render(commentedFilmsContainer, new FilmCard(filmsData[1]).getElement());
+    renderCards(topFilmsContainer, filmsData.slice(0, 2));
+    renderCards(commentedFilmsContainer, filmsData.slice(2, 4));
   }
 
   _onSortTypeChange(sortType) {
