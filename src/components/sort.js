@@ -30,7 +30,6 @@ export class Sort extends AbstractComponent {
       }
 
       const sortType = evt.target.dataset.sortType;
-      console.log("SORT CLICK: ", sortType);
 
       if (this._currenSortType === sortType) {
         return;

@@ -59,6 +59,7 @@ export class PageController {
     // this._tasksModel.setFilterChangeHandler(this._onFilterChange);
 
     this._onDataChange = this._onDataChange.bind(this);
+    this._unrenderFilms = this._unrenderFilms.bind(this);
   }
 
   renderFilms(filmsData) {
@@ -96,6 +97,13 @@ export class PageController {
     //renderCards(commentedFilmsContainer, filmsData.slice(2, 4));
   }
 
+  _unrenderFilms() {
+    this._renderedCards = [];
+    this._container.querySelectorAll(
+      `.films-list__container`
+    )[0].innerHTML = ``;
+  }
+
   _onSortTypeChange(sortType) {
     let sortedFilms = [];
     const films = this._filmsData;
@@ -116,7 +124,7 @@ export class PageController {
         break;
     }
 
-    //this._removeFilms();
+    this._unrenderFilms();
     this.renderFilms(sortedFilms);
 
     // if (sortType === SortType.DEFAULT) {
