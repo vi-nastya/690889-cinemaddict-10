@@ -7,28 +7,28 @@ import { MovieController } from "./controllers/movie-controller";
 
 const SHOWING_FILMS_COUNT = 5;
 
-const renderCard = (container, cardData) => {
-  const film = new FilmCard(cardData);
-  const filmDetails = new FilmDetails(cardData);
+// const renderCard = (container, cardData) => {
+//   const film = new FilmCard(cardData);
+//   const filmDetails = new FilmDetails(cardData);
 
-  const renderFilmDetails = () => {
-    render(document.querySelector(`body`), filmDetails.getElement());
-    filmDetails.setCloseButtonClickHandler(() => {
-      document.querySelector(`body`).removeChild(filmDetails.getElement());
-    });
+//   const renderFilmDetails = () => {
+//     render(document.querySelector(`body`), filmDetails.getElement());
+//     filmDetails.setCloseButtonClickHandler(() => {
+//       document.querySelector(`body`).removeChild(filmDetails.getElement());
+//     });
 
-    document.addEventListener(`keydown`, (evt) => {
-      if (evt.keyCode === 27) {
-        document.querySelector(`body`).removeChild(filmDetails.getElement());
-      }
-    });
-  };
+//     document.addEventListener(`keydown`, (evt) => {
+//       if (evt.keyCode === 27) {
+//         document.querySelector(`body`).removeChild(filmDetails.getElement());
+//       }
+//     });
+//   };
 
-  // add event listeners for FilmCard (open FilmDetails)
-  film.setDetailsOpenClickHandler(renderFilmDetails);
+//   // add event listeners for FilmCard (open FilmDetails)
+//   film.setDetailsOpenClickHandler(renderFilmDetails);
 
-  render(container, film.getElement(), Position.BEFOREEND);
-};
+//   render(container, film.getElement(), Position.BEFOREEND);
+// };
 
 const renderCards = (container, cardsData, onDataChange) => {
   // cardsData.forEach((card) => renderCard(container, card));

@@ -17,6 +17,9 @@ export class MovieController {
 
     this._onDataChange = onDataChange;
     this._mode = Mode.DEFAULT;
+
+    this._changePopupToCard = this._changePopupToCard.bind(this);
+    this._changeCardToPopup = this._changeCardToPopup.bind(this);
   }
 
   render(filmData) {
