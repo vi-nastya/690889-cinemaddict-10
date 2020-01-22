@@ -1,6 +1,4 @@
 import { ShowMoreButton } from "./components/show-more-button";
-import { FilmCard } from "./components/film-card";
-import { FilmDetails } from "./components/film-details";
 import { Position, render, unrender, remove } from "./utils";
 import { SortType, Sort } from "./components/sort";
 import { MovieController } from "./controllers/movie-controller";
