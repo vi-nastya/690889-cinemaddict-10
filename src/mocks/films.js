@@ -76,7 +76,7 @@ export const films = [
       description: `Oscar-winning film, a war drama about two young people, from the creators of timeless classic \`Nu, Pogodi!\` and \`Alice in Wonderland\`, with the best fight scenes since Bruce Lee.`
     },
     userDetails: {
-      personalRating: 9,
+      personalRating: 5,
       watchlist: true,
       alreadyWatched: false,
       watchingDate: `2019-05-11T16:12:32.554Z`,
