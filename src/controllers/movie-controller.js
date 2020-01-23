@@ -8,7 +8,7 @@ const Mode = {
 };
 
 export class MovieController {
-  constructor(container, onDataChange) {
+  constructor(container, onDataChange, onViewChange) {
     this._container = container;
     this._filmComponent = null;
     this._filmDetailsComponent = null;
@@ -16,6 +16,7 @@ export class MovieController {
     this._bodyElement = document.querySelector(`body`);
 
     this._onDataChange = onDataChange;
+    this._onViewChange = onViewChange;
     this._mode = Mode.DEFAULT;
 
     this._changePopupToCard = this._changePopupToCard.bind(this);
@@ -48,7 +49,19 @@ export class MovieController {
     );
 
     // TODO: handle FilmCard button clicks (call onDataChange)
-    // this._filmComponent.setWatchlistButtonClickHandler();
+    this._filmComponent.setWatchlistButtonClickHandler(() => {
+      const newFilmData = Object.assign({}, filmData, {
+        userData: { watchlist: `watchlist UPDATE` }
+      });
+      this._onDataChange(filmData, newFilmData);
+    });
+
+    this._filmDetailsComponent.setWatchlistButtonClickHandler(() => {
+      const newFilmData = Object.assign({}, filmData, {
+        userData: { watchlist: `watchlist UPDATE` }
+      });
+      this._onDataChange(filmData, newFilmData);
+    });
     // this._filmComponent.setWatchedButtonClickHandler();
     // this._filmComponent.setFavoriteButtonClickHandler();
 
@@ -63,8 +76,14 @@ export class MovieController {
   }
 
   _changeCardToPopup() {
-    // TODO: onViewChange (make sure only one popup is showed at a time)
+    this._onViewChange();
     render(this._bodyElement, this._filmDetailsComponent);
     this._mode = Mode.POPUP;
+  }
+
+  setDefaultView() {
+    if (this._mode !== Mode.DEFAULT) {
+      this._changePopupToCard();
+    }
   }
 }

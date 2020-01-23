@@ -28,10 +28,14 @@ const SHOWING_FILMS_COUNT = 5;
 //   render(container, film.getElement(), Position.BEFOREEND);
 // };
 
-const renderCards = (container, cardsData, onDataChange) => {
+const renderCards = (container, cardsData, onDataChange, onViewChange) => {
   // cardsData.forEach((card) => renderCard(container, card));
   return cardsData.map((card) => {
-    const movieController = new MovieController(container, onDataChange);
+    const movieController = new MovieController(
+      container,
+      onDataChange,
+      onViewChange
+    );
     movieController.render(card);
     return movieController;
   });
@@ -59,6 +63,7 @@ export class PageController {
     // this._tasksModel.setFilterChangeHandler(this._onFilterChange);
 
     this._onDataChange = this._onDataChange.bind(this);
+    this._onViewChange = this._onViewChange.bind(this);
     this._unrenderFilms = this._unrenderFilms.bind(this);
   }
 
@@ -79,7 +84,12 @@ export class PageController {
       `.films-list__container`
     )[2];
 
-    this._renderedCards = renderCards(filmsContainer, filmsData);
+    this._renderedCards = renderCards(
+      filmsContainer,
+      filmsData,
+      this._onDataChange,
+      this._onViewChange
+    );
 
     // TODO: button logic
     render(filmsList, this._showMoreButtonComponent, Position.BEFOREEND);
@@ -133,5 +143,12 @@ export class PageController {
 
   _onDataChange(oldFilmData, newFilmData) {
     // TODO call render() from movieController for given data
+    console.log("ON DATA CHANGE");
+    console.log("old: ", oldFilmData);
+    console.log("new: ", newFilmData);
+  }
+
+  _onViewChange() {
+    this._renderedCards.forEach((movie) => movie.setDefaultView());
   }
 }
