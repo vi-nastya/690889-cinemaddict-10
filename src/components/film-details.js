@@ -1,4 +1,4 @@
-import { AbstractComponent } from "../utils";
+import { AbstractSmartComponent } from "../utils";
 
 const MIN_RATING = 1;
 const MAX_RATING = 9;
@@ -87,7 +87,7 @@ const getNewCommentMarkup = () => {
 </div>`;
 };
 
-export class FilmDetails extends AbstractComponent {
+export class FilmDetails extends AbstractSmartComponent {
   constructor(filmData) {
     super();
     this._title = filmData.filmInfo.title;
@@ -110,6 +110,12 @@ export class FilmDetails extends AbstractComponent {
     this._watched = filmData.userDetails.alreadyWatched;
     this._watchlist = filmData.userDetails.watchlist;
     this._favorite = filmData.userDetails.favorite;
+
+    // handlers for eventListeners
+    this._closeButtonClickHandler = null;
+    this._watchlistClickHandler = null;
+    this._watchedClickHandler = null;
+    this._favoriteClickHandler = null;
   }
 
   getTemplate() {
@@ -267,23 +273,40 @@ export class FilmDetails extends AbstractComponent {
     this.getElement()
       .querySelector(`.film-details__control-label--watchlist`)
       .addEventListener(`click`, handler);
+    this._watchlistClickHandler = handler;
   }
 
   setWatchedButtonClickHandler(handler) {
     this.getElement()
       .querySelector(`.film-details__control-label--watched`)
       .addEventListener(`click`, handler);
+    this._watchedClickHandler = handler;
   }
 
   setFavoriteButtonClickHandler(handler) {
     this.getElement()
       .querySelector(`.film-details__control-label--favorite`)
       .addEventListener(`click`, handler);
+    this._favoriteClickHandler = handler;
   }
 
   setCloseButtonClickHandler(handler) {
     this.getElement()
       .querySelector(`.film-details__close-btn`)
       .addEventListener(`click`, handler);
+    this._closeButtonClickHandler = handler;
+  }
+
+  recoveryListeners() {
+    this._subscribeOnEvents();
+  }
+
+  _subscribeOnEvents() {
+    const element = this.getElement();
+
+    this.setCloseButtonClickHandler(this._closeButtonClickHandler);
+    this.setFavoriteButtonClickHandler(this._favoriteClickHandler);
+    this.setWatchedButtonClickHandler(this._watchedClickHandler);
+    this.setWatchlistButtonClickHandler(this._watchlistClickHandler);
   }
 }
