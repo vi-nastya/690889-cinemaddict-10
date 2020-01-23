@@ -71,7 +71,7 @@ export class PageController {
       Position.AFTERBEGIN
     );
 
-    const filmsList = this._container.querySelectorAll(`.films-list`)[0];
+    const filmsList = this._container.querySelectorAll(`.films-list`)[0]; // for button
 
     const filmsContainer = this._container.querySelectorAll(
       `.films-list__container`
