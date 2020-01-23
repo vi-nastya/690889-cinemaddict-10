@@ -116,6 +116,7 @@ export class FilmDetails extends AbstractSmartComponent {
     this._watchlistClickHandler = null;
     this._watchedClickHandler = null;
     this._favoriteClickHandler = null;
+    this._ratingClickHandler = null;
   }
 
   getTemplate() {
@@ -297,6 +298,27 @@ export class FilmDetails extends AbstractSmartComponent {
     this._closeButtonClickHandler = handler;
   }
 
+  // todo
+  // setDeleteCommentClickHandler(handler) {}
+
+  // setFormSubmitHandler(handler) {}
+
+  setRatingClickHandler(handler) {
+    // todo: check if is showing this section
+    this.getElement()
+      .querySelector(`.film-details__user-rating-score`)
+      .addEventListener(`change`, (evt) => {
+        evt.stopPropagation();
+        const userRating = this.getElement().querySelector(
+          `.film-details__user-rating-input:checked`
+        ).value;
+        handler(userRating);
+      });
+    this._ratingClickHandler = handler;
+  }
+
+  // setUndoRatingClickHandler(handler) {}
+
   recoveryListeners() {
     this._subscribeOnEvents();
   }
@@ -308,5 +330,6 @@ export class FilmDetails extends AbstractSmartComponent {
     this.setFavoriteButtonClickHandler(this._favoriteClickHandler);
     this.setWatchedButtonClickHandler(this._watchedClickHandler);
     this.setWatchlistButtonClickHandler(this._watchlistClickHandler);
+    this.setRatingClickHandler(this._ratingClickHandler);
   }
 }
