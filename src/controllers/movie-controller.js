@@ -52,7 +52,7 @@ export class MovieController {
     // this._filmComponent.setWatchedButtonClickHandler();
     // this._filmComponent.setFavoriteButtonClickHandler();
 
-    render(this._container, this._filmComponent.getElement());
+    render(this._container, this._filmComponent);
   }
 
   _changePopupToCard() {
@@ -64,7 +64,7 @@ export class MovieController {
 
   _changeCardToPopup() {
     // TODO: onViewChange (make sure only one popup is showed at a time)
-    render(this._bodyElement, this._filmDetailsComponent.getElement());
+    render(this._bodyElement, this._filmDetailsComponent);
     this._mode = Mode.POPUP;
   }
 }

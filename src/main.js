@@ -30,20 +30,19 @@ const getUserTitle = (movies) => {
 const headerContainer = document.querySelector(`header`);
 const mainContainer = document.querySelector(`main`);
 
-render(headerContainer, new Search().getElement(), Position.BEFOREEND);
+render(headerContainer, new Search(), Position.BEFOREEND);
 // TODO: render search
 if (films.length > 0) {
   // TODO: render user title
   render(
     headerContainer,
-    new UserTitle(getUserTitle(films)).getElement(),
+    new UserTitle(getUserTitle(films)),
     Position.BEFOREEND
   );
 }
 
 // RENDER MAIN SECTION
-render(mainContainer, new Menu().getElement(), Position.BEFOREEND);
-//render(mainContainer, new Sort().getElement(), Position.BEFOREEND);
+render(mainContainer, new Menu(), Position.BEFOREEND);
 
 if (films.length === 0) {
   render(
@@ -52,11 +51,7 @@ if (films.length === 0) {
     Position.BEFOREEND
   );
 } else {
-  render(
-    mainContainer,
-    new ContentContainer().getElement(),
-    Position.BEFOREEND
-  );
+  render(mainContainer, new ContentContainer(), Position.BEFOREEND);
 
   const filmsContainer = mainContainer.querySelector(`.films`);
   const pageController = new PageController(filmsContainer, films);

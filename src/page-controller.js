@@ -65,11 +65,7 @@ export class PageController {
   renderFilms(filmsData) {
     // TODO: get topRated and mostCommented
 
-    render(
-      this._container,
-      this._sortComponent.getElement(),
-      Position.AFTERBEGIN
-    );
+    render(this._container, this._sortComponent, Position.AFTERBEGIN);
 
     const filmsList = this._container.querySelectorAll(`.films-list`)[0]; // for button
 
@@ -86,11 +82,7 @@ export class PageController {
     this._renderedCards = renderCards(filmsContainer, filmsData);
 
     // TODO: button logic
-    render(
-      filmsList,
-      this._showMoreButtonComponent.getElement(),
-      Position.BEFOREEND
-    );
+    render(filmsList, this._showMoreButtonComponent, Position.BEFOREEND);
 
     // TODO: get top rated, get most commented
     //renderCards(topFilmsContainer, filmsData.slice(0, 2));
