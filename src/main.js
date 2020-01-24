@@ -9,6 +9,7 @@ import { PageController } from "./page-controller";
 import { films } from "./mocks/films";
 import { UserTitle } from "./components/user-title";
 import { Position, render, unrender } from "./utils";
+import { Movies } from "./models/movies";
 
 const NUM_FILMS = 3;
 
@@ -26,6 +27,9 @@ const getUserStats = (movies) => {
 const getUserTitle = (movies) => {
   return `fan`;
 };
+
+const moviesModel = new Movies();
+moviesModel.setMovies(films);
 
 const headerContainer = document.querySelector(`header`);
 const mainContainer = document.querySelector(`main`);
@@ -54,6 +58,6 @@ if (films.length === 0) {
   render(mainContainer, new ContentContainer(), Position.BEFOREEND);
 
   const filmsContainer = mainContainer.querySelector(`.films`);
-  const pageController = new PageController(filmsContainer, films);
-  pageController.renderFilms(films);
+  const pageController = new PageController(filmsContainer, moviesModel);
+  pageController.renderFilms();
 }

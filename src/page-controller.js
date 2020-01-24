@@ -42,10 +42,10 @@ const renderCards = (container, cardsData, onDataChange, onViewChange) => {
 };
 
 export class PageController {
-  constructor(container, filmsData) {
+  constructor(container, moviesModel) {
     this._container = container;
     this._showingFilmsCount = SHOWING_FILMS_COUNT;
-    this._filmsData = filmsData;
+    this._moviesModel = moviesModel;
 
     this._renderedCards = [];
 
@@ -67,7 +67,7 @@ export class PageController {
     this._unrenderFilms = this._unrenderFilms.bind(this);
   }
 
-  renderFilms(filmsData) {
+  renderFilms() {
     // TODO: get topRated and mostCommented
 
     render(this._container, this._sortComponent, Position.AFTERBEGIN);
@@ -86,7 +86,7 @@ export class PageController {
 
     this._renderedCards = renderCards(
       filmsContainer,
-      filmsData,
+      this._moviesModel.getAllMovies(),
       this._onDataChange,
       this._onViewChange
     );
@@ -108,7 +108,7 @@ export class PageController {
 
   _onSortTypeChange(sortType) {
     let sortedFilms = [];
-    const films = this._filmsData;
+    const films = this._moviesModel.getAllMovies();
 
     switch (sortType) {
       case SortType.RATING:
