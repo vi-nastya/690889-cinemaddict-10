@@ -172,11 +172,12 @@ export class PageController {
     //this._showedTaskControllers = [];
   }
 
-  _onDataChange(oldFilmData, newFilmData) {
+  _onDataChange(changeObject, actionType, data) {
     // TODO call render() from movieController for given data
     console.log("ON DATA CHANGE");
-    console.log("old: ", oldFilmData);
-    console.log("new: ", newFilmData);
+    console.log("obj: ", changeObject);
+    console.log("type: ", actionType);
+    console.log("data: ", data);
   }
 
   _onViewChange() {

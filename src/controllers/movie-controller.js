@@ -49,22 +49,68 @@ export class MovieController {
       this._changePopupToCard
     );
 
-    // TODO: handle FilmCard button clicks (call onDataChange)
-    this._filmComponent.setWatchlistButtonClickHandler(() => {
-      const newFilmData = Object.assign({}, filmData, {
-        userData: { watchlist: `watchlist UPDATE` }
-      });
-      this._onDataChange(filmData, newFilmData);
+    // CARD BUTTONS
+    this._filmComponent.setFavoriteButtonClickHandler(() => {
+      const newFilmData = Object.assign({}, filmData);
+      newFilmData.userDetails.favorite = !filmData.userDetails.favorite;
+      this._onDataChange(ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
     });
 
-    this._filmDetailsComponent.setWatchlistButtonClickHandler(() => {
-      const newFilmData = Object.assign({}, filmData, {
-        userData: { watchlist: `watchlist UPDATE` }
-      });
-      this._onDataChange(filmData, newFilmData);
+    this._filmComponent.setWatchedButtonClickHandler(() => {
+      const newFilmData = Object.assign({}, filmData);
+      newFilmData.userDetails.watchlist = !filmData.userDetails.watchlist;
+      this._onDataChange(ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
     });
-    // this._filmComponent.setWatchedButtonClickHandler();
-    // this._filmComponent.setFavoriteButtonClickHandler();
+
+    this._filmComponent.setWatchlistButtonClickHandler(() => {
+      const newFilmData = Object.assign({}, filmData);
+      newFilmData.userDetails.favorite = !filmData.userDetails.favorite;
+      this._onDataChange(ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
+    });
+
+    // POPUP BUTTONS
+    this._filmDetailsComponent.setWatchlistButtonClickHandler(() => {
+      const newFilmData = Object.assign({}, filmData);
+      newFilmData.userDetails.watchlist = !filmData.userDetails.watchlist;
+      this._onDataChange(ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
+    });
+
+    this._filmDetailsComponent.setWatchedButtonClickHandler(() => {
+      const newFilmData = Object.assign({}, filmData);
+      newFilmData.userDetails.alreadyWatched = !filmData.userDetails
+        .alreadyWatched;
+      this._onDataChange(ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
+    });
+
+    this._filmDetailsComponent.setFavoriteButtonClickHandler(() => {
+      const newFilmData = Object.assign({}, filmData);
+      newFilmData.userDetails.favorite = !filmData.userDetails.favorite;
+      this._onDataChange(ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
+    });
+
+    // RATING
+    this._filmDetailsComponent.setRatingClickHandler((userRating) => {
+      const newFilmData = Object.assign({}, filmData);
+      newFilmData.userDetails.personalRating = userRating;
+      this._onDataChange(ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
+    });
+
+    // DELETE COMMENT
+    this._filmDetailsComponent.setDeleteCommentClickHandler(
+      (deletedCommentId) => {
+        this._onDataChange(ActionObject.COMMENT, ActionType.DELETE, {
+          commentId: deletedCommentId,
+          movieId: filmData.id
+        });
+      }
+    );
+
+    this._filmDetailsComponent.setDeleteCommentClickHandler((commentData) => {
+      this._onDataChange(ActionObject.COMMENT, ActionType.ADD, {
+        commentData,
+        movieId: filmData.id
+      });
+    });
 
     render(this._container, this._filmComponent);
   }

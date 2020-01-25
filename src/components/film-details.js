@@ -299,9 +299,15 @@ export class FilmDetails extends AbstractSmartComponent {
   }
 
   // todo
-  // setDeleteCommentClickHandler(handler) {}
+  setDeleteCommentClickHandler(handler) {
+    const commentId = 0;
+    handler(commentId);
+  }
 
-  // setFormSubmitHandler(handler) {}
+  setFormSubmitHandler(handler) {
+    const commentData = {};
+    handler(commentData);
+  }
 
   setRatingClickHandler(handler) {
     // todo: check if is showing this section
