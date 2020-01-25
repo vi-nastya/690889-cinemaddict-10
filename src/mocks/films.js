@@ -1,7 +1,7 @@
 export const films = [
   {
     id: `0`,
-    comments: [`0`, `1`],
+    comments: [`0`, `1`, `2`],
     filmInfo: {
       title: `A Little Pony Without The Carpet`,
       alternativeTitle: `Laziness Who Sold Themselves`,
@@ -28,8 +28,8 @@ export const films = [
     }
   },
   {
-    id: `0`,
-    comments: [`2`, `1`],
+    id: `1`,
+    comments: [`2`],
     filmInfo: {
       title: `A Little Pony Without The Carpet`,
       alternativeTitle: `Laziness Who Sold Themselves`,
@@ -56,7 +56,7 @@ export const films = [
     }
   },
   {
-    id: `0`,
+    id: `2`,
     comments: [`1`, `2`],
     filmInfo: {
       title: `A Little Pony Without The Carpet`,
@@ -84,12 +84,12 @@ export const films = [
     }
   },
   {
-    id: `0`,
+    id: `3`,
     comments: [`0`, `2`],
     filmInfo: {
       title: `A Little Pony Without The Carpet`,
       alternativeTitle: `Laziness Who Sold Themselves`,
-      totalRating: 5.3,
+      totalRating: 9.3,
       poster: `images/posters/made-for-each-other.png`,
       ageRating: 0,
       director: `Tom Ford`,

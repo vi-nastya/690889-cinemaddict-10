@@ -10,49 +10,27 @@ const MovieTypes = {
 };
 
 const NUM_EXTRA_MOVIES = 2;
+const SHOWING_FILMS_COUNT = 5;
 
 const getExtaMovies = (movieData, movieType) => {
   switch (movieType) {
-    case MovieTypes.RATING:
-      // TODO: убедиться, что не мутирующая операция
-      return movieData
-        .sort((m1, m2) => m1.filmInfo.totalRating > m2.filmInfo.totalRating)
-        .slice(0, NUM_EXTRA_MOVIES);
-    case MovieTypes.COMMENTS:
-      return movieData
-        .sort((m1, m2) => m1.comments.length > m2.comments.length)
-        .slice(0, NUM_EXTRA_MOVIES);
+    case MovieTypes.RATING: {
+      let copyData = [...movieData];
+      copyData.sort(
+        (m1, m2) => m2.filmInfo.totalRating - m1.filmInfo.totalRating
+      );
+      return copyData.slice(0, NUM_EXTRA_MOVIES);
+    }
+    case MovieTypes.COMMENTS: {
+      let copyData = [...movieData];
+      copyData.sort((m1, m2) => m2.comments.length - m1.comments.length);
+      return copyData.slice(0, NUM_EXTRA_MOVIES);
+    }
   }
   return [];
 };
 
-const SHOWING_FILMS_COUNT = 5;
-
-// const renderCard = (container, cardData) => {
-//   const film = new FilmCard(cardData);
-//   const filmDetails = new FilmDetails(cardData);
-
-//   const renderFilmDetails = () => {
-//     render(document.querySelector(`body`), filmDetails.getElement());
-//     filmDetails.setCloseButtonClickHandler(() => {
-//       document.querySelector(`body`).removeChild(filmDetails.getElement());
-//     });
-
-//     document.addEventListener(`keydown`, (evt) => {
-//       if (evt.keyCode === 27) {
-//         document.querySelector(`body`).removeChild(filmDetails.getElement());
-//       }
-//     });
-//   };
-
-//   // add event listeners for FilmCard (open FilmDetails)
-//   film.setDetailsOpenClickHandler(renderFilmDetails);
-
-//   render(container, film.getElement(), Position.BEFOREEND);
-// };
-
 const renderCards = (container, cardsData, onDataChange, onViewChange) => {
-  // cardsData.forEach((card) => renderCard(container, card));
   return cardsData.map((card) => {
     const movieController = new MovieController(
       container,
@@ -79,18 +57,15 @@ export class PageController {
     this._noFilmsComponent = null; // TODO
     this._showMoreButtonComponent = new ShowMoreButton();
 
-    // this._onDataChange = this._onDataChange.bind(this);
     this._onSortTypeChange = this._onSortTypeChange.bind(this);
-    // this._onViewChange = this._onViewChange.bind(this);
+    this._onDataChange = this._onDataChange.bind(this);
+    this._onViewChange = this._onViewChange.bind(this);
+    this._unrenderFilms = this._unrenderFilms.bind(this);
     // this._onLoadMoreButtonClick = this._onLoadMoreButtonClick.bind(this);
     // this._onFilterChange = this._onFilterChange.bind(this);
 
     this._sortComponent.setSortTypeChangeHandler(this._onSortTypeChange);
     // this._tasksModel.setFilterChangeHandler(this._onFilterChange);
-
-    this._onDataChange = this._onDataChange.bind(this);
-    this._onViewChange = this._onViewChange.bind(this);
-    this._unrenderFilms = this._unrenderFilms.bind(this);
   }
 
   renderFilms() {

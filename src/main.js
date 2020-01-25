@@ -63,3 +63,5 @@ if (films.length === 0) {
   const pageController = new PageController(mainContainer, moviesModel);
   pageController.renderFilms();
 }
+
+// TODO: add number of movies to footer
