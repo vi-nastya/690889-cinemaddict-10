@@ -86,11 +86,15 @@ export class AbstractComponent {
   }
 
   show() {
-    this.getElement().classList.remove(`visually-hidden`);
+    if (this._element) {
+      this._element.classList.remove(`visually-hidden`);
+    }
   }
 
   hide() {
-    this.getElement().classList.add(`visually-hidden`);
+    if (this._element) {
+      this._element.classList.add(`visually-hidden`);
+    }
   }
 }
 

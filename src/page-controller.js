@@ -2,6 +2,7 @@ import { ShowMoreButton } from "./components/show-more-button";
 import { Position, render, unrender, remove } from "./utils";
 import { SortType, Sort } from "./components/sort";
 import { MovieController } from "./controllers/movie-controller";
+import { Films } from "./components/films";
 
 const SHOWING_FILMS_COUNT = 5;
 
@@ -50,6 +51,7 @@ export class PageController {
     this._renderedCards = [];
 
     this._sortComponent = new Sort();
+    this._filmsComponent = new Films();
     this._noFilmsComponent = null; // TODO
     this._showMoreButtonComponent = new ShowMoreButton();
 
@@ -71,6 +73,7 @@ export class PageController {
     // TODO: get topRated and mostCommented
 
     render(this._container, this._sortComponent, Position.AFTERBEGIN);
+    render(this._container, this._filmsComponent, Position.BEFOREEND);
 
     const filmsList = this._container.querySelectorAll(`.films-list`)[0]; // for button
 
@@ -150,5 +153,15 @@ export class PageController {
 
   _onViewChange() {
     this._renderedCards.forEach((movie) => movie.setDefaultView());
+  }
+
+  hide() {
+    this._filmsComponent.hide();
+    this._sortComponent.hide();
+  }
+
+  show() {
+    this._container.show();
+    this._sortComponent.show();
   }
 }

@@ -3,13 +3,13 @@ import { FilmDetails } from "./components/film-details";
 import { Search } from "./components/search";
 import { Menu } from "./components/menu";
 import { Sort } from "./components/sort";
-import { ContentContainer } from "./components/content-container";
 import { ShowMoreButton } from "./components/show-more-button";
 import { PageController } from "./page-controller";
 import { films } from "./mocks/films";
 import { UserTitle } from "./components/user-title";
 import { Position, render, unrender } from "./utils";
 import { Movies } from "./models/movies";
+import { Statistics } from "./components/statistics";
 
 const NUM_FILMS = 3;
 
@@ -48,6 +48,11 @@ if (films.length > 0) {
 // RENDER MAIN SECTION
 render(mainContainer, new Menu(), Position.BEFOREEND);
 
+// STATISTICS
+const statistics = new Statistics();
+render(mainContainer, statistics, Position.BEFOREEND);
+statistics.hide();
+
 if (films.length === 0) {
   render(
     mainContainer,
@@ -55,9 +60,6 @@ if (films.length === 0) {
     Position.BEFOREEND
   );
 } else {
-  render(mainContainer, new ContentContainer(), Position.BEFOREEND);
-
-  const filmsContainer = mainContainer.querySelector(`.films`);
-  const pageController = new PageController(filmsContainer, moviesModel);
+  const pageController = new PageController(mainContainer, moviesModel);
   pageController.renderFilms();
 }

@@ -28,4 +28,8 @@ export class Movies {
 
     // error handler
   }
+
+  getFilteredMovies(filterName) {
+    // TODO
+  }
 }
