@@ -4,6 +4,28 @@ import { SortType, Sort } from "./components/sort";
 import { MovieController } from "./controllers/movie-controller";
 import { Films } from "./components/films";
 
+const MovieTypes = {
+  RATING: `topRated`,
+  COMMENTS: `mostCommented`
+};
+
+const NUM_EXTRA_MOVIES = 2;
+
+const getExtaMovies = (movieData, movieType) => {
+  switch (movieType) {
+    case MovieTypes.RATING:
+      // TODO: убедиться, что не мутирующая операция
+      return movieData
+        .sort((m1, m2) => m1.filmInfo.totalRating > m2.filmInfo.totalRating)
+        .slice(0, NUM_EXTRA_MOVIES);
+    case MovieTypes.COMMENTS:
+      return movieData
+        .sort((m1, m2) => m1.comments.length > m2.comments.length)
+        .slice(0, NUM_EXTRA_MOVIES);
+  }
+  return [];
+};
+
 const SHOWING_FILMS_COUNT = 5;
 
 // const renderCard = (container, cardData) => {
@@ -49,6 +71,8 @@ export class PageController {
     this._moviesModel = moviesModel;
 
     this._renderedCards = [];
+    this._renderedTopRated = [];
+    this._renderedMostCommented = [];
 
     this._sortComponent = new Sort();
     this._filmsComponent = new Films();
@@ -98,8 +122,26 @@ export class PageController {
     render(filmsList, this._showMoreButtonComponent, Position.BEFOREEND);
 
     // TODO: get top rated, get most commented
-    //renderCards(topFilmsContainer, filmsData.slice(0, 2));
-    //renderCards(commentedFilmsContainer, filmsData.slice(2, 4));
+    const topRatedMovies = getExtaMovies(
+      this._moviesModel.getAllMovies(),
+      MovieTypes.RATING
+    );
+    const mostCommentedMovies = getExtaMovies(
+      this._moviesModel.getAllMovies(),
+      MovieTypes.COMMENTS
+    );
+    this._renderedCards = renderCards(
+      topFilmsContainer,
+      topRatedMovies,
+      this._onDataChange,
+      this._onViewChange
+    );
+    this._renderedCards = renderCards(
+      commentedFilmsContainer,
+      mostCommentedMovies,
+      this._onDataChange,
+      this._onViewChange
+    );
   }
 
   _unrenderFilms() {
