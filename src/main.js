@@ -4,7 +4,7 @@ import { Search } from "./components/search";
 import { Menu } from "./components/menu";
 import { Sort } from "./components/sort";
 import { ShowMoreButton } from "./components/show-more-button";
-import { PageController } from "./page-controller";
+import { PageController } from "./controllers/page-controller";
 import { films } from "./mocks/films";
 import { UserTitle } from "./components/user-title";
 import { Position, render, unrender } from "./utils";

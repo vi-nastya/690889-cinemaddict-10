@@ -1,6 +1,7 @@
 import { FilmCard } from "../components/film-card";
 import { FilmDetails } from "../components/film-details";
 import { render } from "../utils";
+import { ActionType, ActionObject } from "./page-controller";
 
 const Mode = {
   DEFAULT: `default`,
