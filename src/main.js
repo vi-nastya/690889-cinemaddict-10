@@ -1,4 +1,3 @@
-import { Search } from "./components/search";
 import { PageController } from "./controllers/page-controller";
 import { films } from "./mocks/films";
 import { UserTitle } from "./components/user-title";
