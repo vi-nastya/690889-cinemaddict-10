@@ -11,7 +11,8 @@ export class FiltersController {
     // TODO
   }
 
-  getFiltersCount(moviesData) {
+  getFiltersCount() {
+    const moviesData = this._moviesModel.getAllMovies();
     const watched = moviesData.filter((movie) => movie.userDetails.alreadyWatched).length;
     const watchlist = moviesData.filter((movie) => movie.userDetails.watchlist).length;
     const favorite = moviesData.filter((movie) => movie.userDetails.favorite).length;
