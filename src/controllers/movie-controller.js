@@ -80,6 +80,8 @@ export class MovieController {
       newFilmData.userDetails.alreadyWatched = !filmData.userDetails
         .alreadyWatched;
       this._onDataChange(ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
+
+      // TODO: rerender Movie controller - popup
     });
 
     this._filmDetailsComponent.setFavoriteButtonClickHandler(() => {

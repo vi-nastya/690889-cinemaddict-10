@@ -1,7 +1,29 @@
 export const films = [
   {
     id: `0`,
-    comments: [`0`, `1`, `2`],
+    comments: [
+      {
+        id: `0`,
+        author: `Ryan`,
+        comment: `film that`,
+        date: `2019-06-11T16:12:32.554Z`,
+        emotion: `smile`
+      },
+      {
+        id: `1`,
+        author: `Ilya`,
+        comment: `a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.`,
+        date: `2019-05-11T16:12:32.554Z`,
+        emotion: `angry`
+      },
+      {
+        id: `2`,
+        author: `Ilya O'Reilly`,
+        comment: `post-credit scene was just amazing omg.`,
+        date: `2019-05-17T16:12:32.554Z`,
+        emotion: `sleeping`
+      }
+    ],
     filmInfo: {
       title: `A Little Pony Without The Carpet`,
       alternativeTitle: `Laziness Who Sold Themselves`,
@@ -29,7 +51,15 @@ export const films = [
   },
   {
     id: `1`,
-    comments: [`2`],
+    comments: [
+      {
+        id: `3`,
+        author: `Ilya O'Reilly`,
+        comment: `post-credit scene was just amazing omg.`,
+        date: `2019-05-17T16:12:32.554Z`,
+        emotion: `sleeping`
+      }
+    ],
     filmInfo: {
       title: `A Little Pony Without The Carpet`,
       alternativeTitle: `Laziness Who Sold Themselves`,
@@ -57,7 +87,22 @@ export const films = [
   },
   {
     id: `2`,
-    comments: [`1`, `2`],
+    comments: [
+      {
+        id: `4`,
+        author: `Ryan`,
+        comment: `film that`,
+        date: `2019-06-11T16:12:32.554Z`,
+        emotion: `smile`
+      },
+      {
+        id: `5`,
+        author: `Ilya O'Reilly`,
+        comment: `post-credit scene was just amazing omg.`,
+        date: `2019-05-17T16:12:32.554Z`,
+        emotion: `sleeping`
+      }
+    ],
     filmInfo: {
       title: `A Little Pony Without The Carpet`,
       alternativeTitle: `Laziness Who Sold Themselves`,
@@ -85,7 +130,36 @@ export const films = [
   },
   {
     id: `3`,
-    comments: [`0`, `2`],
+    comments: [
+      {
+        id: `6`,
+        author: `Ryan`,
+        comment: `film that`,
+        date: `2019-06-11T16:12:32.554Z`,
+        emotion: `smile`
+      },
+      {
+        id: `7`,
+        author: `Ilya`,
+        comment: `a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.`,
+        date: `2019-05-11T16:12:32.554Z`,
+        emotion: `angry`
+      },
+      {
+        id: `8`,
+        author: `Ryan`,
+        comment: `film that`,
+        date: `2019-06-11T16:12:32.554Z`,
+        emotion: `smile`
+      },
+      {
+        id: `8`,
+        author: `Ilya`,
+        comment: `a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.`,
+        date: `2019-05-11T16:12:32.554Z`,
+        emotion: `angry`
+      }
+    ],
     filmInfo: {
       title: `A Little Pony Without The Carpet`,
       alternativeTitle: `Laziness Who Sold Themselves`,

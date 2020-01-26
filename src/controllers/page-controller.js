@@ -178,6 +178,10 @@ export class PageController {
     console.log("obj: ", changeObject);
     console.log("type: ", actionType);
     console.log("data: ", data);
+
+    // TODO: update model
+    // TODO: rerender cards
+    // TODO: rerender MovieController (for ADD/DELETE comment)
   }
 
   _onViewChange() {
