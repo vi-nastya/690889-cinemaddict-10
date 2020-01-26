@@ -1,6 +1,6 @@
 import { AbstractComponent } from "../utils";
 
-export class Menu extends AbstractComponent {
+export class Filters extends AbstractComponent {
   constructor() {
     super();
   }

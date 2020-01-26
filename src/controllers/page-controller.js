@@ -182,14 +182,11 @@ export class PageController {
     if (changeObject === ActionObject.MOVIE) {
       this._moviesModel.updateMovie(data.id, data);
     } else if (actionType === ActionType.ADD) {
-      // update model
+      // TODO: fix (api returns movie object)
+      this._moviesModel.addComment(data.movieId, data.commentData);
     } else {
       this._moviesModel.deleteComment(data.movieId, data.commentId);
     }
-
-    // TODO: update model
-    // TODO: rerender cards
-    // TODO: rerender MovieController (for ADD/DELETE comment)
   }
 
   _onViewChange() {

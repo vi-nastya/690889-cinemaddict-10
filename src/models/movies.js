@@ -30,11 +30,14 @@ export class Movies {
   }
 
   deleteComment(movieId, commentId) {
-    console.log("DEL COMMENT ", movieId, commentId);
     const movieIndex = this._movies.findIndex((movie) => movie.id === movieId);
-    console.log("BEFORE DEL: ", this._movies[movieIndex]);
     this._movies[movieIndex].comments = this._movies[movieIndex].comments.filter((comment) => comment.id !== commentId);
-    console.log("AFTER DEL: ", this._movies[movieIndex]);
+  }
+
+  addComment(movieId, commentData) {
+    const movieIndex = this._movies.findIndex((movie) => movie.id === movieId);
+    // TODO: fix
+    this._movies[movieIndex].comments.push(commentData);
   }
 
   setActiveFilter(newFilter) {
