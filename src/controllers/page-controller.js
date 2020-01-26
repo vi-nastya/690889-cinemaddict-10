@@ -82,7 +82,7 @@ export class PageController {
   renderFilms() {
     // TODO: get topRated and mostCommented
 
-    render(this._container, this._sortComponent, Position.AFTERBEGIN);
+    render(this._container, this._sortComponent, Position.BEFOREEND);
     render(this._container, this._filmsComponent, Position.BEFOREEND);
 
     const filmsList = this._container.querySelectorAll(`.films-list`)[0]; // for button
