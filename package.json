@@ -11,7 +11,8 @@
   },
   "devDependencies": {
     "eslint": "6.1.0",
-    "eslint-config-htmlacademy": "0.5.2"
+    "eslint-config-htmlacademy": "0.5.2",
+    "moment-locales-webpack-plugin": "1.1.2"
   },
   "engines": {
     "node": "10"

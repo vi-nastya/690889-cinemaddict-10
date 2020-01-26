@@ -1,9 +1,5 @@
-import { FilmCard } from "./components/film-card";
-import { FilmDetails } from "./components/film-details";
 import { Search } from "./components/search";
-import { Menu } from "./components/menu";
-import { Sort } from "./components/sort";
-import { ShowMoreButton } from "./components/show-more-button";
+import { Filters } from "./components/filters";
 import { PageController } from "./controllers/page-controller";
 import { films } from "./mocks/films";
 import { UserTitle } from "./components/user-title";
@@ -46,7 +42,7 @@ if (films.length > 0) {
 }
 
 // RENDER MAIN SECTION
-render(mainContainer, new Menu(), Position.BEFOREEND);
+render(mainContainer, new Filters(), Position.BEFOREEND);
 
 // STATISTICS
 const statistics = new Statistics();
