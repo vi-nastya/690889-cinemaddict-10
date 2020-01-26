@@ -29,6 +29,18 @@ export class Movies {
     // error handler
   }
 
+  deleteComment(movieId, commentId) {
+    console.log("DEL COMMENT ", movieId, commentId);
+    const movieIndex = this._movies.findIndex((movie) => movie.id === movieId);
+    console.log("BEFORE DEL: ", this._movies[movieIndex]);
+    this._movies[movieIndex].comments = this._movies[movieIndex].comments.filter((comment) => comment.id !== commentId);
+    console.log("AFTER DEL: ", this._movies[movieIndex]);
+  }
+
+  setActiveFilter(newFilter) {
+    this._activeFilterType = newFilter;
+  }
+
   getFilteredMovies(filterName) {
     // TODO
   }
