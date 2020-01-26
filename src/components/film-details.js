@@ -119,6 +119,8 @@ export class FilmDetails extends AbstractSmartComponent {
     this._watchedClickHandler = null;
     this._favoriteClickHandler = null;
     this._ratingClickHandler = null;
+    this._formSubmitHandler = null;
+    this._deleteCommentHandler = null;
   }
 
   getTemplate() {
@@ -261,11 +263,43 @@ export class FilmDetails extends AbstractSmartComponent {
         handler(commentId);
       });
     });
+    this._deleteCommentHandler = handler;
+  }
+
+  setReactionSelectHandler() {
+    const emojiButtons = this.getElement().querySelectorAll(
+      `.film-details__emoji-item`
+    );
+    const emojiContainer = this.getElement().querySelector(
+      `.film-details__add-emoji-label`
+    );
+    emojiButtons.forEach((button) => {
+      button.addEventListener(`change`, (evt) => {
+        this._selectedEmojiId = evt.target.getAttribute(`id`);
+        const selectedEmojiLabel = this.getElement().querySelector(
+          `label[for="${this._selectedEmojiId}"]`
+        );
+        const emojiPictureSrc = selectedEmojiLabel
+          .querySelector(`img`)
+          .getAttribute(`src`);
+        emojiContainer.innerHTML = `<img src="${emojiPictureSrc}" width="55" height="55" alt="emoji">`;
+      });
+    });
   }
 
   setFormSubmitHandler(handler) {
-    const commentData = {};
-    handler(commentData);
+    const commentForm = this.getElement().querySelector(
+      `.film-details__new-comment`
+    );
+    commentForm.addEventListener(`keydown`, (evt) => {
+      // TODO check if not empty
+      if (evt.ctrlKey && evt.key === 13) {
+        const commentData = {};
+        handler(commentData);
+      }
+    });
+
+    this._formSubmitHandler = handler;
   }
 
   setRatingClickHandler(handler) {

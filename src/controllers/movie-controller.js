@@ -97,6 +97,8 @@ export class MovieController {
       this._onDataChange(ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
     });
 
+    this._filmDetailsComponent.setReactionSelectHandler();
+
     // DELETE COMMENT
     this._filmDetailsComponent.setDeleteCommentClickHandler(
       (deletedCommentId) => {
