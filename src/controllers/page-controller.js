@@ -199,7 +199,7 @@ export class PageController {
   }
 
   show() {
-    this._container.show();
+    this._filmsComponent.show();
     this._sortComponent.show();
   }
 }

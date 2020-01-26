@@ -6,6 +6,7 @@ import { Position, render, unrender } from "./utils";
 import { Movies } from "./models/movies";
 import { Statistics } from "./components/statistics";
 import {FiltersController} from "./controllers/filters-controller";
+import {FilterType} from "./components/filters";
 
 // calculates data for user stats based on films
 // TODO: update and move to utils
@@ -39,14 +40,12 @@ if (films.length > 0) {
   );
 }
 
+const statistics = new Statistics();
+
 // RENDER MAIN SECTION
 const filtersController = new FiltersController(mainContainer, moviesModel);
-filtersController.render();
 
 // STATISTICS
-const statistics = new Statistics();
-render(mainContainer, statistics, Position.BEFOREEND);
-statistics.hide();
 
 if (films.length === 0) {
   render(
@@ -55,6 +54,27 @@ if (films.length === 0) {
     Position.BEFOREEND
   );
 } else {
+  filtersController.setScreenChangeHandler((activeFilter) => {
+    switch (activeFilter) {
+      case FilterType.DEFAULT: {
+        // TODO: show films, hide stats
+        statistics.hide();
+        pageController.show();
+        break;
+      }
+      case FilterType.STATS: {
+        // TODO: hide stats, show films
+        pageController.hide();
+        statistics.show();
+        break;
+      }
+    }
+  });
+  filtersController.render();
+
+  render(mainContainer, statistics, Position.BEFOREEND);
+  statistics.hide();
+
   const pageController = new PageController(mainContainer, moviesModel);
   pageController.renderFilms();
 }

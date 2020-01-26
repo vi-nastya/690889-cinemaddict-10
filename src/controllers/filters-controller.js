@@ -1,17 +1,20 @@
 import {Filters} from "../components/filters";
-import {render} from "../utils";
+import {render, Position} from "../utils";
 
 export class FiltersController {
   constructor(container, moviesModel) {
     this._contaiter = container;
     this._moviesModel = moviesModel;
     this._filtersComponent = new Filters();
+    this._screenChangeHandler = null;
+
+    this._onFilterChange = this._onFilterChange.bind(this);
   }
 
   render() {
     // TODO
     this._filtersComponent.setFilterChangeHandler(this._onFilterChange);
-    render(this._contaiter, this._filtersComponent);
+    render(this._contaiter, this._filtersComponent, Position.AFTERBEGIN);
   }
 
   getFiltersCount() {
@@ -21,7 +24,13 @@ export class FiltersController {
     const favorite = moviesData.filter((movie) => movie.userDetails.favorite).length;
   }
 
-  _onFilterChange() {
-    // TODO
+  setScreenChangeHandler(handler) {
+    this._screenChangeHandler = handler;
+  }
+
+  _onFilterChange(newFilterType) {
+    // TODO: update model
+    // TODO: call screen change handler
+    this._screenChangeHandler(newFilterType);
   }
 }
