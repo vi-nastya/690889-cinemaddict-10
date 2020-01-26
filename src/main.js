@@ -1,16 +1,11 @@
 import { Search } from "./components/search";
-import { Filters } from "./components/filters";
 import { PageController } from "./controllers/page-controller";
 import { films } from "./mocks/films";
 import { UserTitle } from "./components/user-title";
 import { Position, render, unrender } from "./utils";
 import { Movies } from "./models/movies";
 import { Statistics } from "./components/statistics";
-import moment from 'moment';
-
-console.log(moment().format('DD MMMM YYYY'));
-
-const NUM_FILMS = 3;
+import {FiltersController} from "./controllers/filters-controller";
 
 // calculates data for user stats based on films
 // TODO: update and move to utils
@@ -45,7 +40,8 @@ if (films.length > 0) {
 }
 
 // RENDER MAIN SECTION
-render(mainContainer, new Filters(), Position.BEFOREEND);
+const filtersController = new FiltersController(mainContainer, moviesModel);
+filtersController.render();
 
 // STATISTICS
 const statistics = new Statistics();

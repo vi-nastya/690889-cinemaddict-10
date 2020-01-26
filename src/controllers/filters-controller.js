@@ -1,4 +1,5 @@
 import {Filters} from "../components/filters";
+import {render} from "../utils";
 
 export class FiltersController {
   constructor(container, moviesModel) {
@@ -9,6 +10,8 @@ export class FiltersController {
 
   render() {
     // TODO
+    this._filtersComponent.setFilterChangeHandler(this._onFilterChange);
+    render(this._contaiter, this._filtersComponent);
   }
 
   getFiltersCount() {
@@ -16,5 +19,9 @@ export class FiltersController {
     const watched = moviesData.filter((movie) => movie.userDetails.alreadyWatched).length;
     const watchlist = moviesData.filter((movie) => movie.userDetails.watchlist).length;
     const favorite = moviesData.filter((movie) => movie.userDetails.favorite).length;
+  }
+
+  _onFilterChange() {
+    // TODO
   }
 }

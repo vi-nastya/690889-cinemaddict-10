@@ -1,10 +1,53 @@
 import { AbstractComponent } from "../utils";
+import Chart from "chart.js";
+import ChartDataLabels from "chartjs-plugin-datalabels";
+
+const Period = {
+  ALL: `all`,
+  TODAY: `today`,
+  WEEK: `week`,
+  MONTH: `month`,
+  YEAR: `year`
+};
+
+const getStats = (moviesData, period) => {
+  const watchedMovies = moviesData.filter((movie) => movie.userDetails.alreadyWatched)
+    .sort((m1, m2) => m2.userDetails.watchingDate - m1.userDetails.watchingDate);
+
+
+  const today = Date.now();
+  let timeDifference = 0;
+  switch (period) {
+    case Period.ALL:
+      timeDifference = 0;
+      break;
+    case Period.TODAY:
+      timeDifference = 0; // TODO
+      break;
+    case Period.WEEK:
+      timeDifference = 0; // TODO
+      break;
+    case Period.MONTH:
+      timeDifference = 0; // TODO
+      break;
+    case Period.YEAR:
+      timeDifference = 0; // TODO
+      break;
+  }
+
+  const moviesForStats = watchedMovies.filter((movie) => (today - movie.userDetails.watchingDate) < timeDifference);
+  const numMovies = watchedMovies.length;
+  const totalDuration = moviesForStats.map((movie) => movie.filmInfo.duration).reduce((a, b) => a + b, 0);
+  const topGenre = ``; // TODO
+  // get needed subset of movies - filter watched, sort by watch date, filter by period from now
+  // count stats for this subarray
+};
 
 export class Statistics extends AbstractComponent {
   constructor() {
     super();
   }
-
+  // TODO: update rank
   getTemplate() {
     return `<section class="statistic">
     <p class="statistic__rank">
