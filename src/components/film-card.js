@@ -1,4 +1,5 @@
-import { AbstractComponent } from "../utils";
+import { AbstractComponent, formatFilmDuration } from "../utils";
+import moment from 'moment';
 
 const getButtonMarkup = (buttonClass, buttonText, isActive) => {
   return `<button class="film-card__controls-item button film-card__controls-item--${buttonClass} ${
@@ -12,9 +13,10 @@ export class FilmCard extends AbstractComponent {
     this._title = filmData.filmInfo.title;
     this._rating = filmData.filmInfo.totalRating;
     // TODO: format
-    this._year = filmData.filmInfo.release.date;
+    this._year = moment(filmData.filmInfo.release.date).format(`YYYY`);
     // TODO: format
     this._duration = filmData.filmInfo.runtime;
+    console.log
     // TODO: handle multiple genres
     this._genre = filmData.filmInfo.genre[0];
     this._poster = filmData.filmInfo.poster;
@@ -31,7 +33,7 @@ export class FilmCard extends AbstractComponent {
     <p class="film-card__rating">${this._rating}</p>
     <p class="film-card__info">
       <span class="film-card__year">${this._year}</span>
-      <span class="film-card__duration">${this._duration}</span>
+      <span class="film-card__duration">${formatFilmDuration(this._duration)}</span>
       <span class="film-card__genre">${this._genre}</span>
     </p>
     <img src="./${this._poster}" alt="" class="film-card__poster">

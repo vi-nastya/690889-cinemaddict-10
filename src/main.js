@@ -6,6 +6,9 @@ import { UserTitle } from "./components/user-title";
 import { Position, render, unrender } from "./utils";
 import { Movies } from "./models/movies";
 import { Statistics } from "./components/statistics";
+import moment from 'moment';
+
+console.log(moment().format('DD MMMM YYYY'));
 
 const NUM_FILMS = 3;
 

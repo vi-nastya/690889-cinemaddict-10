@@ -5,6 +5,14 @@
 // от 21 и выше — movie buff;
 // }
 
+const MINUTES_IN_HOUR = 60;
+
+export const formatFilmDuration = (duration) => {
+  const hours = Math.floor(duration / MINUTES_IN_HOUR);
+  const minutes = duration - hours * MINUTES_IN_HOUR;
+  return (hours ? `${hours}h` : ``).concat(minutes ? ` ${minutes}m` : ``);
+};
+
 export const getUserStatus = (numMovies) => {
   if (numMovies > 0) {
     if (numMovies <= 10) {

@@ -1,4 +1,5 @@
-import { AbstractSmartComponent } from "../utils";
+import { AbstractSmartComponent, formatFilmDuration } from "../utils";
+import moment from 'moment';
 
 const MIN_RATING = 1;
 const MAX_RATING = 9;
@@ -105,6 +106,7 @@ export class FilmDetails extends AbstractSmartComponent {
     this._director = filmData.filmInfo.director;
     this._actors = filmData.filmInfo.actors;
     this._writers = filmData.filmInfo.writers;
+    this._releaseDate = filmData.filmInfo.release.date;
 
     this._comments = filmData.comments;
 
@@ -164,11 +166,11 @@ export class FilmDetails extends AbstractSmartComponent {
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Release Date</td>
-              <td class="film-details__cell">30 March 1945</td>
+              <td class="film-details__cell">${moment(this._releaseDate).format(`D MMMM YYYY`)}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Runtime</td>
-              <td class="film-details__cell">${this._duration}</td>
+              <td class="film-details__cell">${formatFilmDuration(this._duration)}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Country</td>
