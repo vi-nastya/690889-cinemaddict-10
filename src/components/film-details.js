@@ -287,14 +287,39 @@ export class FilmDetails extends AbstractSmartComponent {
     });
   }
 
+  _getEmotionById(reactionId) {
+    switch (reactionId) {
+      case `emoji-smile`:
+        return `smile`;
+      case `emoji-sleeping`:
+        return `sleeping`;
+      case `emoji-gpuke`:
+        return `puke`;
+      case `emoji-angry`:
+        return `angry`;
+    }
+    return `undefined`;
+  }
+
+  _getNewCommentData() {
+    const emotion = this._getEmotionById(this._selectedEmojiId);
+    // TODO: use he and control length
+    const comment = this.getElement().querySelector(
+      `.film-details__comment-input`
+    ).value;
+    return {
+      emotion,
+      comment,
+      date: ``
+    };
+  }
+
   setFormSubmitHandler(handler) {
-    const commentForm = this.getElement().querySelector(
-      `.film-details__new-comment`
-    );
+    const commentForm = this.getElement().querySelector(`.film-details__new-comment`);
     commentForm.addEventListener(`keydown`, (evt) => {
       // TODO check if not empty
-      if (evt.ctrlKey && evt.key === 13) {
-        const commentData = {};
+      if ((evt.ctrlKey || evt.metaKey) && (evt.keyCode === 13)) {
+        const commentData = this._getNewCommentData();
         handler(commentData);
       }
     });
