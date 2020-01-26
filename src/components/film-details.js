@@ -6,14 +6,14 @@ const MAX_RATING = 9;
 const getCommentMarkup = (comment) => {
   return `<li class="film-details__comment">
   <span class="film-details__comment-emoji">
-    <img src="./images/emoji/${comment.emoji}.png" width="55" height="55" alt="emoji">
+    <img src="./images/emoji/${comment.emotion}.png" width="55" height="55" alt="emoji">
   </span>
   <div>
-    <p class="film-details__comment-text">${comment.text}</p>
+    <p class="film-details__comment-text">${comment.comment}</p>
     <p class="film-details__comment-info">
       <span class="film-details__comment-author">${comment.author}</span>
       <span class="film-details__comment-day">2 days ago</span>
-      <button class="film-details__comment-delete">Delete</button>
+      <button class="film-details__comment-delete" data-id=${comment.id}>Delete</button>
     </p>
   </div>
 </li>`;
@@ -105,6 +105,8 @@ export class FilmDetails extends AbstractSmartComponent {
     this._director = filmData.filmInfo.director;
     this._actors = filmData.filmInfo.actors;
     this._writers = filmData.filmInfo.writers;
+
+    this._comments = filmData.comments;
 
     this._userRating = filmData.userDetails.personalRating;
     this._watched = filmData.userDetails.alreadyWatched;
@@ -209,58 +211,7 @@ export class FilmDetails extends AbstractSmartComponent {
         <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">4</span></h3>
 
         <ul class="film-details__comments-list">
-          <li class="film-details__comment">
-            <span class="film-details__comment-emoji">
-              <img src="./images/emoji/smile.png" width="55" height="55" alt="emoji">
-            </span>
-            <div>
-              <p class="film-details__comment-text">Interesting setting and a good cast</p>
-              <p class="film-details__comment-info">
-                <span class="film-details__comment-author">Tim Macoveev</span>
-                <span class="film-details__comment-day">2019/12/31 23:59</span>
-                <button class="film-details__comment-delete">Delete</button>
-              </p>
-            </div>
-          </li>
-          <li class="film-details__comment">
-            <span class="film-details__comment-emoji">
-              <img src="./images/emoji/sleeping.png" width="55" height="55" alt="emoji">
-            </span>
-            <div>
-              <p class="film-details__comment-text">Booooooooooring</p>
-              <p class="film-details__comment-info">
-                <span class="film-details__comment-author">John Doe</span>
-                <span class="film-details__comment-day">2 days ago</span>
-                <button class="film-details__comment-delete">Delete</button>
-              </p>
-            </div>
-          </li>
-          <li class="film-details__comment">
-            <span class="film-details__comment-emoji">
-              <img src="./images/emoji/puke.png" width="55" height="55" alt="emoji">
-            </span>
-            <div>
-              <p class="film-details__comment-text">Very very old. Meh</p>
-              <p class="film-details__comment-info">
-                <span class="film-details__comment-author">John Doe</span>
-                <span class="film-details__comment-day">2 days ago</span>
-                <button class="film-details__comment-delete">Delete</button>
-              </p>
-            </div>
-          </li>
-          <li class="film-details__comment">
-            <span class="film-details__comment-emoji">
-              <img src="./images/emoji/angry.png" width="55" height="55" alt="emoji">
-            </span>
-            <div>
-              <p class="film-details__comment-text">Almost two hours? Seriously?</p>
-              <p class="film-details__comment-info">
-                <span class="film-details__comment-author">John Doe</span>
-                <span class="film-details__comment-day">Today</span>
-                <button class="film-details__comment-delete">Delete</button>
-              </p>
-            </div>
-          </li>
+        ${this._comments.map(getCommentMarkup)}
         </ul>
 
         ${getNewCommentMarkup()}
@@ -300,8 +251,16 @@ export class FilmDetails extends AbstractSmartComponent {
 
   // todo
   setDeleteCommentClickHandler(handler) {
-    const commentId = 0;
-    handler(commentId);
+    const deleteButtons = this.getElement().querySelectorAll(
+      `.film-details__comment-delete`
+    );
+    deleteButtons.forEach((button) => {
+      button.addEventListener(`click`, (evt) => {
+        evt.preventDefault();
+        const commentId = evt.target.getAttribute(`data-id`);
+        handler(commentId);
+      });
+    });
   }
 
   setFormSubmitHandler(handler) {

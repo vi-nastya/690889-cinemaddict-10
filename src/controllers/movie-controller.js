@@ -107,7 +107,7 @@ export class MovieController {
       }
     );
 
-    this._filmDetailsComponent.setDeleteCommentClickHandler((commentData) => {
+    this._filmDetailsComponent.setFormSubmitHandler((commentData) => {
       this._onDataChange(ActionObject.COMMENT, ActionType.ADD, {
         commentData,
         movieId: filmData.id
