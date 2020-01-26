@@ -13,7 +13,7 @@ const getCommentMarkup = (comment) => {
     <p class="film-details__comment-text">${comment.comment}</p>
     <p class="film-details__comment-info">
       <span class="film-details__comment-author">${comment.author}</span>
-      <span class="film-details__comment-day">2 days ago</span>
+      <span class="film-details__comment-day">${moment(comment.date).format(`YYYY/MM/DD HH:MM`)}</span>
       <button class="film-details__comment-delete" data-id=${comment.id}>Delete</button>
     </p>
   </div>
