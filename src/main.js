@@ -32,7 +32,7 @@ if (films.length > 0) {
   render(headerContainer, new UserTitle(getUserTitle(films)), Position.BEFOREEND);
 }
 
-const statistics = new Statistics();
+const statistics = new Statistics(moviesModel);
 const filtersController = new FiltersController(mainContainer, moviesModel);
 
 // TODO: handle no movies case
