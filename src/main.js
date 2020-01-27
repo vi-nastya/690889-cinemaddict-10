@@ -6,6 +6,16 @@ import {Movies} from "./models/movies";
 import {Statistics} from "./components/statistics";
 import {FiltersController} from "./controllers/filters-controller";
 import {FilterType} from "./components/filters";
+import Api from "./api";
+
+const AUTHORIZATION = `Basic er173jdzbdw`;
+const END_POINT = `https://htmlacademy-es-10.appspot.com/cinemaddict`;
+
+const api = new Api(END_POINT, AUTHORIZATION);
+
+api.getMovies().then((movies) => {
+  console.log("API", movies);
+});
 
 // TODO: update and move to utils
 const getUserStats = (movies) => {
