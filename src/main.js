@@ -13,10 +13,6 @@ const END_POINT = `https://htmlacademy-es-10.appspot.com/cinemaddict`;
 
 const api = new Api(END_POINT, AUTHORIZATION);
 
-api.getMovies().then((movies) => {
-  console.log("API", movies);
-});
-
 // TODO: update and move to utils
 const getUserStats = (movies) => {
   return {
@@ -45,32 +41,42 @@ if (films.length > 0) {
 const statistics = new Statistics(moviesModel);
 const filtersController = new FiltersController(mainContainer, moviesModel);
 
-// TODO: handle no movies case
-if (films.length === 0) {
-  render(mainContainer, `There are no movies in our database`, Position.BEFOREEND
-  );
-} else {
-  filtersController.setScreenChangeHandler((activeFilter) => {
-    switch (activeFilter) {
-      case FilterType.DEFAULT: {
-        statistics.hide();
-        pageController.show();
-        break;
-      }
-      case FilterType.STATS: {
-        pageController.hide();
-        statistics.show();
-        break;
-      }
-    }
-  });
-  filtersController.render();
-
-  render(mainContainer, statistics, Position.BEFOREEND);
-  statistics.hide();
-
-  const pageController = new PageController(mainContainer, moviesModel);
-  pageController.renderFilms();
-}
-
 // TODO: add number of movies to footer
+
+api.getMovies().then((movies) => {
+  let moviesWithComments = movies;
+  const loadComments = moviesWithComments.map((movie) => {
+    return api.getComments(movie.id).then((comments) => {
+      movie.comments = comments;
+    });
+  });
+
+  Promise.all(loadComments).then(() => {
+
+    moviesModel.setMovies(moviesWithComments);
+    console.log("API", moviesWithComments);
+
+    // TODO: handle no movies case
+    filtersController.setScreenChangeHandler((activeFilter) => {
+      switch (activeFilter) {
+        case FilterType.DEFAULT: {
+          statistics.hide();
+          pageController.show();
+          break;
+        }
+        case FilterType.STATS: {
+          pageController.hide();
+          statistics.show();
+          break;
+        }
+      }
+    });
+    filtersController.render();
+
+    render(mainContainer, statistics, Position.BEFOREEND);
+    statistics.hide();
+
+    const pageController = new PageController(mainContainer, moviesModel);
+    pageController.renderFilms();
+  });
+});
