@@ -82,11 +82,11 @@ export class PageController {
     this._onSortTypeChange = this._onSortTypeChange.bind(this);
     this._onDataChange = this._onDataChange.bind(this);
     this._onViewChange = this._onViewChange.bind(this);
-    this._unrenderFilms = this._unrenderFilms.bind(this);
+    this._unrenderMovies = this._unrenderMovies.bind(this);
     // this._onFilterChange = this._onFilterChange.bind(this);
 
     this._sortComponent.setSortTypeChangeHandler(this._onSortTypeChange);
-    this._showMoreButtonClickHandler = this._showMoreButtonClickHandler.bind(this);
+    this._OnShowMoreButtonClick = this._OnShowMoreButtonClick.bind(this);
     // this._tasksModel.setFilterChangeHandler(this._onFilterChange);
   }
 
@@ -131,9 +131,10 @@ export class PageController {
     );
   }
 
-  _unrenderFilms() {
+  _unrenderMovies() {
     this._renderedMovies = [];
     this._allFilmsContainer.innerHTML = ``;
+    remove(this._showMoreButtonComponent);
   }
 
   _renderMovies(moviesData) {
@@ -147,10 +148,10 @@ export class PageController {
     }
 
     render(this._allFilmsContainer, this._showMoreButtonComponent, Position.AFTEREND);
-    this._showMoreButtonComponent.setClickHandler(this._showMoreButtonClickHandler);
+    this._showMoreButtonComponent.setClickHandler(this._OnShowMoreButtonClick);
   }
 
-  _showMoreButtonClickHandler() {
+  _OnShowMoreButtonClick() {
     const numberOfMovies = this._moviesModel.getAllMovies().length;
     const numberOfRenderedMovies = this._renderedMovies.length;
     const numberToRender = Math.min((numberOfMovies - numberOfRenderedMovies), NUM_MOVIES_TO_RENDER);
@@ -164,27 +165,28 @@ export class PageController {
   }
 
   _onSortTypeChange(sortType) {
-    let sortedFilms = [];
-    const films = this._moviesModel.getAllMovies();
+    const movies = this._moviesModel.getAllMovies();
+
+    this._sortType = sortType;
 
     switch (sortType) {
       case SortType.RATING:
-        sortedFilms = films
+        this._unrenderMovies();
+        this._renderMovies(movies
           .slice()
-          .sort((a, b) => b.filmInfo.totalRating - a.filmInfo.totalRating);
+          .sort((a, b) => Number(b.filmInfo.totalRating) - Number(a.filmInfo.totalRating)));
         break;
       case SortType.DATE:
-        sortedFilms = films
+        this._unrenderMovies();
+        this._renderMovies(movies
           .slice()
-          .sort((a, b) => b.filmInfo.release.date - a.filmInfo.release.date);
+          .sort((a, b) => Date.parse(b.filmInfo.release.date) - Date.parse(a.filmInfo.release.date)));
         break;
       case SortType.DEFAULT:
-        sortedFilms = films.slice(0, this._showingFilmsCount);
-        break;
+        this._unrenderMovies();
+        this._renderMovies(movies.slice(0, NUM_MOVIES_TO_RENDER));
+        this._renderShowMoreButton();
     }
-
-    this._unrenderFilms();
-    this.renderFilms(sortedFilms);
   }
 
   _onDataChange(movieController, changeObject, actionType, data) {
