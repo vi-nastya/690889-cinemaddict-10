@@ -41,10 +41,13 @@ if (films.length > 0) {
 const statistics = new Statistics(moviesModel);
 const filtersController = new FiltersController(mainContainer, moviesModel);
 
-// TODO: add number of movies to footer
-
 api.getMovies().then((movies) => {
   let moviesWithComments = movies;
+
+  // update number in footer
+  const footerMoviesNumber = document.querySelector(`.footer__statistics-number`);
+  footerMoviesNumber.innerHTML = movies.length;
+
   const loadComments = moviesWithComments.map((movie) => {
     return api.getComments(movie.id).then((comments) => {
       movie.comments = comments;
@@ -54,7 +57,6 @@ api.getMovies().then((movies) => {
   Promise.all(loadComments).then(() => {
 
     moviesModel.setMovies(moviesWithComments);
-    console.log("API", moviesWithComments);
 
     // TODO: handle no movies case
     filtersController.setScreenChangeHandler((activeFilter) => {
