@@ -2,6 +2,7 @@ import {FilmCard} from "../components/film-card";
 import {FilmDetails} from "../components/film-details";
 import {render, replace} from "../utils";
 import {ActionType, ActionObject} from "./page-controller";
+import Movie from "../models/movie";
 
 const Mode = {
   DEFAULT: `default`,
@@ -59,19 +60,23 @@ export class MovieController {
 
     // CARD BUTTONS
     this._filmComponent.setFavoriteButtonClickHandler(() => {
-      const newFilmData = Object.assign({}, filmData);
+      // const newFilmData = Object.assign({}, filmData);
+      console.log("FILM DATA", filmData);
+      const newFilmData = Movie.clone(filmData);
       newFilmData.userDetails.favorite = !filmData.userDetails.favorite;
       this._onDataChange(this, ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
     });
 
     this._filmComponent.setWatchedButtonClickHandler(() => {
-      const newFilmData = Object.assign({}, filmData);
+      // const newFilmData = Object.assign({}, filmData);
+      const newFilmData = Movie.clone(filmData);
       newFilmData.userDetails.watchlist = !filmData.userDetails.watchlist;
       this._onDataChange(this, ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
     });
 
     this._filmComponent.setWatchlistButtonClickHandler(() => {
-      const newFilmData = Object.assign({}, filmData);
+      // const newFilmData = Object.assign({}, filmData);
+      const newFilmData = Movie.clone(filmData);
       newFilmData.userDetails.favorite = !filmData.userDetails.favorite;
       this._onDataChange(this, ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
     });

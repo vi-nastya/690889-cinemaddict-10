@@ -29,12 +29,10 @@ export default class Movie {
     };
   }
 
-  toRaw(movie) {
+  toRAW() {
     return {
       'id': this.id,
-      'comments': movie.comments.map((comment) => {
-        return comment.id ? comment.id : comment;
-      }),
+      'comments': this.comments.map((comment) => comment.id),
       'film_info': {
         'title': this.filmInfo.title,
         'alternative_title': this.filmInfo.alternativeTitle,
@@ -45,11 +43,11 @@ export default class Movie {
         'writers': this.filmInfo.writers,
         'actors': this.filmInfo.actors,
         'release': {
-          'date': this.filmInfo.release.date ? new Date(this.filmInfo.release.date).toISOString() : new Date(0).toISOString(),
+          'date': this.filmInfo.release.date,
           'release_country': this.filmInfo.release.releaseCountry
         },
         'runtime': this.filmInfo.runtime,
-        'genres': this.filmInfo.genre,
+        'genre': this.filmInfo.genre,
         'description': this.filmInfo.description
       },
       'user_details': {
@@ -71,6 +69,9 @@ export default class Movie {
   }
 
   static clone(movie) {
-    return new Movie(movie.toRaw(movie));
+    const comments = movie.comments;
+    const newMovie = new Movie(movie.toRAW(movie));
+    newMovie.comments = comments;
+    return newMovie;
   }
 }
