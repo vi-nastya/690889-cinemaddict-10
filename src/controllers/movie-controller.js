@@ -60,22 +60,18 @@ export class MovieController {
 
     // CARD BUTTONS
     this._filmComponent.setFavoriteButtonClickHandler(() => {
-      // const newFilmData = Object.assign({}, filmData);
-      console.log("FILM DATA", filmData);
       const newFilmData = Movie.clone(filmData);
       newFilmData.userDetails.favorite = !filmData.userDetails.favorite;
       this._onDataChange(this, ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
     });
 
     this._filmComponent.setWatchedButtonClickHandler(() => {
-      // const newFilmData = Object.assign({}, filmData);
       const newFilmData = Movie.clone(filmData);
       newFilmData.userDetails.watchlist = !filmData.userDetails.watchlist;
       this._onDataChange(this, ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
     });
 
     this._filmComponent.setWatchlistButtonClickHandler(() => {
-      // const newFilmData = Object.assign({}, filmData);
       const newFilmData = Movie.clone(filmData);
       newFilmData.userDetails.favorite = !filmData.userDetails.favorite;
       this._onDataChange(this, ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
@@ -83,13 +79,13 @@ export class MovieController {
 
     // POPUP BUTTONS
     this._filmDetailsComponent.setWatchlistButtonClickHandler(() => {
-      const newFilmData = Object.assign({}, filmData);
+      const newFilmData = Movie.clone(filmData);
       newFilmData.userDetails.watchlist = !filmData.userDetails.watchlist;
       this._onDataChange(this, ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
     });
 
     this._filmDetailsComponent.setWatchedButtonClickHandler(() => {
-      const newFilmData = Object.assign({}, filmData);
+      const newFilmData = Movie.clone(filmData);
       newFilmData.userDetails.alreadyWatched = !filmData.userDetails
         .alreadyWatched;
       this._onDataChange(this, ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
@@ -98,14 +94,14 @@ export class MovieController {
     });
 
     this._filmDetailsComponent.setFavoriteButtonClickHandler(() => {
-      const newFilmData = Object.assign({}, filmData);
+      const newFilmData = Movie.clone(filmData);
       newFilmData.userDetails.favorite = !filmData.userDetails.favorite;
       this._onDataChange(this, ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
     });
 
     // RATING
     this._filmDetailsComponent.setRatingClickHandler((userRating) => {
-      const newFilmData = Object.assign({}, filmData);
+      const newFilmData = Movie.clone(filmData);
       newFilmData.userDetails.personalRating = userRating;
       this._onDataChange(this, ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
     });
