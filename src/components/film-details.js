@@ -20,7 +20,7 @@ const getCommentMarkup = (comment) => {
 </li>`;
 };
 
-const getRatingFormMarkup = (userRating) => {
+const getRatingFormMarkup = (userRating, poster) => {
   const ratingValues = [...Array(MAX_RATING + MIN_RATING).keys()].slice(MIN_RATING);
   return `<div class="form-details__middle-container">
   <section class="film-details__user-rating-wrap">
@@ -30,7 +30,7 @@ const getRatingFormMarkup = (userRating) => {
 
     <div class="film-details__user-score">
       <div class="film-details__user-rating-poster">
-        <img src="./images/posters/the-great-flamarion.jpg" alt="film-poster" class="film-details__user-rating-img">
+        <img src="./${poster}" alt="film-poster" class="film-details__user-rating-img">
       </div>
 
       <section class="film-details__user-rating-inner">
@@ -132,7 +132,7 @@ export class FilmDetails extends AbstractSmartComponent {
       </div>
       <div class="film-details__info-wrap">
         <div class="film-details__poster">
-          <img class="film-details__poster-img" src="./images/posters/the-great-flamarion.jpg" alt="">
+          <img class="film-details__poster-img" src="./${this._poster}" alt="">
 
           <p class="film-details__age">18+</p>
         </div>
@@ -207,7 +207,7 @@ export class FilmDetails extends AbstractSmartComponent {
       </section>
     </div>
 
-    ${this._userRating ? getRatingFormMarkup(this._userRating) : ``}
+    ${this._userRating ? getRatingFormMarkup(this._userRating, this._poster) : ``}
     <div class="form-details__bottom-container">
       <section class="film-details__comments-wrap">
         <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${this._comments.length}</span></h3>

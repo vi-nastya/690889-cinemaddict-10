@@ -28,7 +28,7 @@ const getExtaMovies = (movieData, movieType) => {
     case MovieTypes.RATING: {
       let copyData = [...movieData];
       copyData.sort(
-        (m1, m2) => m2.filmInfo.totalRating - m1.filmInfo.totalRating
+          (m1, m2) => m2.filmInfo.totalRating - m1.filmInfo.totalRating
       );
       return copyData.slice(0, NUM_EXTRA_MOVIES);
     }
@@ -44,9 +44,9 @@ const getExtaMovies = (movieData, movieType) => {
 const renderCards = (container, cardsData, onDataChange, onViewChange) => {
   return cardsData.map((card) => {
     const movieController = new MovieController(
-      container,
-      onDataChange,
-      onViewChange
+        container,
+        onDataChange,
+        onViewChange
     );
     movieController.render(card);
     return movieController;
@@ -88,20 +88,20 @@ export class PageController {
     const filmsList = this._container.querySelectorAll(`.films-list`)[0]; // for button
 
     const filmsContainer = this._container.querySelectorAll(
-      `.films-list__container`
+        `.films-list__container`
     )[0];
     const topFilmsContainer = this._container.querySelectorAll(
-      `.films-list__container`
+        `.films-list__container`
     )[1];
     const commentedFilmsContainer = this._container.querySelectorAll(
-      `.films-list__container`
+        `.films-list__container`
     )[2];
 
     this._renderedCards = renderCards(
-      filmsContainer,
-      this._moviesModel.getAllMovies(),
-      this._onDataChange,
-      this._onViewChange
+        filmsContainer,
+        this._moviesModel.getAllMovies(),
+        this._onDataChange,
+        this._onViewChange
     );
 
     // TODO: button logic
@@ -109,31 +109,31 @@ export class PageController {
 
     // TODO: get top rated, get most commented
     const topRatedMovies = getExtaMovies(
-      this._moviesModel.getAllMovies(),
-      MovieTypes.RATING
+        this._moviesModel.getAllMovies(),
+        MovieTypes.RATING
     );
     const mostCommentedMovies = getExtaMovies(
-      this._moviesModel.getAllMovies(),
-      MovieTypes.COMMENTS
+        this._moviesModel.getAllMovies(),
+        MovieTypes.COMMENTS
     );
     this._renderedCards = renderCards(
-      topFilmsContainer,
-      topRatedMovies,
-      this._onDataChange,
-      this._onViewChange
+        topFilmsContainer,
+        topRatedMovies,
+        this._onDataChange,
+        this._onViewChange
     );
     this._renderedCards = renderCards(
-      commentedFilmsContainer,
-      mostCommentedMovies,
-      this._onDataChange,
-      this._onViewChange
+        commentedFilmsContainer,
+        mostCommentedMovies,
+        this._onDataChange,
+        this._onViewChange
     );
   }
 
   _unrenderFilms() {
     this._renderedCards = [];
     this._container.querySelectorAll(
-      `.films-list__container`
+        `.films-list__container`
     )[0].innerHTML = ``;
   }
 

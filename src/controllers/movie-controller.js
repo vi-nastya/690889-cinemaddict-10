@@ -25,6 +25,7 @@ export class MovieController {
   }
 
   render(filmData) {
+    // if rerendering, replace existing components
     let isReplacingComponents = false;
     let prevCardComponent = null;
     let prevDetailsComponent = null;
@@ -34,7 +35,6 @@ export class MovieController {
       prevDetailsComponent = this._filmDetailsComponent;
     }
 
-    console.log("MOVIE DATA", filmData);
     this._filmComponent = new FilmCard(filmData);
     this._filmDetailsComponent = new FilmDetails(filmData);
 
@@ -45,8 +45,6 @@ export class MovieController {
         document.removeEventListener(`keydown`, onEscKeyDown);
       }
     };
-
-    // add event listeners
 
     // FilmCard -> open popup
     this._filmComponent.setDetailsOpenClickHandler(() => {
@@ -136,9 +134,7 @@ export class MovieController {
   }
 
   _changePopupToCard() {
-    // remove popup
     this._bodyElement.removeChild(this._filmDetailsComponent.getElement());
-
     this._mode = Mode.DEFAULT;
   }
 
