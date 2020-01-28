@@ -1,4 +1,4 @@
-import { AbstractComponent } from "../utils";
+import {AbstractComponent} from "../utils";
 
 export const SortType = {
   RATING: `rating`,
@@ -43,5 +43,14 @@ export class Sort extends AbstractComponent {
 
       handler(this._currenSortType);
     });
+  }
+
+  resetSortType() {
+    if (this._currenSortType === SortType.DEFAULT) {
+      return;
+    }
+    this.getElement().querySelector(`.sort__button--active`).classList.remove(`sort__button--active`);
+    this.getElement().querySelector(`a[data-sort-type=${SortType.DEFAULT}]`).classList.add(`sort__button--active`);
+    this._currenSortType = SortType.DEFAULT;
   }
 }

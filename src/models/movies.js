@@ -1,13 +1,29 @@
+import {FilterType} from "../components/filters";
+
 export class Movies {
   constructor() {
     this._movies = [];
-    this._activeFilterType = null; // TODO
+    this._activeFilterType = FilterType.ALL; // TODO
 
-    this._dataChangeHandler = [];
+    this._dataChangeHandlers = [];
     this._filterChangeHandlers = [];
   }
 
   getAllMovies() {
+    return this._movies;
+  }
+
+  getMovies() {
+    switch (this._activeFilterType) {
+      case FilterType.ALL:
+        return this._movies;
+      case FilterType.WATCHED:
+        return this._movies.filter((movie) => (movie.userDetails.alreadyWatched));
+      case FilterType.FAVORITE:
+        return this._movies.filter((movie) => (movie.userDetails.favorite));
+      case FilterType.WATCHLIST:
+        return this._movies.filter((movie) => (movie.userDetails.watchlist));
+    }
     return this._movies;
   }
 
@@ -23,7 +39,7 @@ export class Movies {
     const movieIndex = this._movies.findIndex((movie) => movie.id === id);
     this._movies[movieIndex] = newMovieData;
 
-    this._activateHandler(this._dataChangeHandler);
+    this._activateHandlers(this._dataChangeHandlers);
     // error handler
   }
 
@@ -40,13 +56,18 @@ export class Movies {
 
   setActiveFilter(newFilter) {
     this._activeFilterType = newFilter;
+    this._activateHandlers(this._filterChangeHandlers);
+  }
+
+  setFilterChangeHandler(handler) {
+    this._filterChangeHandlers.push(handler);
   }
 
   setDataChangeHandler(handler) {
-    this._dataChangeHandler = handler;
+    this._dataChangeHandlers.push(handler);
   }
 
-  _activateHandler(handler) {
-    handler();
+  _activateHandlers(handlers) {
+    handlers.forEach((handler) => handler());
   }
 }

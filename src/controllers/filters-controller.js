@@ -13,6 +13,7 @@ export class FiltersController {
     this._dataChangeHandler = this._dataChangeHandler.bind(this);
 
     this._moviesModel.setDataChangeHandler(this._dataChangeHandler);
+    // this._moviesModel.setFilterChangeHandler(this._onFilterChange);
   }
 
   render() {
@@ -36,7 +37,7 @@ export class FiltersController {
     // TODO: update model
     // TODO: call screen change handler
     this._screenChangeHandler(newFilterType);
-    this._moviesModel.setActiveFilter = newFilterType;
+    this._moviesModel.setActiveFilter(newFilterType);
   }
 
   _dataChangeHandler() {
