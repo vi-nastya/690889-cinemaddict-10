@@ -125,6 +125,7 @@ export class MovieController {
     });
 
     if (isReplacingComponents) {
+      console.log("REPLACE", filmData);
       replace(this._filmComponent, prevCardComponent);
       replace(this._filmDetailsComponent, prevDetailsComponent);
 

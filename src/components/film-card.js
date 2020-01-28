@@ -1,4 +1,4 @@
-import { AbstractComponent, formatFilmDuration } from "../utils";
+import {AbstractComponent, formatFilmDuration} from "../utils";
 import moment from 'moment';
 
 const getButtonMarkup = (buttonClass, buttonText, isActive) => {
@@ -22,7 +22,7 @@ export class FilmCard extends AbstractComponent {
     this._numComments = filmData.comments.length;
 
     this._watched = filmData.userDetails.alreadyWatched;
-    this._watchlist = filmData.userDetails.watchList;
+    this._watchlist = filmData.userDetails.watchlist;
     this._favorite = filmData.userDetails.favorite;
   }
 
