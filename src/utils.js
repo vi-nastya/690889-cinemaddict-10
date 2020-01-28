@@ -13,6 +13,13 @@ export const formatFilmDuration = (duration) => {
   return (hours ? `${hours}h` : ``).concat(minutes ? ` ${minutes}m` : ``);
 };
 
+export const getHoursAndMinutes = (duration) => {
+  const hours = Math.floor(duration / MINUTES_IN_HOUR);
+  const minutes = duration - hours * MINUTES_IN_HOUR;
+  return {hours, minutes};
+};
+
+
 export const getUserStatus = (numMovies) => {
   if (numMovies > 0) {
     if (numMovies <= 10) {

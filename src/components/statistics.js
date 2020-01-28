@@ -1,4 +1,4 @@
-import {AbstractSmartComponent} from "../utils";
+import {AbstractSmartComponent, getHoursAndMinutes} from "../utils";
 import Chart from "chart.js";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 
@@ -44,7 +44,7 @@ const getMoviesForPeriod = (moviesData, period) => {
 
 const getStats = (moviesData) => {
   const numMovies = moviesData.length;
-  const totalDuration = moviesData.map((movie) => movie.filmInfo.runtime).reduce((a, b) => a + b, 0);
+  const totalDuration = getHoursAndMinutes(moviesData.map((movie) => movie.filmInfo.runtime).reduce((a, b) => a + b, 0));
   const topGenre = `Sci-Fi`; // TODO
   return {
     numMovies, totalDuration, topGenre
@@ -100,7 +100,7 @@ export class Statistics extends AbstractSmartComponent {
       </li>
       <li class="statistic__text-item">
         <h4 class="statistic__item-title">Total duration</h4>
-        <p class="statistic__item-text">${statsData.totalDuration} <span class="statistic__item-description">h</span> 22 <span class="statistic__item-description">m</span></p>
+        <p class="statistic__item-text">${statsData.totalDuration.hours} <span class="statistic__item-description">h</span> ${statsData.totalDuration.minutes} <span class="statistic__item-description">m</span></p>
       </li>
       <li class="statistic__text-item">
         <h4 class="statistic__item-title">Top genre</h4>
