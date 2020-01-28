@@ -17,7 +17,7 @@ export class FilmCard extends AbstractComponent {
     // TODO: format
     this._duration = filmData.filmInfo.runtime;
     // TODO: handle multiple genres
-    this._genre = filmData.filmInfo.genre.join(`, `);
+    this._genre = filmData.filmInfo.genre[0];
     this._poster = filmData.filmInfo.poster;
     this._numComments = filmData.comments.length;
 

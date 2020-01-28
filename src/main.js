@@ -61,18 +61,14 @@ api.getMovies().then((movies) => {
 
     // TODO: handle no movies case
     filtersController.setScreenChangeHandler((activeFilter) => {
-      switch (activeFilter) {
-        case FilterType.DEFAULT: {
-          statistics.hide();
-          pageController.show();
-          break;
-        }
-        case FilterType.STATS: {
-          pageController.hide();
-          statistics.show();
-          break;
-        }
+      if (activeFilter === FilterType.STATS) {
+        pageController.hide();
+        statistics.show();
+      } else {
+        statistics.hide();
+        pageController.show();
       }
+
     });
     filtersController.render();
 
