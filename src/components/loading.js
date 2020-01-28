@@ -1,6 +1,6 @@
 import {AbstractComponent} from "../utils";
 
-export class NoFilms extends AbstractComponent {
+export class Loading extends AbstractComponent {
   constructor() {
     super();
   }
@@ -8,7 +8,7 @@ export class NoFilms extends AbstractComponent {
   getTemplate() {
     return `<section class="films">
     <section class="films-list">
-      <h2 class="films-list__title">There are no movies in our database</h2>
+      <h2 class="films-list__title">Loading...</h2>
     </section>
   </section>`;
   }

@@ -1,11 +1,12 @@
 import {PageController} from "./controllers/page-controller";
 import {films} from "./mocks/films";
 import {UserTitle} from "./components/user-title";
-import {Position, render} from "./utils";
+import {Position, render, remove} from "./utils";
 import {Movies} from "./models/movies";
 import {Statistics} from "./components/statistics";
 import {FiltersController} from "./controllers/filters-controller";
 import {FilterType} from "./components/filters";
+import {Loading} from "./components/loading";
 import Api from "./api";
 
 const AUTHORIZATION = `Basic er173jdzbdw`;
@@ -23,6 +24,9 @@ moviesModel.setMovies(films);
 
 const headerContainer = document.querySelector(`header`);
 const mainContainer = document.querySelector(`main`);
+
+const loadingComponent = new Loading();
+render(mainContainer, loadingComponent);
 
 if (films.length > 0) {
   // TODO: render user title
@@ -65,6 +69,8 @@ api.getMovies().then((movies) => {
 
     render(mainContainer, statistics, Position.BEFOREEND);
     statistics.hide();
+
+    remove(loadingComponent);
 
     const pageController = new PageController(mainContainer, moviesModel, api);
     pageController.renderFilms();
