@@ -172,7 +172,7 @@ export class PageController {
     //this._showedTaskControllers = [];
   }
 
-  _onDataChange(changeObject, actionType, data) {
+  _onDataChange(movieController, changeObject, actionType, data) {
     // TODO call render() from movieController for given data
     console.log("ON DATA CHANGE");
     console.log("obj: ", changeObject);
@@ -186,6 +186,7 @@ export class PageController {
       this._moviesModel.addComment(data.movieId, data.commentData);
     } else {
       this._moviesModel.deleteComment(data.movieId, data.commentId);
+      movieController.render(this._moviesModel.getMovieById(data.movieId));
     }
   }
 

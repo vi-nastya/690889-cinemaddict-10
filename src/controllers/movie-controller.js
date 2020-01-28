@@ -1,7 +1,7 @@
-import { FilmCard } from "../components/film-card";
-import { FilmDetails } from "../components/film-details";
-import { render } from "../utils";
-import { ActionType, ActionObject } from "./page-controller";
+import {FilmCard} from "../components/film-card";
+import {FilmDetails} from "../components/film-details";
+import {render, replace} from "../utils";
+import {ActionType, ActionObject} from "./page-controller";
 
 const Mode = {
   DEFAULT: `default`,
@@ -25,6 +25,16 @@ export class MovieController {
   }
 
   render(filmData) {
+    let isReplacingComponents = false;
+    let prevCardComponent = null;
+    let prevDetailsComponent = null;
+    if (this._filmComponent && this._filmDetailsComponent) {
+      isReplacingComponents = true;
+      prevCardComponent = this._filmComponent;
+      prevDetailsComponent = this._filmDetailsComponent;
+    }
+
+    console.log("MOVIE DATA", filmData);
     this._filmComponent = new FilmCard(filmData);
     this._filmDetailsComponent = new FilmDetails(filmData);
 
@@ -46,40 +56,40 @@ export class MovieController {
 
     // Popup -> close
     this._filmDetailsComponent.setCloseButtonClickHandler(
-      this._changePopupToCard
+        this._changePopupToCard
     );
 
     // CARD BUTTONS
     this._filmComponent.setFavoriteButtonClickHandler(() => {
       const newFilmData = Object.assign({}, filmData);
       newFilmData.userDetails.favorite = !filmData.userDetails.favorite;
-      this._onDataChange(ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
+      this._onDataChange(this, ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
     });
 
     this._filmComponent.setWatchedButtonClickHandler(() => {
       const newFilmData = Object.assign({}, filmData);
       newFilmData.userDetails.watchlist = !filmData.userDetails.watchlist;
-      this._onDataChange(ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
+      this._onDataChange(this, ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
     });
 
     this._filmComponent.setWatchlistButtonClickHandler(() => {
       const newFilmData = Object.assign({}, filmData);
       newFilmData.userDetails.favorite = !filmData.userDetails.favorite;
-      this._onDataChange(ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
+      this._onDataChange(this, ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
     });
 
     // POPUP BUTTONS
     this._filmDetailsComponent.setWatchlistButtonClickHandler(() => {
       const newFilmData = Object.assign({}, filmData);
       newFilmData.userDetails.watchlist = !filmData.userDetails.watchlist;
-      this._onDataChange(ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
+      this._onDataChange(this, ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
     });
 
     this._filmDetailsComponent.setWatchedButtonClickHandler(() => {
       const newFilmData = Object.assign({}, filmData);
       newFilmData.userDetails.alreadyWatched = !filmData.userDetails
         .alreadyWatched;
-      this._onDataChange(ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
+      this._onDataChange(this, ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
 
       // TODO: rerender Movie controller - popup
     });
@@ -87,36 +97,42 @@ export class MovieController {
     this._filmDetailsComponent.setFavoriteButtonClickHandler(() => {
       const newFilmData = Object.assign({}, filmData);
       newFilmData.userDetails.favorite = !filmData.userDetails.favorite;
-      this._onDataChange(ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
+      this._onDataChange(this, ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
     });
 
     // RATING
     this._filmDetailsComponent.setRatingClickHandler((userRating) => {
       const newFilmData = Object.assign({}, filmData);
       newFilmData.userDetails.personalRating = userRating;
-      this._onDataChange(ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
+      this._onDataChange(this, ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
     });
 
     this._filmDetailsComponent.setReactionSelectHandler();
 
     // DELETE COMMENT
     this._filmDetailsComponent.setDeleteCommentClickHandler(
-      (deletedCommentId) => {
-        this._onDataChange(ActionObject.COMMENT, ActionType.DELETE, {
-          commentId: deletedCommentId,
-          movieId: filmData.id
-        });
-      }
+        (deletedCommentId) => {
+          this._onDataChange(this, ActionObject.COMMENT, ActionType.DELETE, {
+            commentId: deletedCommentId,
+            movieId: filmData.id
+          });
+        }
     );
 
     this._filmDetailsComponent.setFormSubmitHandler((commentData) => {
-      this._onDataChange(ActionObject.COMMENT, ActionType.ADD, {
+      this._onDataChange(this, ActionObject.COMMENT, ActionType.ADD, {
         commentData,
         movieId: filmData.id
       });
     });
 
-    render(this._container, this._filmComponent);
+    if (isReplacingComponents) {
+      replace(this._filmComponent, prevCardComponent);
+      replace(this._filmDetailsComponent, prevDetailsComponent);
+
+    } else {
+      render(this._container, this._filmComponent);
+    }
   }
 
   _changePopupToCard() {

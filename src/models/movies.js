@@ -11,20 +11,17 @@ export class Movies {
     return this._movies;
   }
 
+  getMovieById(movieId) {
+    return this._movies.find((movie) => movie.id === movieId) || null;
+  }
+
   setMovies(movies) {
     this._movies = movies;
   }
 
   updateMovie(id, newMovieData) {
-    const movieIndex = this._movies.findIndex(
-      (movie) => movie.filmData.filmInfo.id === id
-    );
-
-    this._movies = [].concat(
-      this._movies.slice(0, movieIndex),
-      newMovieData,
-      this._movies.slice(movieIndex + 1)
-    );
+    const movieIndex = this._movies.findIndex((movie) => movie.filmData.filmInfo.id === id);
+    this._movies[movieIndex] = newMovieData;
 
     // error handler
   }
