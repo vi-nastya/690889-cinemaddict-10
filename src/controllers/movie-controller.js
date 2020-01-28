@@ -69,13 +69,13 @@ export class MovieController {
 
     this._filmComponent.setWatchedButtonClickHandler(() => {
       const newFilmData = Movie.clone(filmData);
-      newFilmData.userDetails.watchlist = !filmData.userDetails.watchlist;
+      newFilmData.userDetails.alreadyWatched = !filmData.userDetails.alreadyWatched;
       this._onDataChange(this, ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
     });
 
     this._filmComponent.setWatchlistButtonClickHandler(() => {
       const newFilmData = Movie.clone(filmData);
-      newFilmData.userDetails.favorite = !filmData.userDetails.favorite;
+      newFilmData.userDetails.watchlist = !filmData.userDetails.watchlist;
       this._onDataChange(this, ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
     });
 

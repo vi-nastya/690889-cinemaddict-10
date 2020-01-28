@@ -1,5 +1,5 @@
 import {Filters, FilterType} from "../components/filters";
-import {render, Position} from "../utils";
+import {render, Position, replace} from "../utils";
 
 export class FiltersController {
   constructor(container, moviesModel) {
@@ -9,14 +9,23 @@ export class FiltersController {
     this._screenChangeHandler = null;
 
     this._onFilterChange = this._onFilterChange.bind(this);
+
+    this._dataChangeHandler = this._dataChangeHandler.bind(this);
+
+    this._moviesModel.setDataChangeHandler(this._dataChangeHandler);
   }
 
   render() {
+    const prevComponent = this._filtersComponent;
+
     this._filtersComponent = new Filters(FilterType.ALL, this._moviesModel.getAllMovies());
-    console.log(this._filtersComponent);
     // TODO
     this._filtersComponent.setFilterChangeHandler(this._onFilterChange);
-    render(this._contaiter, this._filtersComponent, Position.AFTERBEGIN);
+    if (prevComponent) {
+      replace(this._filtersComponent, prevComponent);
+    } else {
+      render(this._contaiter, this._filtersComponent, Position.AFTERBEGIN);
+    }
   }
 
   setScreenChangeHandler(handler) {
@@ -27,5 +36,10 @@ export class FiltersController {
     // TODO: update model
     // TODO: call screen change handler
     this._screenChangeHandler(newFilterType);
+    this._moviesModel.setActiveFilter = newFilterType;
+  }
+
+  _dataChangeHandler() {
+    this.render();
   }
 }

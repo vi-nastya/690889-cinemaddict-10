@@ -3,7 +3,7 @@ export class Movies {
     this._movies = [];
     this._activeFilterType = null; // TODO
 
-    this._dataChangeHandlers = [];
+    this._dataChangeHandler = [];
     this._filterChangeHandlers = [];
   }
 
@@ -22,6 +22,8 @@ export class Movies {
   updateMovie(id, newMovieData) {
     const movieIndex = this._movies.findIndex((movie) => movie.id === id);
     this._movies[movieIndex] = newMovieData;
+
+    this._activateHandler(this._dataChangeHandler);
     // error handler
   }
 
@@ -40,7 +42,11 @@ export class Movies {
     this._activeFilterType = newFilter;
   }
 
-  getFilteredMovies(filterName) {
-    // TODO
+  setDataChangeHandler(handler) {
+    this._dataChangeHandler = handler;
+  }
+
+  _activateHandler(handler) {
+    handler();
   }
 }

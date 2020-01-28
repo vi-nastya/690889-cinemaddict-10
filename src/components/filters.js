@@ -21,7 +21,7 @@ const getFiltersMarkup = (moviesData, activeFilter) => {
     <a href="#favorites" data-filter-type="${FilterType.FAVORITE}" class="main-navigation__item" ${activeFilter === FilterType.FAVORITE ? `main-navigation__item--active` : ``}>Favorites <span class="main-navigation__item-count">${moviesFavorite}</span></a>
     <a href="#stats" data-filter-type="${FilterType.STATS}" class="main-navigation__item main-navigation__item--additional" ${activeFilter === FilterType.STATS ? `main-navigation__item--active` : ``}>Stats</a>
   </nav>`;
-}
+};
 
 export class Filters extends AbstractComponent {
   constructor(currentFilter, moviesData) {
