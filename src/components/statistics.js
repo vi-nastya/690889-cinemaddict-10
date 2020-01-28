@@ -87,10 +87,18 @@ const getGenresStats = (moviesData) => {
   return {stats, labels, values};
 };
 
+const getTopGenre = (moviesData) => {
+  const stats = getGenresStats(moviesData);
+  if (moviesData.length === 0) {
+    return `-`;
+  }
+  return stats.labels[stats.values.indexOf(Math.max(...stats.values))];
+};
+
 const getStats = (moviesData) => {
   const numMovies = moviesData.length;
   const totalDuration = getHoursAndMinutes(moviesData.map((movie) => movie.filmInfo.runtime).reduce((a, b) => a + b, 0));
-  const topGenre = `Sci-Fi`; // TODO
+  const topGenre = getTopGenre(moviesData); // TODO
   return {
     numMovies, totalDuration, topGenre
   };
