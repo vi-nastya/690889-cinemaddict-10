@@ -1,4 +1,4 @@
-import { AbstractComponent } from "../utils";
+import {AbstractComponent} from "../utils";
 
 export const FilterType = {
   DEFAULT: `all`,
@@ -20,11 +20,11 @@ export class Filters extends AbstractComponent {
   getTemplate() {
     // TODO: mark active
     return `<nav class="main-navigation">
-    <a href="#all" data-filter-type="${FilterType.DEFAULT}" class="main-navigation__item main-navigation__item--active">All movies</a>
-    <a href="#watchlist" data-filter-type="${FilterType.WATCHLIST}" class="main-navigation__item">Watchlist <span class="main-navigation__item-count">13</span></a>
-    <a href="#history" data-filter-type="${FilterType.WATCHED}" class="main-navigation__item">History <span class="main-navigation__item-count">4</span></a>
-    <a href="#favorites" data-filter-type="${FilterType.FAVORITE}" class="main-navigation__item">Favorites <span class="main-navigation__item-count">8</span></a>
-    <a href="#stats" data-filter-type="${FilterType.STATS}" class="main-navigation__item main-navigation__item--additional">Stats</a>
+    <a href="#all" data-filter-type="${FilterType.DEFAULT}" class="main-navigation__item ${this._currentFilter === FilterType.DEFAULT ? `main-navigation__item--active` : ``}">All movies</a>
+    <a href="#watchlist" data-filter-type="${FilterType.WATCHLIST}" class="main-navigation__item" ${this._currentFilter === FilterType.WATCHLIST ? `main-navigation__item--active` : ``}>Watchlist <span class="main-navigation__item-count">13</span></a>
+    <a href="#history" data-filter-type="${FilterType.WATCHED}" class="main-navigation__item" ${this._currentFilter === FilterType.WATCHED ? `main-navigation__item--active` : ``}>History <span class="main-navigation__item-count">4</span></a>
+    <a href="#favorites" data-filter-type="${FilterType.FAVORITE}" class="main-navigation__item" ${this._currentFilter === FilterType.FAVORITE ? `main-navigation__item--active` : ``}>Favorites <span class="main-navigation__item-count">8</span></a>
+    <a href="#stats" data-filter-type="${FilterType.STATS}" class="main-navigation__item main-navigation__item--additional" ${this._currentFilter === FilterType.STATS ? `main-navigation__item--active` : ``}>Stats</a>
   </nav>`;
   }
 

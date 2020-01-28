@@ -1,11 +1,11 @@
-import {Filters} from "../components/filters";
+import {Filters, FilterType} from "../components/filters";
 import {render, Position} from "../utils";
 
 export class FiltersController {
   constructor(container, moviesModel) {
     this._contaiter = container;
     this._moviesModel = moviesModel;
-    this._filtersComponent = new Filters();
+    this._filtersComponent = new Filters(FilterType.DEFAULT);
     this._screenChangeHandler = null;
 
     this._onFilterChange = this._onFilterChange.bind(this);
