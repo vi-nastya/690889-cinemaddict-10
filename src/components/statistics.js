@@ -15,6 +15,22 @@ const MILLISECONDS_IN_WEEK = MILLISECONDS_IN_DAY * 7;
 const MILLISECONDS_IN_MONTH = MILLISECONDS_IN_DAY * 30;
 const MILLISECONDS_IN_YEAR = MILLISECONDS_IN_DAY * 365;
 
+const ChartParams = {
+  CHART_TYPE: `horizontalBar`,
+  BACKGROUND_COLOR: `#ffe800`,
+  BAR_THICKNESS: 22,
+  MIN_BAR_LENGTH: 0,
+  DISPLAY_NONE_STATE: false,
+  COLOR: `#fff`,
+  TOOLTIPS_ENABLED_STATE: false,
+  FONT_SIZE: 16,
+  LEGEND_STATE: false,
+  DATA_LABELS_POSITION: `start`,
+  DATA_LABELS_OFFSET: 25,
+  STACKED_STATE: true,
+  TICKS_PADDING: 60
+};
+
 
 const getMoviesForPeriod = (moviesData, period) => {
   const watchedMovies = moviesData.filter((movie) => movie.userDetails.alreadyWatched);
@@ -40,6 +56,35 @@ const getMoviesForPeriod = (moviesData, period) => {
 
   const moviesForStats = watchedMovies.filter((movie) => Date.parse(movie.userDetails.watchingDate) >= minTimestamp);
   return moviesForStats;
+};
+
+const getGenresFromMovies = (moviesData) => {
+  let genres = [];
+  moviesData.forEach((movie) => {
+    genres = genres.concat(movie.filmInfo.genre);
+  });
+  return [...new Set(genres)];
+};
+
+const getGenresStats = (moviesData) => {
+  const genres = getGenresFromMovies(moviesData);
+  const stats = {};
+  const labels = [];
+  const values = [];
+  genres.map((genre) => {
+    let currentDuration = 0;
+    moviesData.forEach((movie) => {
+      if (movie.filmInfo.genre.indexOf(genre) !== -1) {
+        currentDuration += movie.filmInfo.runtime;
+      }
+    });
+    if (currentDuration > 0) {
+      stats[genre] = currentDuration;
+      labels.push(genre);
+      values.push(currentDuration);
+    }
+  });
+  return {stats, labels, values};
 };
 
 const getStats = (moviesData) => {
@@ -92,7 +137,7 @@ export class Statistics extends AbstractSmartComponent {
     </ul>
 
     <div class="statistic__chart-wrap">
-      <canvas class="statistic__chart" width="1000"></canvas>
+      <canvas id="genres-chart" class="statistic__chart" width="1000"></canvas>
     </div>
 
   </section>`;
@@ -128,8 +173,84 @@ export class Statistics extends AbstractSmartComponent {
       this._currentPeriod = evt.target.value;
 
       this._moviesForPeriod = getMoviesForPeriod(this._movies, this._currentPeriod);
+
+      const statsValues = getGenresStats(this._moviesForPeriod);
+      this._genresLabels = statsValues.labels;
+      this._genresValues = statsValues.values;
+
       this.rerender(this._moviesForPeriod);
     });
+  }
+
+  updateChart() {
+    const statsValues = getGenresStats(this._moviesForPeriod);
+    this._genresLabels = statsValues.labels;
+    this._genresValues = statsValues.values;
+
+    if (this._genresLabels.length && this._genresValues.length) {
+      const ctx = this.getElement().querySelector(`#genres-chart`).getContext(`2d`);
+      return new Chart(ctx, {
+        plugins: [ChartDataLabels],
+        type: ChartParams.CHART_TYPE,
+        data: {
+          labels: this._genresLabels,
+          datasets: [{
+            data: this._genresValues,
+            backgroundColor: ChartParams.BACKGROUND_COLOR,
+            barThickness: ChartParams.BAR_THICKNESS,
+            minBarLength: ChartParams.MIN_BAR_LENGTH
+          }]
+        },
+        gridLines: {
+          display: ChartParams.DISPLAY_NONE_STATE
+        },
+        options: {
+          label: {
+            font: {
+              color: ChartParams.COLOR
+            }
+          },
+          tooltips: {
+            enabled: ChartParams.TOOLTIPS_ENABLED_STATE
+          },
+          plugins: {
+            datalabels: {
+              anchor: ChartParams.DATA_LABELS_POSITION,
+              align: ChartParams.DATA_LABELS_POSITION,
+              offset: ChartParams.DATA_LABELS_OFFSET,
+              color: ChartParams.COLOR,
+              font: {
+                size: ChartParams.FONT_SIZE
+              }
+            }
+          },
+          legend: ChartParams.LEGEND_STATE,
+          scales: {
+            xAxes: [{
+              gridLines: {
+                display: ChartParams.DISPLAY_NONE_STATE
+              },
+              ticks: {
+                display: ChartParams.DISPLAY_NONE_STATE
+              },
+              stacked: ChartParams.STACKED_STATE
+            }],
+            yAxes: [{
+              gridLines: {
+                display: ChartParams.DISPLAY_NONE_STATE
+              },
+              ticks: {
+                fontSize: ChartParams.FONT_SIZE,
+                fontColor: ChartParams.COLOR,
+                padding: ChartParams.TICKS_PADDING
+              },
+              stacked: ChartParams.STACKED_STATE
+            }]
+          }
+        }
+      });
+    }
+    return null;
   }
 
   rerender() {
@@ -143,5 +264,10 @@ export class Statistics extends AbstractSmartComponent {
 
   recoveryListeners() {
     this._subscribeOnEvents();
+  }
+
+  show() {
+    super.show();
+    this.updateChart();
   }
 }

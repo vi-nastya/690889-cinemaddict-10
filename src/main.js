@@ -38,7 +38,6 @@ if (films.length > 0) {
   render(headerContainer, new UserTitle(getUserTitle(films)), Position.BEFOREEND);
 }
 
-const statistics = new Statistics(moviesModel);
 const filtersController = new FiltersController(mainContainer, moviesModel);
 
 api.getMovies().then((movies) => {
@@ -75,6 +74,7 @@ api.getMovies().then((movies) => {
     });
     filtersController.render();
 
+    const statistics = new Statistics(moviesModel);
     render(mainContainer, statistics, Position.BEFOREEND);
     statistics.hide();
 
