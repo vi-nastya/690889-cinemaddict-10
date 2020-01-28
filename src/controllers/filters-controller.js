@@ -5,23 +5,18 @@ export class FiltersController {
   constructor(container, moviesModel) {
     this._contaiter = container;
     this._moviesModel = moviesModel;
-    this._filtersComponent = new Filters(FilterType.DEFAULT);
+    this._filtersComponent = null;
     this._screenChangeHandler = null;
 
     this._onFilterChange = this._onFilterChange.bind(this);
   }
 
   render() {
+    this._filtersComponent = new Filters(FilterType.ALL, this._moviesModel.getAllMovies());
+    console.log(this._filtersComponent);
     // TODO
     this._filtersComponent.setFilterChangeHandler(this._onFilterChange);
     render(this._contaiter, this._filtersComponent, Position.AFTERBEGIN);
-  }
-
-  getFiltersCount() {
-    const moviesData = this._moviesModel.getAllMovies();
-    const watched = moviesData.filter((movie) => movie.userDetails.alreadyWatched).length;
-    const watchlist = moviesData.filter((movie) => movie.userDetails.watchlist).length;
-    const favorite = moviesData.filter((movie) => movie.userDetails.favorite).length;
   }
 
   setScreenChangeHandler(handler) {

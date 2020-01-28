@@ -57,6 +57,8 @@ api.getMovies().then((movies) => {
 
     moviesModel.setMovies(moviesWithComments);
 
+    const statistics = new Statistics(moviesModel);
+
     // TODO: handle no movies case
     filtersController.setScreenChangeHandler((activeFilter) => {
       switch (activeFilter) {
@@ -74,7 +76,6 @@ api.getMovies().then((movies) => {
     });
     filtersController.render();
 
-    const statistics = new Statistics(moviesModel);
     render(mainContainer, statistics, Position.BEFOREEND);
     statistics.hide();
 
