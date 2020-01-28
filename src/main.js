@@ -13,15 +13,6 @@ const END_POINT = `https://htmlacademy-es-10.appspot.com/cinemaddict`;
 
 const api = new Api(END_POINT, AUTHORIZATION);
 
-// TODO: update and move to utils
-const getUserStats = (movies) => {
-  return {
-    title: `fan`,
-    watchlist: 10,
-    history: 2,
-    favorites: 5
-  };
-};
 
 const getUserTitle = (movies) => {
   return `fan`;
