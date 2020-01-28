@@ -9,6 +9,8 @@ const Mode = {
   POPUP: `popup`
 };
 
+const DEFAULT_RATING = 0;
+
 export class MovieController {
   constructor(container, onDataChange, onViewChange) {
     this._container = container;
@@ -103,6 +105,12 @@ export class MovieController {
     this._filmDetailsComponent.setRatingClickHandler((userRating) => {
       const newFilmData = Movie.clone(filmData);
       newFilmData.userDetails.personalRating = userRating;
+      this._onDataChange(this, ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
+    });
+
+    this._filmDetailsComponent.setUndoRatingClickHandler(() => {
+      const newFilmData = Movie.clone(filmData);
+      newFilmData.userDetails.personalRating = DEFAULT_RATING;
       this._onDataChange(this, ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
     });
 

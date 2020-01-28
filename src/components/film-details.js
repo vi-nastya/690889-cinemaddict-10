@@ -1,8 +1,9 @@
-import { AbstractSmartComponent, formatFilmDuration } from "../utils";
+import {AbstractSmartComponent, formatFilmDuration} from "../utils";
 import moment from 'moment';
 
 const MIN_RATING = 1;
 const MAX_RATING = 9;
+const DEFAULT_RATING = 0;
 
 const getCommentMarkup = (comment) => {
   return `<li class="film-details__comment">
@@ -121,6 +122,7 @@ export class FilmDetails extends AbstractSmartComponent {
     this._ratingClickHandler = null;
     this._formSubmitHandler = null;
     this._deleteCommentHandler = null;
+    this._undoClickHandler = null;
   }
 
   getTemplate() {
@@ -207,7 +209,7 @@ export class FilmDetails extends AbstractSmartComponent {
       </section>
     </div>
 
-    ${this._userRating ? getRatingFormMarkup(this._userRating, this._poster) : ``}
+    ${this._watched ? getRatingFormMarkup(this._userRating, this._poster) : ``}
     <div class="form-details__bottom-container">
       <section class="film-details__comments-wrap">
         <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${this._comments.length}</span></h3>
@@ -329,19 +331,30 @@ export class FilmDetails extends AbstractSmartComponent {
 
   setRatingClickHandler(handler) {
     // todo: check if is showing this section
-    this.getElement()
-      .querySelector(`.film-details__user-rating-score`)
-      .addEventListener(`change`, (evt) => {
-        evt.stopPropagation();
-        const userRating = this.getElement().querySelector(
-            `.film-details__user-rating-input:checked`
-        ).value;
-        handler(userRating);
-      });
-    this._ratingClickHandler = handler;
+    if (this._watched) {
+      this.getElement()
+        .querySelector(`.film-details__user-rating-score`)
+        .addEventListener(`change`, (evt) => {
+          evt.stopPropagation();
+          const userRating = this.getElement().querySelector(
+              `.film-details__user-rating-input:checked`
+          ).value;
+          handler(Number(userRating));
+        });
+      this._ratingClickHandler = handler;
+    }
   }
 
-  // setUndoRatingClickHandler(handler) {}
+  setUndoRatingClickHandler(handler) {
+    const undoButton = this.getElement().querySelector(`.film-details__watched-reset`);
+    if (undoButton) {
+      undoButton.addEventListener(`click`, (evt) => {
+        evt.preventDefault();
+        handler();
+      });
+    }
+    this._undoClickHandler = handler;
+  }
 
   recoveryListeners() {
     this._subscribeOnEvents();
