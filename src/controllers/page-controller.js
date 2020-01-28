@@ -174,26 +174,27 @@ export class PageController {
   }
 
   _onDataChange(movieController, changeObject, actionType, data) {
-    // TODO call render() from movieController for given data
     if (changeObject === ActionObject.MOVIE) {
       const oldComments = data.comments;
-      console.log("ON CHANGE INPUT", data);
       this._api.updateMovie(data.id, data).then((response) => {
         const newMovieData = response;
         newMovieData.comments = oldComments;
         this._moviesModel.updateMovie(data.id, newMovieData);
         movieController.render(this._moviesModel.getMovieById(data.id));
+        // todo: rerender
       });
     } else if (actionType === ActionType.ADD) {
-      // TODO: fix (api returns movie object)
       this._api.createComment(data.commentData, data.movieId).then((newMovieData) => {
         this._moviesModel.updateMovie(data.movieId, newMovieData);
         movieController.render(this._moviesModel.getMovieById(data.movieId));
+        // todo: rerender
       });
-      // this._moviesModel.addComment(data.movieId, data.commentData);
     } else {
-      this._moviesModel.deleteComment(data.movieId, data.commentId);
-      movieController.render(this._moviesModel.getMovieById(data.movieId));
+      this._api.deleteComment(data.commentId).then((response) => {
+        this._moviesModel.deleteComment(data.movieId, data.commentId);
+        movieController.render(this._moviesModel.getMovieById(data.movieId));
+      // todo: rerender
+      });
     }
   }
 
