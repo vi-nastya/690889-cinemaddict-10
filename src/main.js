@@ -76,7 +76,7 @@ api.getMovies().then((movies) => {
     render(mainContainer, statistics, Position.BEFOREEND);
     statistics.hide();
 
-    const pageController = new PageController(mainContainer, moviesModel);
+    const pageController = new PageController(mainContainer, moviesModel, api);
     pageController.renderFilms();
   });
 });

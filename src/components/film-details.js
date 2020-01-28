@@ -310,7 +310,7 @@ export class FilmDetails extends AbstractSmartComponent {
     return {
       emotion,
       comment,
-      date: ``
+      date: new Date().toISOString()
     };
   }
 

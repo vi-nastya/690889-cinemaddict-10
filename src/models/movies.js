@@ -20,9 +20,8 @@ export class Movies {
   }
 
   updateMovie(id, newMovieData) {
-    const movieIndex = this._movies.findIndex((movie) => movie.filmData.filmInfo.id === id);
+    const movieIndex = this._movies.findIndex((movie) => movie.id === id);
     this._movies[movieIndex] = newMovieData;
-
     // error handler
   }
 

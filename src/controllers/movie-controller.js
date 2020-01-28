@@ -117,6 +117,7 @@ export class MovieController {
         }
     );
 
+    // ADD COMMENT
     this._filmDetailsComponent.setFormSubmitHandler((commentData) => {
       this._onDataChange(this, ActionObject.COMMENT, ActionType.ADD, {
         commentData,
@@ -125,7 +126,6 @@ export class MovieController {
     });
 
     if (isReplacingComponents) {
-      console.log("REPLACE", filmData);
       replace(this._filmComponent, prevCardComponent);
       replace(this._filmDetailsComponent, prevDetailsComponent);
 

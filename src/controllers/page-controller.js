@@ -54,10 +54,11 @@ const renderCards = (container, cardsData, onDataChange, onViewChange) => {
 };
 
 export class PageController {
-  constructor(container, moviesModel) {
+  constructor(container, moviesModel, api) {
     this._container = container;
     this._showingFilmsCount = SHOWING_FILMS_COUNT;
     this._moviesModel = moviesModel;
+    this._api = api;
 
     this._renderedCards = [];
     this._renderedTopRated = [];
@@ -174,16 +175,15 @@ export class PageController {
 
   _onDataChange(movieController, changeObject, actionType, data) {
     // TODO call render() from movieController for given data
-    console.log("ON DATA CHANGE");
-    console.log("obj: ", changeObject);
-    console.log("type: ", actionType);
-    console.log("data: ", data);
-
     if (changeObject === ActionObject.MOVIE) {
       this._moviesModel.updateMovie(data.id, data);
     } else if (actionType === ActionType.ADD) {
       // TODO: fix (api returns movie object)
-      this._moviesModel.addComment(data.movieId, data.commentData);
+      this._api.createComment(data.commentData, data.movieId).then((newMovieData) => {
+        this._moviesModel.updateMovie(data.movieId, newMovieData);
+        movieController.render(this._moviesModel.getMovieById(data.movieId));
+      });
+      // this._moviesModel.addComment(data.movieId, data.commentData);
     } else {
       this._moviesModel.deleteComment(data.movieId, data.commentId);
       movieController.render(this._moviesModel.getMovieById(data.movieId));

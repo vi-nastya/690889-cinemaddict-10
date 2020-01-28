@@ -42,7 +42,11 @@ export default class Api {
       headers: new Headers({'Content-Type': CONTENT_TYPE})
     })
       .then((response) => response.json())
-      .then(Movie.parseMovie);
+      .then((response) => {
+        const newMovieData = response.movie;
+        newMovieData.comments = response.comments;
+        return Movie.parseMovie(newMovieData);
+      });
   }
 
   updateMovie(movieId, data) {
