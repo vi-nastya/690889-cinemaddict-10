@@ -21,9 +21,7 @@ const getCommentMarkup = (comment) => {
 };
 
 const getRatingFormMarkup = (userRating) => {
-  const ratingValues = [...Array(MAX_RATING + MIN_RATING).keys()].slice(
-    MIN_RATING
-  );
+  const ratingValues = [...Array(MAX_RATING + MIN_RATING).keys()].slice(MIN_RATING);
   return `<div class="form-details__middle-container">
   <section class="film-details__user-rating-wrap">
     <div class="film-details__user-rating-controls">
@@ -100,7 +98,7 @@ export class FilmDetails extends AbstractSmartComponent {
     // TODO: format
     this._duration = filmData.filmInfo.runtime;
     // TODO: handle multiple genres
-    this._genres = filmData.filmInfo.genre;
+    this._genre = filmData.filmInfo.genre;
     this._poster = filmData.filmInfo.poster;
     this._numComments = filmData.comments.length;
     this._director = filmData.filmInfo.director;
@@ -177,11 +175,11 @@ export class FilmDetails extends AbstractSmartComponent {
               <td class="film-details__cell">${this._country}</td>
             </tr>
             <tr class="film-details__row">
-              <td class="film-details__term">Genres</td>
+              <td class="film-details__term">Genre${this._genre.length > 0 ? `s` : ``}</td>
               <td class="film-details__cell">
-                ${this._genres.map(
-                  (el) => `<span class="film-details__genre">${el}</span>`
-                )}</td>
+                ${this._genre.map(
+      (el) => `<span class="film-details__genre">${el}</span>`
+  ).join(`, `)}</td>
             </tr>
           </table>
 
@@ -193,18 +191,18 @@ export class FilmDetails extends AbstractSmartComponent {
 
       <section class="film-details__controls">
         <input type="checkbox" class="film-details__control-input visually-hidden" id="watchlist" name="watchlist" ${
-          this._watchlist ? `checked` : ``
-        }>
+  this._watchlist ? `checked` : ``
+}>
         <label for="watchlist" class="film-details__control-label film-details__control-label--watchlist">Add to watchlist</label>
 
         <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched" ${
-          this._watched ? `checked` : ``
-        }>
+  this._watched ? `checked` : ``
+}>
         <label for="watched" class="film-details__control-label film-details__control-label--watched">Already watched</label>
 
         <input type="checkbox" class="film-details__control-input visually-hidden" id="favorite" name="favorite" ${
-          this._favorite ? `checked` : ``
-        }>
+  this._favorite ? `checked` : ``
+}>
         <label for="favorite" class="film-details__control-label film-details__control-label--favorite">Add to favorites</label>
       </section>
     </div>
@@ -256,7 +254,7 @@ export class FilmDetails extends AbstractSmartComponent {
   // todo
   setDeleteCommentClickHandler(handler) {
     const deleteButtons = this.getElement().querySelectorAll(
-      `.film-details__comment-delete`
+        `.film-details__comment-delete`
     );
     deleteButtons.forEach((button) => {
       button.addEventListener(`click`, (evt) => {
@@ -270,16 +268,16 @@ export class FilmDetails extends AbstractSmartComponent {
 
   setReactionSelectHandler() {
     const emojiButtons = this.getElement().querySelectorAll(
-      `.film-details__emoji-item`
+        `.film-details__emoji-item`
     );
     const emojiContainer = this.getElement().querySelector(
-      `.film-details__add-emoji-label`
+        `.film-details__add-emoji-label`
     );
     emojiButtons.forEach((button) => {
       button.addEventListener(`change`, (evt) => {
         this._selectedEmojiId = evt.target.getAttribute(`id`);
         const selectedEmojiLabel = this.getElement().querySelector(
-          `label[for="${this._selectedEmojiId}"]`
+            `label[for="${this._selectedEmojiId}"]`
         );
         const emojiPictureSrc = selectedEmojiLabel
           .querySelector(`img`)
@@ -307,7 +305,7 @@ export class FilmDetails extends AbstractSmartComponent {
     const emotion = this._getEmotionById(this._selectedEmojiId);
     // TODO: use he and control length
     const comment = this.getElement().querySelector(
-      `.film-details__comment-input`
+        `.film-details__comment-input`
     ).value;
     return {
       emotion,
@@ -336,7 +334,7 @@ export class FilmDetails extends AbstractSmartComponent {
       .addEventListener(`change`, (evt) => {
         evt.stopPropagation();
         const userRating = this.getElement().querySelector(
-          `.film-details__user-rating-input:checked`
+            `.film-details__user-rating-input:checked`
         ).value;
         handler(userRating);
       });

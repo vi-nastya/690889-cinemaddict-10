@@ -16,9 +16,8 @@ export class FilmCard extends AbstractComponent {
     this._year = moment(filmData.filmInfo.release.date).format(`YYYY`);
     // TODO: format
     this._duration = filmData.filmInfo.runtime;
-    console.log
     // TODO: handle multiple genres
-    this._genre = filmData.filmInfo.genre[0];
+    this._genre = filmData.filmInfo.genre.join(`, `);
     this._poster = filmData.filmInfo.poster;
     this._numComments = filmData.comments.length;
 
@@ -48,9 +47,7 @@ export class FilmCard extends AbstractComponent {
   }
 
   setWatchlistButtonClickHandler(handler) {
-    const buttonElement = this.getElement().querySelector(
-      `.film-card__controls-item--add-to-watchlist`
-    );
+    const buttonElement = this.getElement().querySelector(`.film-card__controls-item--add-to-watchlist`);
     buttonElement.addEventListener(`click`, (evt) => {
       evt.preventDefault();
       buttonElement.classList.toggle(`film-card__controls-item--active`);
@@ -59,9 +56,7 @@ export class FilmCard extends AbstractComponent {
   }
 
   setWatchedButtonClickHandler(handler) {
-    const buttonElement = this.getElement().querySelector(
-      `.film-card__controls-item--mark-as-watched`
-    );
+    const buttonElement = this.getElement().querySelector(`.film-card__controls-item--mark-as-watched`);
     buttonElement.addEventListener(`click`, (evt) => {
       evt.preventDefault();
       buttonElement.classList.toggle(`film-card__controls-item--active`);
@@ -70,9 +65,7 @@ export class FilmCard extends AbstractComponent {
   }
 
   setFavoriteButtonClickHandler(handler) {
-    const buttonElement = this.getElement().querySelector(
-      `.film-card__controls-item--favorite`
-    );
+    const buttonElement = this.getElement().querySelector(`.film-card__controls-item--favorite`);
     buttonElement.addEventListener(`click`, (evt) => {
       evt.preventDefault();
       buttonElement.classList.toggle(`film-card__controls-item--active`);
