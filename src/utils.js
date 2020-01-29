@@ -1,4 +1,5 @@
-import {MINUTES_IN_HOUR, UserRank, MinMoviesForRank} from "./constants";
+import {MINUTES_IN_HOUR, UserRank, MinMoviesForRank,
+  MAX_CARD_DESCRIPTION_LENGTH, EXTRA_DESCRIPTION_SYMBOL} from "./constants";
 
 export const getUserRank = (movies) => {
   const moviesWatched = movies.filter((movie) => movie.userDetails.alreadyWatched).length;
@@ -10,6 +11,14 @@ export const getUserRank = (movies) => {
     return UserRank.NOVICE;
   } else {
     return null;
+  }
+};
+
+export const formatDescription = (description) => {
+  if (description.length <= MAX_CARD_DESCRIPTION_LENGTH) {
+    return description;
+  } else {
+    return description.slice(0, MAX_CARD_DESCRIPTION_LENGTH).concat(EXTRA_DESCRIPTION_SYMBOL);
   }
 };
 

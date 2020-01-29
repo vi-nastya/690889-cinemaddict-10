@@ -84,7 +84,7 @@ export default class PageController {
 
   render() {
     const movies = this._moviesModel.getMovies();
-    if (!movies) {
+    if (!movies.length) {
       render(this._container, this._emptyMoviesComponent);
       return;
     }
@@ -144,7 +144,7 @@ export default class PageController {
   }
 
   _renderMovies(moviesData) {
-    if (!moviesData) {
+    if (!moviesData.length) {
       return;
     }
     this._renderedMovies = this._renderedMovies.concat(renderCards(this._allFilmsContainer, moviesData, this._onDataChange, this._onViewChange));

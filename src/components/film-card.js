@@ -1,4 +1,4 @@
-import {formatFilmDuration} from "../utils";
+import {formatFilmDuration, formatDescription} from "../utils";
 import AbstractComponent from "./abstract-component";
 import moment from 'moment';
 
@@ -17,6 +17,7 @@ export default class FilmCard extends AbstractComponent {
     this._genre = filmData.filmInfo.genre[0];
     this._poster = filmData.filmInfo.poster;
     this._numComments = filmData.comments.length;
+    this._description = formatDescription(filmData.filmInfo.description);
 
     this._watched = filmData.userDetails.alreadyWatched;
     this._watchlist = filmData.userDetails.watchlist;
@@ -33,7 +34,7 @@ export default class FilmCard extends AbstractComponent {
       <span class="film-card__genre">${this._genre}</span>
     </p>
     <img src="./${this._poster}" alt="" class="film-card__poster">
-    <p class="film-card__description">Burlesque comic Ralph "Skid" Johnson (Skelly), and specialty dancer Bonny Lee King (Carroll), end up together on a cold, rainy night at a tr…</p>
+    <p class="film-card__description">${this._description}</p>
     <a class="film-card__comments">${this._numComments} comments</a>
     <form class="film-card__controls">
     ${getButtonMarkup(`add-to-watchlist`, `Add to watchlist`, this._watchlist)}

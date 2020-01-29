@@ -5,6 +5,9 @@ export const DEFAULT_RATING = 0;
 export const ANIMATION_TIME_SECONDS = 1.5;
 export const MILLISECONDS_IN_SECOND = 1000;
 
+export const MAX_CARD_DESCRIPTION_LENGTH = 139;
+export const EXTRA_DESCRIPTION_SYMBOL = `…`;
+
 export const COMMENT_FORM_CLASS = `film-details__new-comment`;
 export const COMMENT_INPUT_CLASS = `film-details__comment-input`;
 export const VISUALLY_HIDDEN_CLASS = `visually-hidden`;
