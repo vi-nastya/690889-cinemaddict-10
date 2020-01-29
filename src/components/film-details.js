@@ -1,9 +1,8 @@
-import {AbstractSmartComponent, formatFilmDuration} from "../utils";
+import {formatFilmDuration} from "../utils";
 import moment from 'moment';
+import AbstractSmartComponent from "./abstract-smart-component";
+import {MIN_RATING, MAX_RATING, COMMENT_FORM_CLASS, COMMENT_INPUT_CLASS, ANIMATION_TIME_SECONDS, MILLISECONDS_IN_SECOND, DeleteButtonText} from "../constants";
 
-const MIN_RATING = 1;
-const MAX_RATING = 9;
-const DEFAULT_RATING = 0;
 
 const getCommentMarkup = (comment) => {
   return `<li class="film-details__comment">
@@ -15,7 +14,7 @@ const getCommentMarkup = (comment) => {
     <p class="film-details__comment-info">
       <span class="film-details__comment-author">${comment.author}</span>
       <span class="film-details__comment-day">${moment(comment.date).format(`YYYY/MM/DD HH:MM`)}</span>
-      <button class="film-details__comment-delete" data-id=${comment.id}>Delete</button>
+      <button class="film-details__comment-delete" data-id=${comment.id}>${DeleteButtonText.DELETE}</button>
     </p>
   </div>
 </li>`;
@@ -87,7 +86,7 @@ const getNewCommentMarkup = () => {
 </div>`;
 };
 
-export class FilmDetails extends AbstractSmartComponent {
+export default class FilmDetails extends AbstractSmartComponent {
   constructor(filmData) {
     super();
     this._title = filmData.filmInfo.title;
@@ -253,7 +252,7 @@ export class FilmDetails extends AbstractSmartComponent {
     this._closeButtonClickHandler = handler;
   }
 
-  // todo
+  // DELETE COMMENTS LOGIC
   setDeleteCommentClickHandler(handler) {
     const deleteButtons = this.getElement().querySelectorAll(
         `.film-details__comment-delete`
@@ -262,12 +261,26 @@ export class FilmDetails extends AbstractSmartComponent {
       button.addEventListener(`click`, (evt) => {
         evt.preventDefault();
         const commentId = evt.target.getAttribute(`data-id`);
+
+        // disable
+        evt.target.textContent = DeleteButtonText.DELETING;
+        evt.target.disabled = true;
+
         handler(commentId);
       });
     });
     this._deleteCommentHandler = handler;
   }
 
+  onDeleteError() {
+    const deleteButtons = this.getElement().querySelectorAll(`.film-details__comment-delete`);
+    deleteButtons.forEach((button) => {
+      button.textContent = DeleteButtonText.DELETE;
+      button.disabled = false;
+    });
+  }
+
+  // ADD COMMENT LOGIC
   setReactionSelectHandler() {
     const emojiButtons = this.getElement().querySelectorAll(
         `.film-details__emoji-item`
@@ -322,6 +335,9 @@ export class FilmDetails extends AbstractSmartComponent {
       // TODO check if not empty
       if ((evt.ctrlKey || evt.metaKey) && (evt.keyCode === 13)) {
         const commentData = this._getNewCommentData();
+
+        this.getElement().querySelector(`.${COMMENT_INPUT_CLASS}`).disabled = true;
+
         handler(commentData);
       }
     });
@@ -329,6 +345,11 @@ export class FilmDetails extends AbstractSmartComponent {
     this._formSubmitHandler = handler;
   }
 
+  unlockCommentSubmitForm() {
+    this.getElement().querySelector(`.${COMMENT_INPUT_CLASS}`).disabled = false;
+  }
+
+  // ADD RATING LOGIC
   setRatingClickHandler(handler) {
     // todo: check if is showing this section
     if (this._watched) {
@@ -356,12 +377,25 @@ export class FilmDetails extends AbstractSmartComponent {
     this._undoClickHandler = handler;
   }
 
+  shake() {
+    const commentForm = this.getElement().querySelector(`.${COMMENT_FORM_CLASS}`);
+    if (commentForm) {
+      commentForm.style.animation = `shake ${ANIMATION_TIME_SECONDS}s`;
+      this.getElement().style.animation = `shake ${ANIMATION_TIME_SECONDS}s`;
+
+      setTimeout(() => {
+        commentForm.style.animation = ``;
+        this.getElement().style.animation = ``;
+      }, ANIMATION_TIME_SECONDS * MILLISECONDS_IN_SECOND);
+    }
+  }
+
   recoveryListeners() {
     this._subscribeOnEvents();
   }
 
   _subscribeOnEvents() {
-    const element = this.getElement();
+    // const element = this.getElement();
 
     this.setCloseButtonClickHandler(this._closeButtonClickHandler);
     this.setFavoriteButtonClickHandler(this._favoriteClickHandler);

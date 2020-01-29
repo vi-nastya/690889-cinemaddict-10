@@ -1,27 +1,9 @@
-import {ShowMoreButton} from "../components/show-more-button";
-import {Position, render, unrender, remove} from "../utils";
-import {SortType, Sort} from "../components/sort";
-import {MovieController} from "./movie-controller";
-import {Films} from "../components/films";
-
-const MovieTypes = {
-  RATING: `topRated`,
-  COMMENTS: `mostCommented`
-};
-
-export const ActionType = {
-  ADD: `add`,
-  UPDATE: `update`,
-  DELETE: `delete`
-};
-
-export const ActionObject = {
-  MOVIE: `movie`,
-  COMMENT: `comment`
-};
-
-const NUM_EXTRA_MOVIES = 2;
-const NUM_MOVIES_TO_RENDER = 5;
+import ShowMoreButton from "../components/show-more-button";
+import {Position, render, remove} from "../utils";
+import Sort from "../components/sort";
+import MovieController from "./movie-controller";
+import Films from "../components/films";
+import {SortType, NUM_EXTRA_MOVIES, NUM_MOVIES_TO_RENDER, MovieTypes, ActionType, ActionObject} from "../constants";
 
 const getExtaMovies = (movieData, movieType) => {
   switch (movieType) {
@@ -58,7 +40,7 @@ const renderCards = (container, cardsData, onDataChange, onViewChange) => {
   });
 };
 
-export class PageController {
+export default class PageController {
   constructor(container, moviesModel, api) {
     this._container = container;
     this._moviesModel = moviesModel;
@@ -130,10 +112,12 @@ export class PageController {
 
   _renderMovies(moviesData) {
     if (!moviesData) {
-      console.log("NO MOVIES, SORRY");
-      return [];
+      // TODO
+      // console.log("NO MOVIES, SORRY");
+      return;
     }
     this._renderedMovies = this._renderedMovies.concat(renderCards(this._allFilmsContainer, moviesData, this._onDataChange, this._onViewChange));
+    return;
   }
 
   _renderExtraMovies(container, moviesData) {
@@ -204,16 +188,24 @@ export class PageController {
         // todo: rerender
       });
     } else if (actionType === ActionType.ADD) {
-      this._api.createComment(data.commentData, data.movieId).then((newMovieData) => {
+      this._api.createComment(data.commentData, data.movieId)
+      .then((newMovieData) => {
         this._moviesModel.updateMovie(data.movieId, newMovieData);
         movieController.render(this._moviesModel.getMovieById(data.movieId));
         // todo: rerender
+      })
+      .catch(() => {
+        movieController.handleAddCommentError();
       });
     } else {
-      this._api.deleteComment(data.commentId).then((response) => {
+      this._api.deleteComment(data.commentId)
+      .then(() => {
         this._moviesModel.deleteComment(data.movieId, data.commentId);
         movieController.render(this._moviesModel.getMovieById(data.movieId));
       // todo: rerender
+      })
+      .catch(() => {
+        movieController.handleDeleteError();
       });
     }
   }

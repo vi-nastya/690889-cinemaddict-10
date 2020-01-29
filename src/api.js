@@ -7,10 +7,13 @@ const Method = {
   DELETE: `DELETE`
 };
 
+const SUCCESS_STATUS_CODE = 200;
+const MULTIPLE_CHOICE_CODE = 300;
+
 const CONTENT_TYPE = `application/json`;
 
 const checkStatus = (response) => {
-  if (response.status >= 200 && response.status < 300) {
+  if (response.status >= SUCCESS_STATUS_CODE && response.status < MULTIPLE_CHOICE_CODE) {
     return response;
   } else {
     throw new Error(`${response.status}: ${response.statusText}`);
@@ -26,12 +29,18 @@ export default class Api {
   getMovies() {
     return this._load({url: `movies`})
       .then((response) => response.json())
-      .then(Movie.parseMovies);
+      .then(Movie.parseMovies)
+      .catch((err) => {
+        throw err;
+      });
   }
 
   getComments(movieId) {
     return this._load({url: `comments/${movieId}`})
-      .then((response) => response.json());
+      .then((response) => response.json())
+      .catch((err) => {
+        throw err;
+      });
   }
 
   createComment(comment, movieId) {
@@ -45,7 +54,10 @@ export default class Api {
       .then((response) => {
         const newMovieData = response.movie;
         newMovieData.comments = response.comments;
-        return Movie.parseMovie(newMovieData);
+        return Movie.parseMovie(newMovieData)
+        .catch((err) => {
+          throw err;
+        });
       });
   }
 
@@ -57,7 +69,10 @@ export default class Api {
       headers: new Headers({'Content-Type': CONTENT_TYPE})
     })
       .then((response) => response.json())
-      .then(Movie.parseMovie);
+      .then(Movie.parseMovie)
+      .catch((err) => {
+        throw err;
+      });
   }
 
   deleteComment(commentId) {

@@ -1,17 +1,10 @@
-import {FilmCard} from "../components/film-card";
-import {FilmDetails} from "../components/film-details";
+import FilmCard from "../components/film-card";
+import FilmDetails from "../components/film-details";
 import {render, replace} from "../utils";
-import {ActionType, ActionObject} from "./page-controller";
 import Movie from "../models/movie";
+import {ActionType, ActionObject, Mode, DEFAULT_RATING} from "../constants";
 
-const Mode = {
-  DEFAULT: `default`,
-  POPUP: `popup`
-};
-
-const DEFAULT_RATING = 0;
-
-export class MovieController {
+export default class MovieController {
   constructor(container, onDataChange, onViewChange) {
     this._container = container;
     this._filmComponent = null;
@@ -146,6 +139,15 @@ export class MovieController {
   _changePopupToCard() {
     this._bodyElement.removeChild(this._filmDetailsComponent.getElement());
     this._mode = Mode.DEFAULT;
+  }
+
+  handleAddCommentError() {
+    this._filmDetailsComponent.shake();
+    this._filmDetailsComponent.unlockCommentSubmitForm();
+  }
+
+  handleDeleteError() {
+    this._filmDetailsComponent.onDeleteError();
   }
 
   _changeCardToPopup() {

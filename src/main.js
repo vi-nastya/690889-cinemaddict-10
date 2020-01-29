@@ -1,12 +1,11 @@
-import {PageController} from "./controllers/page-controller";
-import {films} from "./mocks/films";
-import {UserTitle} from "./components/user-title";
+import PageController from "./controllers/page-controller";
+// import UserTitle from "./components/user-title";
 import {Position, render, remove} from "./utils";
-import {Movies} from "./models/movies";
-import {Statistics} from "./components/statistics";
-import {FiltersController} from "./controllers/filters-controller";
-import {FilterType} from "./components/filters";
-import {Loading} from "./components/loading";
+import Movies from "./models/movies";
+import Statistics from "./components/statistics";
+import FiltersController from "./controllers/filters-controller";
+import {FilterType} from "./constants";
+import Loading from "./components/loading";
 import Api from "./api";
 
 const AUTHORIZATION = `Basic er173jdzbdw`;
@@ -15,23 +14,22 @@ const END_POINT = `https://htmlacademy-es-10.appspot.com/cinemaddict`;
 const api = new Api(END_POINT, AUTHORIZATION);
 
 
-const getUserTitle = (movies) => {
-  return `fan`;
-};
+// const getUserTitle = (movies) => {
+//   return `fan`;
+// };
 
 const moviesModel = new Movies();
-moviesModel.setMovies(films);
 
-const headerContainer = document.querySelector(`header`);
+// const headerContainer = document.querySelector(`header`);
 const mainContainer = document.querySelector(`main`);
 
 const loadingComponent = new Loading();
 render(mainContainer, loadingComponent);
 
-if (films.length > 0) {
-  // TODO: render user title
-  render(headerContainer, new UserTitle(getUserTitle(films)), Position.BEFOREEND);
-}
+// if (films.length > 0) {
+//   // TODO: render user title
+//   render(headerContainer, new UserTitle(getUserTitle(films)), Position.BEFOREEND);
+// }
 
 const filtersController = new FiltersController(mainContainer, moviesModel);
 

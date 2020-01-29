@@ -1,19 +1,8 @@
-import {AbstractSmartComponent, getHoursAndMinutes} from "../utils";
+import {getHoursAndMinutes} from "../utils";
 import Chart from "chart.js";
+import AbstractSmartComponent from "./abstract-smart-component";
 import ChartDataLabels from "chartjs-plugin-datalabels";
-
-const Period = {
-  ALL: `all-time`,
-  TODAY: `today`,
-  WEEK: `week`,
-  MONTH: `month`,
-  YEAR: `year`
-};
-
-const MILLISECONDS_IN_DAY = 24 * 60 * 60 * 1000;
-const MILLISECONDS_IN_WEEK = MILLISECONDS_IN_DAY * 7;
-const MILLISECONDS_IN_MONTH = MILLISECONDS_IN_DAY * 30;
-const MILLISECONDS_IN_YEAR = MILLISECONDS_IN_DAY * 365;
+import {Period, MILLISECONDS_IN_WEEK, MILLISECONDS_IN_YEAR, MILLISECONDS_IN_MONTH} from "../constants";
 
 const ChartParams = {
   CHART_TYPE: `horizontalBar`,
@@ -104,7 +93,7 @@ const getStats = (moviesData) => {
   };
 };
 
-export class Statistics extends AbstractSmartComponent {
+export default class Statistics extends AbstractSmartComponent {
   constructor(moviesModel) {
     super();
     this._model = moviesModel;

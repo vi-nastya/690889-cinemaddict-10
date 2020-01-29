@@ -1,4 +1,5 @@
-import {AbstractComponent, formatFilmDuration} from "../utils";
+import {formatFilmDuration} from "../utils";
+import AbstractComponent from "./abstract-component";
 import moment from 'moment';
 
 const getButtonMarkup = (buttonClass, buttonText, isActive) => {
@@ -7,7 +8,7 @@ const getButtonMarkup = (buttonClass, buttonText, isActive) => {
   }">${buttonText}</button>`;
 };
 
-export class FilmCard extends AbstractComponent {
+export default class FilmCard extends AbstractComponent {
   constructor(filmData) {
     super();
     this._title = filmData.filmInfo.title;

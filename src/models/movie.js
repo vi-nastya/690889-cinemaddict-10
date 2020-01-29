@@ -1,5 +1,4 @@
 export default class Movie {
-  // TODO: format dates
   constructor(movieData) {
     this.id = movieData.id;
     this.comments = movieData.comments;

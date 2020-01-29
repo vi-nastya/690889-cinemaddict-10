@@ -1,6 +1,6 @@
-import {AbstractComponent} from "../utils";
+import AbstractComponent from "./abstract-component";
 
-export class NoFilms extends AbstractComponent {
+export default class NoFilms extends AbstractComponent {
   constructor() {
     super();
   }

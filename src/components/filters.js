@@ -1,14 +1,5 @@
-import {AbstractComponent} from "../utils";
-
-export const FilterType = {
-  ALL: `all`,
-  STATS: `stats`,
-  WATCHED: `watched`,
-  WATCHLIST: `watchlist`,
-  FAVORITE: `favorite`
-};
-
-const ACTIVE_FILTER_CLASS = `main-navigation__item--active`;
+import AbstractComponent from "./abstract-component";
+import {FilterType, ACTIVE_FILTER_CLASS} from "../constants";
 
 const getFiltersMarkup = (moviesData, activeFilter) => {
   const moviesWatched = moviesData.filter((movie) => movie.userDetails.alreadyWatched).length;
@@ -23,7 +14,7 @@ const getFiltersMarkup = (moviesData, activeFilter) => {
   </nav>`;
 };
 
-export class Filters extends AbstractComponent {
+export default class Filters extends AbstractComponent {
   constructor(currentFilter, moviesData) {
     super();
     this._movies = moviesData;

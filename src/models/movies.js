@@ -1,6 +1,6 @@
-import {FilterType} from "../components/filters";
+import {FilterType} from "../constants";
 
-export class Movies {
+export default class Movies {
   constructor() {
     this._movies = [];
     this._activeFilterType = FilterType.ALL; // TODO
