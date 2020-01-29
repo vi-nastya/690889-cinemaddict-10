@@ -1,9 +1,10 @@
 import ShowMoreButton from "../components/show-more-button";
-import {Position, render, remove} from "../utils";
+import {Position, render, remove, getUserRank} from "../utils";
 import Sort from "../components/sort";
 import MovieController from "./movie-controller";
 import Films from "../components/films";
 import EmptyMoviesList from "../components/empty-movies-list";
+import UserRank from "../components/user-rank";
 import {SortType, NUM_EXTRA_MOVIES, NUM_MOVIES_TO_RENDER, MovieTypes, ActionType, ActionObject} from "../constants";
 
 const getExtaMovies = (movieData, movieType) => {
@@ -51,6 +52,8 @@ export default class PageController {
     this._renderedTopRated = [];
     this._renderedMostCommented = [];
 
+    this._userRankComponent = new UserRank();
+
     this._sortType = SortType.DEFAULT;
 
     this._sortComponent = new Sort();
@@ -76,13 +79,13 @@ export default class PageController {
     this._emptyMoviesComponent = new EmptyMoviesList();
   }
 
-  renderFilms() {
+  render() {
     const movies = this._moviesModel.getMovies();
     if (!movies) {
       render(this._container, this._emptyMoviesComponent);
       return;
     }
-
+    this._renderUserRank(movies);
     render(this._container, this._sortComponent, Position.BEFOREEND);
     render(this._container, this._filmsComponent, Position.BEFOREEND);
 
@@ -104,6 +107,15 @@ export default class PageController {
     const mostCommentedMovies = getExtaMovies(movies, MovieTypes.COMMENTS);
     this._renderedTopRated = this._renderExtraMovies(this._topRatedContainer, topRatedMovies);
     this._renderedMostCommented = this._renderExtraMovies(this._mostCommentedContainer, mostCommentedMovies);
+  }
+
+  _renderUserRank(movies) {
+    remove(this._userRankComponent);
+    const userRank = getUserRank(movies);
+    if (userRank) {
+      this._userRankComponent.setRank(userRank);
+      render(document.querySelector(`header`), this._userRankComponent, Position.BEFOREEND);
+    }
   }
 
   _unrenderMovies() {

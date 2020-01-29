@@ -1,11 +1,17 @@
-// const USER_STATUSES {
-//   0 — звание не отображается;
-// от 1 до 10 — novice;
-// от 11 до 20 — fan;
-// от 21 и выше — movie buff;
-// }
+import {MINUTES_IN_HOUR, UserRank, MinMoviesForRank} from "./constants";
 
-const MINUTES_IN_HOUR = 60;
+export const getUserRank = (movies) => {
+  const moviesWatched = movies.filter((movie) => movie.userDetails.alreadyWatched).length;
+  if (moviesWatched >= MinMoviesForRank.MOVIE_BUFF) {
+    return UserRank.MOVIE_BUFF;
+  } else if (moviesWatched >= MinMoviesForRank.FAN) {
+    return UserRank.FAN;
+  } else if (moviesWatched >= MinMoviesForRank.NOVICE) {
+    return UserRank.NOVICE;
+  } else {
+    return null;
+  }
+};
 
 export const formatFilmDuration = (duration) => {
   const hours = Math.floor(duration / MINUTES_IN_HOUR);
@@ -62,13 +68,6 @@ export const replace = (newComponent, oldComponent) => {
 
   if (isExistElements && parentElement.contains(oldElement)) {
     parentElement.replaceChild(newElement, oldElement);
-  }
-};
-
-export const unrender = (element) => {
-  if (element) {
-    element.remove();
-    element.removeElement();
   }
 };
 

@@ -1,4 +1,4 @@
-import {getHoursAndMinutes} from "../utils";
+import {getHoursAndMinutes, getUserRank} from "../utils";
 import Chart from "chart.js";
 import AbstractSmartComponent from "./abstract-smart-component";
 import ChartDataLabels from "chartjs-plugin-datalabels";
@@ -98,7 +98,7 @@ export default class Statistics extends AbstractSmartComponent {
     super();
     this._model = moviesModel;
     this._currentPeriod = Period.ALL;
-    this._movies = moviesModel.getAllMovies();
+    this._movies = getMoviesForPeriod(moviesModel.getAllMovies(), Period.ALL);
     this._moviesForPeriod = this._movies;
 
     this._setPeriodChangeHandler = this._setPeriodChangeHandler.bind(this);
@@ -106,14 +106,14 @@ export default class Statistics extends AbstractSmartComponent {
 
     this._subscribeOnEvents();
   }
-  // TODO: update rank
+
   getTemplate() {
     const statsData = getStats(this._moviesForPeriod, this._currentPeriod);
     return `<section class="statistic">
     <p class="statistic__rank">
       Your rank
       <img class="statistic__img" src="images/bitmap@2x.png" alt="Avatar" width="35" height="35">
-      <span class="statistic__rank-label">Sci-Fighter</span>
+      <span class="statistic__rank-label">${getUserRank(this._movies)}</span>
     </p>
 
     ${this._getPeriodSelectorMarkup()}

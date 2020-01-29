@@ -68,4 +68,16 @@ export const MILLISECONDS_IN_DAY = 24 * 60 * 60 * 1000;
 export const MILLISECONDS_IN_WEEK = MILLISECONDS_IN_DAY * 7;
 export const MILLISECONDS_IN_MONTH = MILLISECONDS_IN_DAY * 30;
 export const MILLISECONDS_IN_YEAR = MILLISECONDS_IN_DAY * 365;
+export const MINUTES_IN_HOUR = 60;
 
+export const UserRank = {
+  NOVICE: `novice`,
+  FAN: `fan`,
+  MOVIE_BUFF: `movie buff`
+};
+
+export const MinMoviesForRank = {
+  NOVICE: 1,
+  FAN: 11,
+  MOVIE_BUFF: 21
+};
