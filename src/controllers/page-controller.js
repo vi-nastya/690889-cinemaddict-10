@@ -100,7 +100,6 @@ export default class PageController {
 
     this._renderShowMoreButton();
 
-    // TODO: get top rated, get most commented
     const topRatedMovies = getExtaMovies(movies, MovieTypes.RATING);
     const mostCommentedMovies = getExtaMovies(movies, MovieTypes.COMMENTS);
     this._renderedTopRated = this._renderExtraMovies(this._topRatedContainer, topRatedMovies);
@@ -115,8 +114,6 @@ export default class PageController {
 
   _renderMovies(moviesData) {
     if (!moviesData) {
-      // TODO
-      // console.log("NO MOVIES, SORRY");
       return;
     }
     this._renderedMovies = this._renderedMovies.concat(renderCards(this._allFilmsContainer, moviesData, this._onDataChange, this._onViewChange));

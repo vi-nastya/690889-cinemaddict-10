@@ -24,7 +24,7 @@ export default class Movie {
       watchlist: movieData[`user_details`][`watchlist`],
       alreadyWatched: movieData[`user_details`][`already_watched`],
       favorite: movieData[`user_details`][`favorite`],
-      watchingDate: movieData[`user_details`][`watching_date`]
+      watchingDate: movieData[`user_details`][`watching_date`] || null
     };
   }
 
@@ -53,7 +53,7 @@ export default class Movie {
         'personal_rating': this.userDetails.personalRating,
         'watchlist': this.userDetails.watchlist,
         'already_watched': this.userDetails.alreadyWatched,
-        'watching_date': this.userDetails.watchingDate,
+        'watching_date': this.userDetails.watchingDate ? this.userDetails.watchingDate : new Date(0).toISOString(),
         'favorite': this.userDetails.favorite
       }
     };
