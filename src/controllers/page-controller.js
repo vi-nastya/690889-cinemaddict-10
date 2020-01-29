@@ -3,6 +3,7 @@ import {Position, render, remove} from "../utils";
 import Sort from "../components/sort";
 import MovieController from "./movie-controller";
 import Films from "../components/films";
+import EmptyMoviesList from "../components/empty-movies-list";
 import {SortType, NUM_EXTRA_MOVIES, NUM_MOVIES_TO_RENDER, MovieTypes, ActionType, ActionObject} from "../constants";
 
 const getExtaMovies = (movieData, movieType) => {
@@ -71,9 +72,17 @@ export default class PageController {
 
     this._onFilterChange = this._onFilterChange.bind(this);
     this._moviesModel.setFilterChangeHandler(this._onFilterChange);
+
+    this._emptyMoviesComponent = new EmptyMoviesList();
   }
 
   renderFilms() {
+    const movies = this._moviesModel.getMovies();
+    if (!movies) {
+      render(this._container, this._emptyMoviesComponent);
+      return;
+    }
+
     render(this._container, this._sortComponent, Position.BEFOREEND);
     render(this._container, this._filmsComponent, Position.BEFOREEND);
 
@@ -87,19 +96,13 @@ export default class PageController {
         `.films-list__container`
     )[2];
 
-    this._renderMovies(this._moviesModel.getMovies().slice(0, NUM_MOVIES_TO_RENDER));
+    this._renderMovies(movies.slice(0, NUM_MOVIES_TO_RENDER));
 
     this._renderShowMoreButton();
 
     // TODO: get top rated, get most commented
-    const topRatedMovies = getExtaMovies(
-        this._moviesModel.getAllMovies(),
-        MovieTypes.RATING
-    );
-    const mostCommentedMovies = getExtaMovies(
-        this._moviesModel.getAllMovies(),
-        MovieTypes.COMMENTS
-    );
+    const topRatedMovies = getExtaMovies(movies, MovieTypes.RATING);
+    const mostCommentedMovies = getExtaMovies(movies, MovieTypes.COMMENTS);
     this._renderedTopRated = this._renderExtraMovies(this._topRatedContainer, topRatedMovies);
     this._renderedMostCommented = this._renderExtraMovies(this._mostCommentedContainer, mostCommentedMovies);
   }
