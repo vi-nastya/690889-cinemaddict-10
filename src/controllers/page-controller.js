@@ -121,6 +121,7 @@ export default class PageController {
   _updateMovies() {
     const newMovies = this._moviesModel.getMovies();
     this._unrenderMovies();
+    this._renderUserRank(newMovies);
     this._onSortTypeChange(this._sortType);
     this._renderExtraMovies(newMovies);
   }
