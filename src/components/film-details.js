@@ -41,9 +41,8 @@ const getRatingFormMarkup = (userRating, poster) => {
         <div class="film-details__user-rating-score">
         ${ratingValues
           .map((value) => {
-            return `<input type="radio" name="score" class="film-details__user-rating-input visually-hidden" value="${value}" id="rating-${value}" ${
-              userRating === value ? `checked` : ``
-            }>
+            return `<input type="radio" name="score" class="film-details__user-rating-input visually-hidden"
+              value="${value}" id="rating-${value}" ${userRating === value ? `checked` : ``}>
           <label class="film-details__user-rating-label" for="rating-${value}">${value}</label>`;
           })
           .join(`\n`)}
@@ -92,12 +91,12 @@ export default class FilmDetails extends AbstractSmartComponent {
     this._title = filmData.filmInfo.title;
     this._rating = filmData.filmInfo.totalRating;
     this._description = filmData.filmInfo.description;
-    // TODO: format
+
     this._year = filmData.filmInfo.release.date;
     this._country = filmData.filmInfo.release.releaseCountry;
-    // TODO: format
+
     this._duration = filmData.filmInfo.runtime;
-    // TODO: handle multiple genres
+
     this._genre = filmData.filmInfo.genre;
     this._poster = filmData.filmInfo.poster;
     this._numComments = filmData.comments.length;
@@ -178,9 +177,9 @@ export default class FilmDetails extends AbstractSmartComponent {
             <tr class="film-details__row">
               <td class="film-details__term">Genre${this._genre.length > 0 ? `s` : ``}</td>
               <td class="film-details__cell">
-                ${this._genre.map(
-      (el) => `<span class="film-details__genre">${el}</span>`
-  ).join(`, `)}</td>
+                ${this._genre
+                  .map((el) => `<span class="film-details__genre">${el}</span>`)
+                  .join(`, `)}</td>
             </tr>
           </table>
 
@@ -191,19 +190,13 @@ export default class FilmDetails extends AbstractSmartComponent {
       </div>
 
       <section class="film-details__controls">
-        <input type="checkbox" class="film-details__control-input visually-hidden" id="watchlist" name="watchlist" ${
-  this._watchlist ? `checked` : ``
-}>
+        <input type="checkbox" class="film-details__control-input visually-hidden" id="watchlist" name="watchlist" ${this._watchlist ? `checked` : ``}>
         <label for="watchlist" class="film-details__control-label film-details__control-label--watchlist">Add to watchlist</label>
 
-        <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched" ${
-  this._watched ? `checked` : ``
-}>
+        <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched" ${this._watched ? `checked` : ``}>
         <label for="watched" class="film-details__control-label film-details__control-label--watched">Already watched</label>
 
-        <input type="checkbox" class="film-details__control-input visually-hidden" id="favorite" name="favorite" ${
-  this._favorite ? `checked` : ``
-}>
+        <input type="checkbox" class="film-details__control-input visually-hidden" id="favorite" name="favorite" ${this._favorite ? `checked` : ``}>
         <label for="favorite" class="film-details__control-label film-details__control-label--favorite">Add to favorites</label>
       </section>
     </div>
@@ -214,7 +207,7 @@ export default class FilmDetails extends AbstractSmartComponent {
         <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${this._comments.length}</span></h3>
 
         <ul class="film-details__comments-list">
-        ${this._comments.map(getCommentMarkup)}
+        ${this._comments.map(getCommentMarkup).join(`\n`)}
         </ul>
 
         ${getNewCommentMarkup()}
@@ -318,7 +311,6 @@ export default class FilmDetails extends AbstractSmartComponent {
 
   _getNewCommentData() {
     const emotion = this._getEmotionById(this._selectedEmojiId);
-    // TODO: use he and control length
     const comment = this.getElement().querySelector(
         `.film-details__comment-input`
     ).value;
@@ -332,7 +324,6 @@ export default class FilmDetails extends AbstractSmartComponent {
   setFormSubmitHandler(handler) {
     const commentForm = this.getElement().querySelector(`.film-details__new-comment`);
     commentForm.addEventListener(`keydown`, (evt) => {
-      // TODO check if not empty
       if ((evt.ctrlKey || evt.metaKey) && (evt.keyCode === 13)) {
         const commentData = this._getNewCommentData();
 
@@ -351,7 +342,6 @@ export default class FilmDetails extends AbstractSmartComponent {
 
   // ADD RATING LOGIC
   setRatingClickHandler(handler) {
-    // todo: check if is showing this section
     if (this._watched) {
       this.getElement()
         .querySelector(`.film-details__user-rating-score`)
@@ -395,8 +385,6 @@ export default class FilmDetails extends AbstractSmartComponent {
   }
 
   _subscribeOnEvents() {
-    // const element = this.getElement();
-
     this.setCloseButtonClickHandler(this._closeButtonClickHandler);
     this.setFavoriteButtonClickHandler(this._favoriteClickHandler);
     this.setWatchedButtonClickHandler(this._watchedClickHandler);

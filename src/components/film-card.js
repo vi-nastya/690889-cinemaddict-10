@@ -3,8 +3,8 @@ import AbstractComponent from "./abstract-component";
 import moment from 'moment';
 
 const getButtonMarkup = (buttonClass, buttonText, isActive) => {
-  return `<button class="film-card__controls-item button film-card__controls-item--${buttonClass} ${
-    isActive ? `film-card__controls-item--active` : ``}">${buttonText}</button>`;
+  return `<button class="film-card__controls-item button film-card__controls-item--${buttonClass}
+  ${isActive ? `film-card__controls-item--active` : ``}">${buttonText}</button>`;
 };
 
 export default class FilmCard extends AbstractComponent {
@@ -12,11 +12,8 @@ export default class FilmCard extends AbstractComponent {
     super();
     this._title = filmData.filmInfo.title;
     this._rating = filmData.filmInfo.totalRating;
-    // TODO: format
     this._year = moment(filmData.filmInfo.release.date).format(`YYYY`);
-    // TODO: format
     this._duration = filmData.filmInfo.runtime;
-    // TODO: handle multiple genres
     this._genre = filmData.filmInfo.genre[0];
     this._poster = filmData.filmInfo.poster;
     this._numComments = filmData.comments.length;

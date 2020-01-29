@@ -103,15 +103,17 @@ export default class PageController {
     const topRatedMovies = getExtaMovies(movies, ExtraType.TOP_RATED);
     const mostCommentedMovies = getExtaMovies(movies, ExtraType.MOST_COMMENTED);
 
-    if (!topRatedMovies) {
-      this._topRatedContainer.classList.add(VISUALLY_HIDDEN_CLASS);
+    if (!topRatedMovies.length) {
+      this._container.querySelector(`section[data-extra-type="${ExtraType.TOP_RATED}"]`)
+        .classList.add(VISUALLY_HIDDEN_CLASS);
       this._renderedTopRated = [];
     } else {
       this._renderedTopRated = renderCards(this._topRatedContainer, topRatedMovies, this._onDataChange, this._onViewChange);
     }
 
-    if (!mostCommentedMovies) {
-      this._mostCommentedContainer.classList.add(VISUALLY_HIDDEN_CLASS);
+    if (!mostCommentedMovies.length) {
+      this._container.querySelector(`section[data-extra-type="${ExtraType.MOST_COMMENTED}"]`)
+        .classList.add(VISUALLY_HIDDEN_CLASS);
       this._renderedMostCommented = [];
     } else {
       this._renderedMostCommented = renderCards(this._mostCommentedContainer, mostCommentedMovies, this._onDataChange, this._onViewChange);
@@ -152,24 +154,28 @@ export default class PageController {
   _renderExtraMovies(moviesData) {
     // remove old cards
     this._topRatedContainer.innerHTML = ``;
-    this._topRatedContainer.classList.remove(VISUALLY_HIDDEN_CLASS);
+    this._container.querySelector(`section[data-extra-type="${ExtraType.TOP_RATED}"]`)
+        .classList.remove(VISUALLY_HIDDEN_CLASS);
     this._mostCommentedContainer.innerHTML = ``;
-    this._mostCommentedContainer.classList.remove(VISUALLY_HIDDEN_CLASS);
+    this._container.querySelector(`section[data-extra-type="${ExtraType.MOST_COMMENTED}"]`)
+        .classList.remove(VISUALLY_HIDDEN_CLASS);
 
     // get new data
     const topRatedMovies = getExtaMovies(moviesData, ExtraType.TOP_RATED);
     const mostCommentedMovies = getExtaMovies(moviesData, ExtraType.MOST_COMMENTED);
 
     // render new cards or hide sections
-    if (!topRatedMovies) {
-      this._topRatedContainer.classList.add(VISUALLY_HIDDEN_CLASS);
+    if (!topRatedMovies.length) {
+      this._container.querySelector(`section[data-extra-type="${ExtraType.TOP_RATED}"]`)
+        .classList.add(VISUALLY_HIDDEN_CLASS);
       this._renderedTopRated = [];
     } else {
       this._renderedTopRated = renderCards(this._topRatedContainer, topRatedMovies, this._onDataChange, this._onViewChange);
     }
 
-    if (!mostCommentedMovies) {
-      this._mostCommentedContainer.classList.add(VISUALLY_HIDDEN_CLASS);
+    if (!mostCommentedMovies.length) {
+      this._container.querySelector(`section[data-extra-type="${ExtraType.MOST_COMMENTED}"]`)
+        .classList.add(VISUALLY_HIDDEN_CLASS);
       this._renderedMostCommented = [];
     } else {
       this._renderedMostCommented = renderCards(this._mostCommentedContainer, mostCommentedMovies, this._onDataChange, this._onViewChange);
