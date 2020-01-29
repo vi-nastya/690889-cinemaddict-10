@@ -54,10 +54,10 @@ export default class Api {
       .then((response) => {
         const newMovieData = response.movie;
         newMovieData.comments = response.comments;
-        return Movie.parseMovie(newMovieData)
-        .catch((err) => {
-          throw err;
-        });
+        return Movie.parseMovie(newMovieData);
+      })
+      .catch((err) => {
+        throw err;
       });
   }
 

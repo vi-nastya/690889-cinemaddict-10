@@ -4,8 +4,7 @@ import moment from 'moment';
 
 const getButtonMarkup = (buttonClass, buttonText, isActive) => {
   return `<button class="film-card__controls-item button film-card__controls-item--${buttonClass} ${
-    isActive ? `film-card__controls-item--active` : ``
-  }">${buttonText}</button>`;
+    isActive ? `film-card__controls-item--active` : ``}">${buttonText}</button>`;
 };
 
 export default class FilmCard extends AbstractComponent {

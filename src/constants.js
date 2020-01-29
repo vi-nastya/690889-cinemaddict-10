@@ -7,6 +7,7 @@ export const MILLISECONDS_IN_SECOND = 1000;
 
 export const COMMENT_FORM_CLASS = `film-details__new-comment`;
 export const COMMENT_INPUT_CLASS = `film-details__comment-input`;
+export const VISUALLY_HIDDEN_CLASS = `visually-hidden`;
 
 export const DeleteButtonText = {
   DELETE: `Delete`,
@@ -32,11 +33,6 @@ export const SortType = {
 // Page controller
 export const NUM_EXTRA_MOVIES = 2;
 export const NUM_MOVIES_TO_RENDER = 5;
-
-export const MovieTypes = {
-  RATING: `topRated`,
-  COMMENTS: `mostCommented`
-};
 
 export const ActionType = {
   ADD: `add`,
@@ -80,4 +76,9 @@ export const MinMoviesForRank = {
   NOVICE: 1,
   FAN: 11,
   MOVIE_BUFF: 21
+};
+
+export const ExtraType = {
+  TOP_RATED: `top-rated`,
+  MOST_COMMENTED: `most-commented`
 };
