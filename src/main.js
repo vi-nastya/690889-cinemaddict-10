@@ -1,37 +1,63 @@
-import { FilmCard } from "./components/film-card";
-// import {getFiltersMarkup} from './components/filters';
-// import {getEditEventFormMarkup} from './components/edit-event-form';
-// import {getDaysListMarkup} from './components/days-list';
-// import {getDayCardMarkup} from './components/day-card';
-// import {getTripInfoMarkup} from './components/trip-info';
-// import {getTripSortMarkup} from './components/trip-sort';
+import PageController from "./controllers/page-controller";
+import {Position, render, remove} from "./utils";
+import Movies from "./models/movies";
+import Statistics from "./components/statistics";
+import FiltersController from "./controllers/filters-controller";
+import {FilterType} from "./constants";
+import Loading from "./components/loading";
+import Api from "./api";
 
-// const NUM_CARDS = 3;
+const AUTHORIZATION = `Basic er173jdzbdw`;
+const END_POINT = `https://htmlacademy-es-10.appspot.com/cinemaddict`;
 
-const renderComponent = (element, componentMarkup, position = `beforeend`) => {
-  element.insertAdjacentHTML(position, componentMarkup);
-};
+const api = new Api(END_POINT, AUTHORIZATION);
+
+const moviesModel = new Movies();
 
 const mainContainer = document.querySelector(`main`);
-renderComponent(mainContainer, new FilmCard().getTemplate());
 
-// const renderCards = (element, numCardsToRender) => {
-//   for (let i = 0; i < numCardsToRender; i++) {
-//     renderComponent(element, getDayCardMarkup());
-//   }
-// };
+const loadingComponent = new Loading();
+render(mainContainer, loadingComponent);
 
-// const tripInfoContainer = document.querySelector(`.trip-info`);
-// const menuHeader = document.querySelector(`.trip-controls h2`);
-// const filtersHeader = document.querySelectorAll(`.trip-controls h2`)[1];
-// const tripEventsContainer = document.querySelector(`.trip-events`);
+const filtersController = new FiltersController(mainContainer, moviesModel);
 
-// renderComponent(tripInfoContainer, getTripInfoMarkup(), `afterbegin`);
-// renderComponent(menuHeader, getMenuMarkup(), `afterend`);
-// renderComponent(filtersHeader, getFiltersMarkup(), `afterend`);
-// renderComponent(tripEventsContainer, getTripSortMarkup());
-// renderComponent(tripEventsContainer, getEditEventFormMarkup());
-// renderComponent(tripEventsContainer, getDaysListMarkup());
+api.getMovies().then((movies) => {
+  let moviesWithComments = movies;
 
-// const daysContainer = document.querySelector(`.trip-days`);
-// renderCards(daysContainer, NUM_CARDS);
+  // update number in footer
+  const footerMoviesNumber = document.querySelector(`.footer__statistics-number`);
+  footerMoviesNumber.innerHTML = movies.length;
+
+  const loadComments = moviesWithComments.map((movie) => {
+    return api.getComments(movie.id).then((comments) => {
+      movie.comments = comments;
+    });
+  });
+
+  Promise.all(loadComments).then(() => {
+
+    moviesModel.setMovies(moviesWithComments);
+
+    const statistics = new Statistics(moviesModel);
+
+    filtersController.setScreenChangeHandler((activeFilter) => {
+      if (activeFilter === FilterType.STATS) {
+        pageController.hide();
+        statistics.show();
+      } else {
+        statistics.hide();
+        pageController.show();
+      }
+
+    });
+    filtersController.render();
+
+    render(mainContainer, statistics, Position.BEFOREEND);
+    statistics.hide();
+
+    remove(loadingComponent);
+
+    const pageController = new PageController(mainContainer, moviesModel, api);
+    pageController.render();
+  });
+});
