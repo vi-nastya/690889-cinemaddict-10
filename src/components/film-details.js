@@ -2,7 +2,7 @@ import {formatFilmDuration} from "../utils";
 import moment from 'moment';
 import AbstractSmartComponent from "./abstract-smart-component";
 import {MIN_RATING, MAX_RATING, COMMENT_FORM_CLASS, COMMENT_INPUT_CLASS, ANIMATION_TIME_SECONDS, MILLISECONDS_IN_SECOND, DeleteButtonText} from "../constants";
-
+import he from "he";
 
 const getCommentMarkup = (comment) => {
   return `<li class="film-details__comment">
@@ -10,7 +10,7 @@ const getCommentMarkup = (comment) => {
     <img src="./images/emoji/${comment.emotion}.png" width="55" height="55" alt="emoji">
   </span>
   <div>
-    <p class="film-details__comment-text">${comment.comment}</p>
+    <p class="film-details__comment-text">${he.encode(comment.comment)}</p>
     <p class="film-details__comment-info">
       <span class="film-details__comment-author">${comment.author}</span>
       <span class="film-details__comment-day">${moment(comment.date).format(`YYYY/MM/DD HH:MM`)}</span>
