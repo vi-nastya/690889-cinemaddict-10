@@ -1,7 +1,7 @@
 import {formatFilmDuration} from "../utils";
 import moment from 'moment';
 import AbstractSmartComponent from "./abstract-smart-component";
-import {MIN_RATING, MAX_RATING, COMMENT_FORM_CLASS, COMMENT_INPUT_CLASS, ANIMATION_TIME_SECONDS, MILLISECONDS_IN_SECOND, DeleteButtonText} from "../constants";
+import {MIN_RATING, MAX_RATING, COMMENT_FORM_CLASS, COMMENT_INPUT_CLASS, ANIMATION_TIME_SECONDS, MILLISECONDS_IN_SECOND, DeleteButtonText, EMOJIS} from "../constants";
 import he from "he";
 
 const getCommentMarkup = (comment) => {
@@ -53,6 +53,13 @@ const getRatingFormMarkup = (userRating, poster) => {
 </div>`;
 };
 
+const getEmojiInputMarkup = (emoji) => {
+  return `<input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="${emoji.id}" value="${emoji.value}">
+  <label class="film-details__emoji-label" for="${emoji.id}">
+    <img src="./images/emoji/${emoji.image}.png" width="30" height="30" alt="emoji">
+  </label>`;
+};
+
 const getNewCommentMarkup = () => {
   return `<div class="film-details__new-comment">
   <div for="add-emoji" class="film-details__add-emoji-label"></div>
@@ -62,25 +69,7 @@ const getNewCommentMarkup = () => {
   </label>
 
   <div class="film-details__emoji-list">
-    <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-smile" value="sleeping">
-    <label class="film-details__emoji-label" for="emoji-smile">
-      <img src="./images/emoji/smile.png" width="30" height="30" alt="emoji">
-    </label>
-
-    <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-sleeping" value="neutral-face">
-    <label class="film-details__emoji-label" for="emoji-sleeping">
-      <img src="./images/emoji/sleeping.png" width="30" height="30" alt="emoji">
-    </label>
-
-    <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-gpuke" value="grinning">
-    <label class="film-details__emoji-label" for="emoji-gpuke">
-      <img src="./images/emoji/puke.png" width="30" height="30" alt="emoji">
-    </label>
-
-    <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-angry" value="grinning">
-    <label class="film-details__emoji-label" for="emoji-angry">
-      <img src="./images/emoji/angry.png" width="30" height="30" alt="emoji">
-    </label>
+  ${EMOJIS.map((emoji) => getEmojiInputMarkup(emoji)).join(``)}
   </div>
 </div>`;
 };

@@ -2,6 +2,12 @@ export const MIN_RATING = 1;
 export const MAX_RATING = 9;
 export const DEFAULT_RATING = 0;
 
+export const Rating = {
+  MIN: 1,
+  MAX: 9,
+  DEFAULT: 0,
+};
+
 export const ANIMATION_TIME_SECONDS = 1.5;
 export const MILLISECONDS_IN_SECOND = 1000;
 
@@ -85,3 +91,25 @@ export const ExtraType = {
   TOP_RATED: `top-rated`,
   MOST_COMMENTED: `most-commented`
 };
+
+export const EMOJIS = [{
+  id: `emoji-smile`,
+  value: `sleeping`,
+  image: `smile`
+},
+{
+  id: `emoji-sleeping`,
+  value: `neutral-face`,
+  image: `sleeping`
+},
+{
+  id: `emoji-gpuke`,
+  value: `grinning`,
+  image: `puke`
+},
+{
+  id: `emoji-angry`,
+  value: `grinning`,
+  image: `angry`
+},
+];
