@@ -2,9 +2,20 @@ import AbstractComponent from "./abstract-component";
 import {FilterType, ElementClass} from "../constants";
 
 const getFiltersMarkup = (moviesData, activeFilter) => {
-  const moviesWatched = moviesData.filter((movie) => movie.userDetails.alreadyWatched).length;
-  const moviesWatchlist = moviesData.filter((movie) => movie.userDetails.watchlist).length;
-  const moviesFavorite = moviesData.filter((movie) => movie.userDetails.favorite).length;
+  let moviesWatched = 0;
+  let moviesWatchlist = 0;
+  let moviesFavorite = 0;
+  for (let movie of moviesData) {
+    if (movie.userDetails.alreadyWatched) {
+      moviesWatched++;
+    }
+    if (movie.userDetails.watchlist) {
+      moviesWatchlist++;
+    }
+    if (movie.userDetails.favorite) {
+      moviesFavorite++;
+    }
+  }
   return `<nav class="main-navigation">
     <a href="#all" data-filter-type="${FilterType.ALL}"
     class="main-navigation__item ${activeFilter === FilterType.ALL ? `main-navigation__item--active` : ``}">
