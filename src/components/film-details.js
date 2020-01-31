@@ -97,7 +97,7 @@ export default class FilmDetails extends AbstractSmartComponent {
 
     this._duration = filmData.filmInfo.runtime;
 
-    this._genre = filmData.filmInfo.genre;
+    this._genre = (filmData.filmInfo.genres.length === 0) ? null : filmData.filmInfo.genres;
     this._poster = filmData.filmInfo.poster;
     this._numComments = filmData.comments.length;
     this._director = filmData.filmInfo.director;
@@ -174,13 +174,14 @@ export default class FilmDetails extends AbstractSmartComponent {
               <td class="film-details__term">Country</td>
               <td class="film-details__cell">${this._country}</td>
             </tr>
-            <tr class="film-details__row">
-              <td class="film-details__term">Genre${this._genre.length > 0 ? `s` : ``}</td>
+            ${!this._genre ? `` : `<tr class="film-details__row">
+              <td class="film-details__term">Genre${this._genre.length > 1 ? `s` : ``}</td>
               <td class="film-details__cell">
                 ${this._genre
                   .map((el) => `<span class="film-details__genre">${el}</span>`)
-                  .join(`, `)}</td>
-            </tr>
+                  .join(``)}</td>
+            </tr>`}
+
           </table>
 
           <p class="film-details__film-description">

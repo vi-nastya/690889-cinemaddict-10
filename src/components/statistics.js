@@ -50,7 +50,7 @@ const getMoviesForPeriod = (moviesData, period) => {
 const getGenresFromMovies = (moviesData) => {
   let genres = [];
   moviesData.forEach((movie) => {
-    genres = genres.concat(movie.filmInfo.genre);
+    genres = genres.concat(movie.filmInfo.genres);
   });
   return [...new Set(genres)];
 };
@@ -63,7 +63,7 @@ const getGenresStats = (moviesData) => {
   genres.map((genre) => {
     let currentDuration = 0;
     moviesData.forEach((movie) => {
-      if (movie.filmInfo.genre.indexOf(genre) !== -1) {
+      if (movie.filmInfo.genres.indexOf(genre) !== -1) {
         currentDuration += movie.filmInfo.runtime;
       }
     });

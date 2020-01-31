@@ -14,7 +14,7 @@ export default class FilmCard extends AbstractComponent {
     this._rating = filmData.filmInfo.totalRating;
     this._year = moment(filmData.filmInfo.release.date).format(`YYYY`);
     this._duration = filmData.filmInfo.runtime;
-    this._genre = filmData.filmInfo.genre[0];
+    this._genre = filmData.filmInfo.genres[0] || ``;
     this._poster = filmData.filmInfo.poster;
     this._numComments = filmData.comments.length;
     this._description = formatDescription(filmData.filmInfo.description);
