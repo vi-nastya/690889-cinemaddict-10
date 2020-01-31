@@ -2,7 +2,7 @@ import FilmCard from "../components/film-card";
 import FilmDetails from "../components/film-details";
 import {render, replace} from "../utils";
 import Movie from "../models/movie";
-import {ActionType, ActionObject, Mode, Rating} from "../constants";
+import {ActionType, ActionObject, Mode, Rating, KeyCode} from "../constants";
 
 export default class MovieController {
   constructor(container, onDataChange, onViewChange) {
@@ -35,7 +35,7 @@ export default class MovieController {
     this._filmDetailsComponent = new FilmDetails(filmData);
 
     const onEscKeyDown = (evt) => {
-      if (evt.keyCode === 27) {
+      if (evt.keyCode === KeyCode.ESC) {
         evt.preventDefault();
         this._changePopupToCard();
         document.removeEventListener(`keydown`, onEscKeyDown);

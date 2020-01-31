@@ -5,7 +5,7 @@ import MovieController from "./movie-controller";
 import Films from "../components/films";
 import EmptyMoviesList from "../components/empty-movies-list";
 import UserRank from "../components/user-rank";
-import {SortType, NUM_EXTRA_MOVIES, NUM_MOVIES_TO_RENDER, ActionType, ActionObject, VISUALLY_HIDDEN_CLASS, ExtraType} from "../constants";
+import {SortType, NUM_EXTRA_MOVIES, NUM_MOVIES_TO_RENDER, ActionType, ActionObject, ElementClass, ExtraType} from "../constants";
 
 const getExtaMovies = (movieData, movieType) => {
   switch (movieType) {
@@ -116,7 +116,7 @@ export default class PageController {
 
     if (!topRatedMovies.length) {
       this._container.querySelector(`section[data-extra-type="${ExtraType.TOP_RATED}"]`)
-        .classList.add(VISUALLY_HIDDEN_CLASS);
+        .classList.add(ElementClass.VISUALLY_HIDDEN);
       this._renderedTopRated = [];
     } else {
       this._renderedTopRated = renderCards(this._topRatedContainer, topRatedMovies, this._onDataChange, this._onViewChange);
@@ -124,7 +124,7 @@ export default class PageController {
 
     if (!mostCommentedMovies.length) {
       this._container.querySelector(`section[data-extra-type="${ExtraType.MOST_COMMENTED}"]`)
-        .classList.add(VISUALLY_HIDDEN_CLASS);
+        .classList.add(ElementClass.VISUALLY_HIDDEN);
       this._renderedMostCommented = [];
     } else {
       this._renderedMostCommented = renderCards(this._mostCommentedContainer, mostCommentedMovies, this._onDataChange, this._onViewChange);
@@ -167,10 +167,10 @@ export default class PageController {
     // remove old cards
     this._topRatedContainer.innerHTML = ``;
     this._container.querySelector(`section[data-extra-type="${ExtraType.TOP_RATED}"]`)
-        .classList.remove(VISUALLY_HIDDEN_CLASS);
+        .classList.remove(ElementClass.VISUALLY_HIDDEN);
     this._mostCommentedContainer.innerHTML = ``;
     this._container.querySelector(`section[data-extra-type="${ExtraType.MOST_COMMENTED}"]`)
-        .classList.remove(VISUALLY_HIDDEN_CLASS);
+        .classList.remove(ElementClass.VISUALLY_HIDDEN);
 
     // get new data
     const topRatedMovies = getExtaMovies(moviesData, ExtraType.TOP_RATED);
@@ -179,7 +179,7 @@ export default class PageController {
     // render new cards or hide sections
     if (!topRatedMovies.length) {
       this._container.querySelector(`section[data-extra-type="${ExtraType.TOP_RATED}"]`)
-        .classList.add(VISUALLY_HIDDEN_CLASS);
+        .classList.add(ElementClass.VISUALLY_HIDDEN);
       this._renderedTopRated = [];
     } else {
       this._renderedTopRated = renderCards(this._topRatedContainer, topRatedMovies, this._onDataChange, this._onViewChange);
@@ -187,7 +187,7 @@ export default class PageController {
 
     if (!mostCommentedMovies.length) {
       this._container.querySelector(`section[data-extra-type="${ExtraType.MOST_COMMENTED}"]`)
-        .classList.add(VISUALLY_HIDDEN_CLASS);
+        .classList.add(ElementClass.VISUALLY_HIDDEN);
       this._renderedMostCommented = [];
     } else {
       this._renderedMostCommented = renderCards(this._mostCommentedContainer, mostCommentedMovies, this._onDataChange, this._onViewChange);

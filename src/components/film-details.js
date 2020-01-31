@@ -1,7 +1,7 @@
 import {formatFilmDuration} from "../utils";
 import moment from 'moment';
 import AbstractSmartComponent from "./abstract-smart-component";
-import {Rating, COMMENT_FORM_CLASS, COMMENT_INPUT_CLASS, ANIMATION_TIME_SECONDS, MILLISECONDS_IN_SECOND, DeleteButtonText, EMOJIS} from "../constants";
+import {Rating, ANIMATION_TIME_SECONDS, ValueInMilliseconds, DeleteButtonText, EMOJIS, KeyCode, ElementClass} from "../constants";
 import he from "he";
 
 const getCommentMarkup = (comment) => {
@@ -304,10 +304,10 @@ export default class FilmDetails extends AbstractSmartComponent {
   setFormSubmitHandler(handler) {
     const commentForm = this.getElement().querySelector(`.film-details__new-comment`);
     commentForm.addEventListener(`keydown`, (evt) => {
-      if ((evt.ctrlKey || evt.metaKey) && (evt.keyCode === 13)) {
+      if ((evt.ctrlKey || evt.metaKey) && (evt.keyCode === KeyCode.ENTER)) {
         const commentData = this._getNewCommentData();
 
-        this.getElement().querySelector(`.${COMMENT_INPUT_CLASS}`).disabled = true;
+        this.getElement().querySelector(`.${ElementClass.COMMENT_INPUT}`).disabled = true;
 
         handler(commentData);
       }
@@ -317,7 +317,7 @@ export default class FilmDetails extends AbstractSmartComponent {
   }
 
   unlockCommentSubmitForm() {
-    this.getElement().querySelector(`.${COMMENT_INPUT_CLASS}`).disabled = false;
+    this.getElement().querySelector(`.${ElementClass.COMMENT_INPUT}`).disabled = false;
   }
 
   // ADD RATING LOGIC
@@ -348,7 +348,7 @@ export default class FilmDetails extends AbstractSmartComponent {
   }
 
   shake() {
-    const commentForm = this.getElement().querySelector(`.${COMMENT_FORM_CLASS}`);
+    const commentForm = this.getElement().querySelector(`.${ElementClass.COMMENT_FORM}`);
     if (commentForm) {
       commentForm.style.animation = `shake ${ANIMATION_TIME_SECONDS}s`;
       this.getElement().style.animation = `shake ${ANIMATION_TIME_SECONDS}s`;
@@ -356,7 +356,7 @@ export default class FilmDetails extends AbstractSmartComponent {
       setTimeout(() => {
         commentForm.style.animation = ``;
         this.getElement().style.animation = ``;
-      }, ANIMATION_TIME_SECONDS * MILLISECONDS_IN_SECOND);
+      }, ANIMATION_TIME_SECONDS * ValueInMilliseconds.SECOND);
     }
   }
 

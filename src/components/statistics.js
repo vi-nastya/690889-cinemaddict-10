@@ -2,7 +2,7 @@ import {getHoursAndMinutes, getUserRank} from "../utils";
 import Chart from "chart.js";
 import AbstractSmartComponent from "./abstract-smart-component";
 import ChartDataLabels from "chartjs-plugin-datalabels";
-import {Period, MILLISECONDS_IN_WEEK, MILLISECONDS_IN_YEAR, MILLISECONDS_IN_MONTH} from "../constants";
+import {Period, ValueInMilliseconds} from "../constants";
 
 const ChartParams = {
   CHART_TYPE: `horizontalBar`,
@@ -33,13 +33,13 @@ const getMoviesForPeriod = (moviesData, period) => {
       minTimestamp = new Date().setHours(0, 0, 0, 0);
       break;
     case Period.WEEK:
-      minTimestamp = currentTimestamp - MILLISECONDS_IN_WEEK; // TODO
+      minTimestamp = currentTimestamp - ValueInMilliseconds.WEEK; // TODO
       break;
     case Period.MONTH:
-      minTimestamp = currentTimestamp - MILLISECONDS_IN_MONTH; // TODO
+      minTimestamp = currentTimestamp - ValueInMilliseconds.MONTH; // TODO
       break;
     case Period.YEAR:
-      minTimestamp = currentTimestamp - MILLISECONDS_IN_YEAR; // TODO
+      minTimestamp = currentTimestamp - ValueInMilliseconds.YEAR; // TODO
       break;
   }
 
@@ -111,12 +111,13 @@ export default class Statistics extends AbstractSmartComponent {
     this._movies = getMoviesForPeriod(this._model.getAllMovies(), Period.ALL);
     this._moviesForPeriod = this._movies;
     const statsData = getStats(this._moviesForPeriod, this._currentPeriod);
+    const rank = getUserRank(this._movies);
     return `<section class="statistic">
-    <p class="statistic__rank">
+    ${ rank ? `<p class="statistic__rank">
       Your rank
       <img class="statistic__img" src="images/bitmap@2x.png" alt="Avatar" width="35" height="35">
-      <span class="statistic__rank-label">${getUserRank(this._movies)}</span>
-    </p>
+      <span class="statistic__rank-label">${rank}</span>
+    </p>` : ``}
 
     ${this._getPeriodSelectorMarkup()}
 

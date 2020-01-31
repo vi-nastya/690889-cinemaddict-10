@@ -7,13 +7,15 @@ const Method = {
   DELETE: `DELETE`
 };
 
-const SUCCESS_STATUS_CODE = 200;
-const MULTIPLE_CHOICE_CODE = 300;
+const StatusCode = {
+  SUCCESS: 200,
+  MULTIPLE_CHOICE: 300,
+};
 
 const CONTENT_TYPE = `application/json`;
 
 const checkStatus = (response) => {
-  if (response.status >= SUCCESS_STATUS_CODE && response.status < MULTIPLE_CHOICE_CODE) {
+  if (response.status >= StatusCode.SUCCESS && response.status < StatusCode.MULTIPLE_CHOICE) {
     return response;
   } else {
     throw new Error(`${response.status}: ${response.statusText}`);
