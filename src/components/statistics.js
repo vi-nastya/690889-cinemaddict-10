@@ -47,32 +47,28 @@ const getMoviesForPeriod = (moviesData, period) => {
   return moviesForStats;
 };
 
-const getGenresFromMovies = (moviesData) => {
-  let genres = [];
-  moviesData.forEach((movie) => {
-    genres = genres.concat(movie.filmInfo.genres);
-  });
-  return [...new Set(genres)];
-};
-
 const getGenresStats = (moviesData) => {
-  const genres = getGenresFromMovies(moviesData);
-  const stats = {};
   const labels = [];
   const values = [];
-  genres.map((genre) => {
-    let currentDuration = 0;
-    moviesData.forEach((movie) => {
-      if (movie.filmInfo.genres.indexOf(genre) !== -1) {
-        currentDuration += movie.filmInfo.runtime;
-      }
-    });
-    if (currentDuration > 0) {
-      stats[genre] = currentDuration;
-      labels.push(genre);
-      values.push(currentDuration);
+  const stats = {};
+
+  for (let movie of moviesData) {
+    if (movie.filmInfo.genres.length > 0) {
+      movie.filmInfo.genres.forEach((genre) => {
+        if (!(genre in stats)) {
+          stats[genre] = movie.filmInfo.runtime;
+          labels.push(genre);
+        } else {
+          stats[genre] += movie.filmInfo.runtime;
+        }
+      });
     }
-  });
+  }
+
+  for (let genre of labels) {
+    values.push(stats[genre]);
+  }
+
   return {stats, labels, values};
 };
 
