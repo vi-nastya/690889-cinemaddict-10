@@ -1,7 +1,7 @@
 import {formatFilmDuration} from "../utils";
 import moment from 'moment';
 import AbstractSmartComponent from "./abstract-smart-component";
-import {MIN_RATING, MAX_RATING, COMMENT_FORM_CLASS, COMMENT_INPUT_CLASS, ANIMATION_TIME_SECONDS, MILLISECONDS_IN_SECOND, DeleteButtonText, EMOJIS} from "../constants";
+import {Rating, COMMENT_FORM_CLASS, COMMENT_INPUT_CLASS, ANIMATION_TIME_SECONDS, MILLISECONDS_IN_SECOND, DeleteButtonText, EMOJIS} from "../constants";
 import he from "he";
 
 const getCommentMarkup = (comment) => {
@@ -21,7 +21,7 @@ const getCommentMarkup = (comment) => {
 };
 
 const getRatingFormMarkup = (userRating, poster) => {
-  const ratingValues = [...Array(MAX_RATING + MIN_RATING).keys()].slice(MIN_RATING);
+  const ratingValues = [...Array(Rating.MAX + Rating.MIN).keys()].slice(Rating.MIN);
   return `<div class="form-details__middle-container">
   <section class="film-details__user-rating-wrap">
     <div class="film-details__user-rating-controls">

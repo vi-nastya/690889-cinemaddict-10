@@ -2,7 +2,7 @@ import FilmCard from "../components/film-card";
 import FilmDetails from "../components/film-details";
 import {render, replace} from "../utils";
 import Movie from "../models/movie";
-import {ActionType, ActionObject, Mode, DEFAULT_RATING} from "../constants";
+import {ActionType, ActionObject, Mode, Rating} from "../constants";
 
 export default class MovieController {
   constructor(container, onDataChange, onViewChange) {
@@ -103,7 +103,7 @@ export default class MovieController {
 
     this._filmDetailsComponent.setUndoRatingClickHandler(() => {
       const newFilmData = Movie.clone(filmData);
-      newFilmData.userDetails.personalRating = DEFAULT_RATING;
+      newFilmData.userDetails.personalRating = Rating.DEFAULT;
       this._onDataChange(this, ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
     });
 

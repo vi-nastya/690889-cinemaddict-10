@@ -1,7 +1,3 @@
-export const MIN_RATING = 1;
-export const MAX_RATING = 9;
-export const DEFAULT_RATING = 0;
-
 export const Rating = {
   MIN: 1,
   MAX: 9,
