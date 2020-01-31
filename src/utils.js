@@ -30,20 +30,6 @@ export const getHoursAndMinutes = (duration) => {
   return {hours, minutes};
 };
 
-
-export const getUserStatus = (numMovies) => {
-  if (numMovies > 0) {
-    if (numMovies <= 10) {
-      return `novice`;
-    } else if (numMovies <= 20) {
-      return `fan`;
-    } else {
-      return `movie buff`;
-    }
-  }
-  return ``;
-};
-
 export const Position = {
   AFTERBEGIN: `afterbegin`,
   BEFOREEND: `beforeend`,
