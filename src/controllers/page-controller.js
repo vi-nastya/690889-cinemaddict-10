@@ -94,6 +94,7 @@ export default class PageController {
 
   render() {
     const movies = this._moviesModel.getMovies();
+    const allMovies = this._moviesModel.getAllMovies();
     if (!movies.length) {
       render(this._container, this._emptyMoviesComponent);
       return;
@@ -110,8 +111,8 @@ export default class PageController {
 
     this._renderShowMoreButton();
 
-    const topRatedMovies = getExtaMovies(movies, ExtraType.TOP_RATED);
-    const mostCommentedMovies = getExtaMovies(movies, ExtraType.MOST_COMMENTED);
+    const topRatedMovies = getExtaMovies(allMovies, ExtraType.TOP_RATED);
+    const mostCommentedMovies = getExtaMovies(allMovies, ExtraType.MOST_COMMENTED);
 
     if (!topRatedMovies.length) {
       this._container.querySelector(`section[data-extra-type="${ExtraType.TOP_RATED}"]`)
@@ -132,10 +133,11 @@ export default class PageController {
 
   _updateMovies() {
     const newMovies = this._moviesModel.getMovies();
+    const newAllMovies = this._moviesModel.getAllMovies();
     this._unrenderMovies();
     this._renderUserRank(newMovies);
     this._onSortTypeChange(this._sortType);
-    this._renderExtraMovies(newMovies);
+    this._renderExtraMovies(newAllMovies);
   }
 
   _renderUserRank(movies) {
