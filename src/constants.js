@@ -1,16 +1,21 @@
-export const MIN_RATING = 1;
-export const MAX_RATING = 9;
-export const DEFAULT_RATING = 0;
+export const Rating = {
+  MIN: 1,
+  MAX: 9,
+  DEFAULT: 0,
+};
 
 export const ANIMATION_TIME_SECONDS = 1.5;
-export const MILLISECONDS_IN_SECOND = 1000;
 
 export const MAX_CARD_DESCRIPTION_LENGTH = 139;
 export const EXTRA_DESCRIPTION_SYMBOL = `…`;
 
-export const COMMENT_FORM_CLASS = `film-details__new-comment`;
-export const COMMENT_INPUT_CLASS = `film-details__comment-input`;
-export const VISUALLY_HIDDEN_CLASS = `visually-hidden`;
+export const ElementClass = {
+  COMMENT_FORM: `film-details__new-comment`,
+  COMMENT_INPUT: `film-details__comment-input`,
+  VISUALLY_HIDDEN: `visually-hidden`,
+  ACTIVE_FILTER: `main-navigation__item--active`
+};
+
 
 export const DeleteButtonText = {
   DELETE: `Delete`,
@@ -24,8 +29,6 @@ export const FilterType = {
   WATCHLIST: `watchlist`,
   FAVORITE: `favorite`
 };
-
-export const ACTIVE_FILTER_CLASS = `main-navigation__item--active`;
 
 export const SortType = {
   RATING: `rating`,
@@ -63,11 +66,19 @@ export const Period = {
   YEAR: `year`
 };
 
-export const MILLISECONDS_IN_DAY = 24 * 60 * 60 * 1000;
-export const MILLISECONDS_IN_WEEK = MILLISECONDS_IN_DAY * 7;
-export const MILLISECONDS_IN_MONTH = MILLISECONDS_IN_DAY * 30;
-export const MILLISECONDS_IN_YEAR = MILLISECONDS_IN_DAY * 365;
 export const MINUTES_IN_HOUR = 60;
+
+export const ValueInMilliseconds = {
+  SECOND: 1000,
+  WEEK: 24 * 60 * 60 * 1000 * 7,
+  MONTH: 24 * 60 * 60 * 1000 * 30,
+  YEAR: 24 * 60 * 60 * 1000 * 365,
+};
+
+export const KeyCode = {
+  ESC: 27,
+  ENTER: 13
+};
 
 export const UserRank = {
   NOVICE: `novice`,
@@ -85,3 +96,25 @@ export const ExtraType = {
   TOP_RATED: `top-rated`,
   MOST_COMMENTED: `most-commented`
 };
+
+export const EMOJIS = [{
+  id: `emoji-smile`,
+  value: `sleeping`,
+  image: `smile`
+},
+{
+  id: `emoji-sleeping`,
+  value: `neutral-face`,
+  image: `sleeping`
+},
+{
+  id: `emoji-gpuke`,
+  value: `grinning`,
+  image: `puke`
+},
+{
+  id: `emoji-angry`,
+  value: `grinning`,
+  image: `angry`
+},
+];

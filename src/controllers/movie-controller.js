@@ -2,7 +2,7 @@ import FilmCard from "../components/film-card";
 import FilmDetails from "../components/film-details";
 import {render, replace} from "../utils";
 import Movie from "../models/movie";
-import {ActionType, ActionObject, Mode, DEFAULT_RATING} from "../constants";
+import {ActionType, ActionObject, Mode, Rating, KeyCode} from "../constants";
 
 export default class MovieController {
   constructor(container, onDataChange, onViewChange) {
@@ -35,7 +35,7 @@ export default class MovieController {
     this._filmDetailsComponent = new FilmDetails(filmData);
 
     const onEscKeyDown = (evt) => {
-      if (evt.keyCode === 27) {
+      if (evt.keyCode === KeyCode.ESC) {
         evt.preventDefault();
         this._changePopupToCard();
         document.removeEventListener(`keydown`, onEscKeyDown);
@@ -49,9 +49,10 @@ export default class MovieController {
     });
 
     // Popup -> close
-    this._filmDetailsComponent.setCloseButtonClickHandler(
-        this._changePopupToCard
-    );
+    this._filmDetailsComponent.setCloseButtonClickHandler(() => {
+      this._changePopupToCard();
+      document.removeEventListener(`keydown`, onEscKeyDown);
+    });
 
     // CARD BUTTONS
     this._filmComponent.setFavoriteButtonClickHandler(() => {
@@ -63,6 +64,9 @@ export default class MovieController {
     this._filmComponent.setWatchedButtonClickHandler(() => {
       const newFilmData = Movie.clone(filmData);
       newFilmData.userDetails.alreadyWatched = !filmData.userDetails.alreadyWatched;
+      if (newFilmData.userDetails.alreadyWatched) {
+        newFilmData.userDetails.watchingDate = new Date().toISOString();
+      }
       this._onDataChange(this, ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
     });
 
@@ -83,9 +87,10 @@ export default class MovieController {
       const newFilmData = Movie.clone(filmData);
       newFilmData.userDetails.alreadyWatched = !filmData.userDetails
         .alreadyWatched;
+      if (newFilmData.userDetails.alreadyWatched) {
+        newFilmData.userDetails.watchingDate = new Date().toISOString();
+      }
       this._onDataChange(this, ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
-
-      // TODO: rerender Movie controller - popup
     });
 
     this._filmDetailsComponent.setFavoriteButtonClickHandler(() => {
@@ -103,7 +108,7 @@ export default class MovieController {
 
     this._filmDetailsComponent.setUndoRatingClickHandler(() => {
       const newFilmData = Movie.clone(filmData);
-      newFilmData.userDetails.personalRating = DEFAULT_RATING;
+      newFilmData.userDetails.personalRating = Rating.DEFAULT;
       this._onDataChange(this, ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
     });
 

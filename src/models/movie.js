@@ -16,7 +16,7 @@ export default class Movie {
         releaseCountry: movieData[`film_info`][`release`][`release_country`]
       },
       runtime: movieData[`film_info`][`runtime`],
-      genre: movieData[`film_info`][`genre`],
+      genres: movieData[`film_info`][`genre`],
       description: movieData[`film_info`][`description`]
     };
     this.userDetails = {
@@ -46,7 +46,7 @@ export default class Movie {
           'release_country': this.filmInfo.release.releaseCountry
         },
         'runtime': this.filmInfo.runtime,
-        'genre': this.filmInfo.genre,
+        'genre': this.filmInfo.genres,
         'description': this.filmInfo.description
       },
       'user_details': {

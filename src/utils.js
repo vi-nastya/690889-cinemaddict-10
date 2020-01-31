@@ -15,11 +15,7 @@ export const getUserRank = (movies) => {
 };
 
 export const formatDescription = (description) => {
-  if (description.length <= MAX_CARD_DESCRIPTION_LENGTH) {
-    return description;
-  } else {
-    return description.slice(0, MAX_CARD_DESCRIPTION_LENGTH).concat(EXTRA_DESCRIPTION_SYMBOL);
-  }
+  return description.length <= MAX_CARD_DESCRIPTION_LENGTH ? description : description.slice(0, MAX_CARD_DESCRIPTION_LENGTH).concat(EXTRA_DESCRIPTION_SYMBOL);
 };
 
 export const formatFilmDuration = (duration) => {
@@ -32,20 +28,6 @@ export const getHoursAndMinutes = (duration) => {
   const hours = Math.floor(duration / MINUTES_IN_HOUR);
   const minutes = duration - hours * MINUTES_IN_HOUR;
   return {hours, minutes};
-};
-
-
-export const getUserStatus = (numMovies) => {
-  if (numMovies > 0) {
-    if (numMovies <= 10) {
-      return `novice`;
-    } else if (numMovies <= 20) {
-      return `fan`;
-    } else {
-      return `movie buff`;
-    }
-  }
-  return ``;
 };
 
 export const Position = {

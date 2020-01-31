@@ -1,7 +1,7 @@
 import {formatFilmDuration} from "../utils";
 import moment from 'moment';
 import AbstractSmartComponent from "./abstract-smart-component";
-import {MIN_RATING, MAX_RATING, COMMENT_FORM_CLASS, COMMENT_INPUT_CLASS, ANIMATION_TIME_SECONDS, MILLISECONDS_IN_SECOND, DeleteButtonText} from "../constants";
+import {Rating, ANIMATION_TIME_SECONDS, ValueInMilliseconds, DeleteButtonText, EMOJIS, KeyCode, ElementClass} from "../constants";
 import he from "he";
 
 const getCommentMarkup = (comment) => {
@@ -21,7 +21,7 @@ const getCommentMarkup = (comment) => {
 };
 
 const getRatingFormMarkup = (userRating, poster) => {
-  const ratingValues = [...Array(MAX_RATING + MIN_RATING).keys()].slice(MIN_RATING);
+  const ratingValues = [...Array(Rating.MAX + Rating.MIN).keys()].slice(Rating.MIN);
   return `<div class="form-details__middle-container">
   <section class="film-details__user-rating-wrap">
     <div class="film-details__user-rating-controls">
@@ -53,6 +53,13 @@ const getRatingFormMarkup = (userRating, poster) => {
 </div>`;
 };
 
+const getEmojiInputMarkup = (emoji) => {
+  return `<input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="${emoji.id}" value="${emoji.value}">
+  <label class="film-details__emoji-label" for="${emoji.id}">
+    <img src="./images/emoji/${emoji.image}.png" width="30" height="30" alt="emoji">
+  </label>`;
+};
+
 const getNewCommentMarkup = () => {
   return `<div class="film-details__new-comment">
   <div for="add-emoji" class="film-details__add-emoji-label"></div>
@@ -62,25 +69,7 @@ const getNewCommentMarkup = () => {
   </label>
 
   <div class="film-details__emoji-list">
-    <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-smile" value="sleeping">
-    <label class="film-details__emoji-label" for="emoji-smile">
-      <img src="./images/emoji/smile.png" width="30" height="30" alt="emoji">
-    </label>
-
-    <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-sleeping" value="neutral-face">
-    <label class="film-details__emoji-label" for="emoji-sleeping">
-      <img src="./images/emoji/sleeping.png" width="30" height="30" alt="emoji">
-    </label>
-
-    <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-gpuke" value="grinning">
-    <label class="film-details__emoji-label" for="emoji-gpuke">
-      <img src="./images/emoji/puke.png" width="30" height="30" alt="emoji">
-    </label>
-
-    <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-angry" value="grinning">
-    <label class="film-details__emoji-label" for="emoji-angry">
-      <img src="./images/emoji/angry.png" width="30" height="30" alt="emoji">
-    </label>
+  ${EMOJIS.map((emoji) => getEmojiInputMarkup(emoji)).join(``)}
   </div>
 </div>`;
 };
@@ -97,7 +86,7 @@ export default class FilmDetails extends AbstractSmartComponent {
 
     this._duration = filmData.filmInfo.runtime;
 
-    this._genre = filmData.filmInfo.genre;
+    this._genre = (filmData.filmInfo.genres.length === 0) ? null : filmData.filmInfo.genres;
     this._poster = filmData.filmInfo.poster;
     this._numComments = filmData.comments.length;
     this._director = filmData.filmInfo.director;
@@ -174,13 +163,14 @@ export default class FilmDetails extends AbstractSmartComponent {
               <td class="film-details__term">Country</td>
               <td class="film-details__cell">${this._country}</td>
             </tr>
-            <tr class="film-details__row">
-              <td class="film-details__term">Genre${this._genre.length > 0 ? `s` : ``}</td>
+            ${!this._genre ? `` : `<tr class="film-details__row">
+              <td class="film-details__term">Genre${this._genre.length > 1 ? `s` : ``}</td>
               <td class="film-details__cell">
                 ${this._genre
                   .map((el) => `<span class="film-details__genre">${el}</span>`)
-                  .join(`, `)}</td>
-            </tr>
+                  .join(``)}</td>
+            </tr>`}
+
           </table>
 
           <p class="film-details__film-description">
@@ -296,17 +286,7 @@ export default class FilmDetails extends AbstractSmartComponent {
   }
 
   _getEmotionById(reactionId) {
-    switch (reactionId) {
-      case `emoji-smile`:
-        return `smile`;
-      case `emoji-sleeping`:
-        return `sleeping`;
-      case `emoji-gpuke`:
-        return `puke`;
-      case `emoji-angry`:
-        return `angry`;
-    }
-    return `undefined`;
+    return EMOJIS.filter((emoji) => emoji.id === reactionId).image;
   }
 
   _getNewCommentData() {
@@ -324,10 +304,10 @@ export default class FilmDetails extends AbstractSmartComponent {
   setFormSubmitHandler(handler) {
     const commentForm = this.getElement().querySelector(`.film-details__new-comment`);
     commentForm.addEventListener(`keydown`, (evt) => {
-      if ((evt.ctrlKey || evt.metaKey) && (evt.keyCode === 13)) {
+      if ((evt.ctrlKey || evt.metaKey) && (evt.keyCode === KeyCode.ENTER)) {
         const commentData = this._getNewCommentData();
 
-        this.getElement().querySelector(`.${COMMENT_INPUT_CLASS}`).disabled = true;
+        this.getElement().querySelector(`.${ElementClass.COMMENT_INPUT}`).disabled = true;
 
         handler(commentData);
       }
@@ -337,7 +317,7 @@ export default class FilmDetails extends AbstractSmartComponent {
   }
 
   unlockCommentSubmitForm() {
-    this.getElement().querySelector(`.${COMMENT_INPUT_CLASS}`).disabled = false;
+    this.getElement().querySelector(`.${ElementClass.COMMENT_INPUT}`).disabled = false;
   }
 
   // ADD RATING LOGIC
@@ -368,7 +348,7 @@ export default class FilmDetails extends AbstractSmartComponent {
   }
 
   shake() {
-    const commentForm = this.getElement().querySelector(`.${COMMENT_FORM_CLASS}`);
+    const commentForm = this.getElement().querySelector(`.${ElementClass.COMMENT_FORM}`);
     if (commentForm) {
       commentForm.style.animation = `shake ${ANIMATION_TIME_SECONDS}s`;
       this.getElement().style.animation = `shake ${ANIMATION_TIME_SECONDS}s`;
@@ -376,7 +356,7 @@ export default class FilmDetails extends AbstractSmartComponent {
       setTimeout(() => {
         commentForm.style.animation = ``;
         this.getElement().style.animation = ``;
-      }, ANIMATION_TIME_SECONDS * MILLISECONDS_IN_SECOND);
+      }, ANIMATION_TIME_SECONDS * ValueInMilliseconds.SECOND);
     }
   }
 
