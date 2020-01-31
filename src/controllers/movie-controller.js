@@ -49,9 +49,10 @@ export default class MovieController {
     });
 
     // Popup -> close
-    this._filmDetailsComponent.setCloseButtonClickHandler(
-        this._changePopupToCard
-    );
+    this._filmDetailsComponent.setCloseButtonClickHandler(() => {
+      this._changePopupToCard();
+      document.removeEventListener(`keydown`, onEscKeyDown);
+    });
 
     // CARD BUTTONS
     this._filmComponent.setFavoriteButtonClickHandler(() => {
