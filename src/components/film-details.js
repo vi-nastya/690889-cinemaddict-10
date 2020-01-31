@@ -286,17 +286,7 @@ export default class FilmDetails extends AbstractSmartComponent {
   }
 
   _getEmotionById(reactionId) {
-    switch (reactionId) {
-      case `emoji-smile`:
-        return `smile`;
-      case `emoji-sleeping`:
-        return `sleeping`;
-      case `emoji-gpuke`:
-        return `puke`;
-      case `emoji-angry`:
-        return `angry`;
-    }
-    return `undefined`;
+    return EMOJIS.filter((emoji) => emoji.id === reactionId).image;
   }
 
   _getNewCommentData() {
