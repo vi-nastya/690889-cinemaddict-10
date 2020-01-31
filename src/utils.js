@@ -15,11 +15,7 @@ export const getUserRank = (movies) => {
 };
 
 export const formatDescription = (description) => {
-  if (description.length <= MAX_CARD_DESCRIPTION_LENGTH) {
-    return description;
-  } else {
-    return description.slice(0, MAX_CARD_DESCRIPTION_LENGTH).concat(EXTRA_DESCRIPTION_SYMBOL);
-  }
+  return description.length <= MAX_CARD_DESCRIPTION_LENGTH ? description : description.slice(0, MAX_CARD_DESCRIPTION_LENGTH).concat(EXTRA_DESCRIPTION_SYMBOL);
 };
 
 export const formatFilmDuration = (duration) => {
