@@ -284,5 +284,7 @@ export default class PageController {
 
   _onViewChange() {
     this._renderedMovies.forEach((movie) => movie.setDefaultView());
+    this._renderedTopRated.forEach((movie) => movie.setDefaultView());
+    this._renderedMostCommented.forEach((movie) => movie.setDefaultView());
   }
 }
