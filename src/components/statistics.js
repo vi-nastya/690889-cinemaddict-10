@@ -98,7 +98,7 @@ export default class Statistics extends AbstractSmartComponent {
     super();
     this._model = moviesModel;
     this._currentPeriod = Period.ALL;
-    this._movies = getMoviesForPeriod(moviesModel.getAllMovies(), Period.ALL);
+    this._movies = getMoviesForPeriod(this._model.getAllMovies(), Period.ALL);
     this._moviesForPeriod = this._movies;
 
     this._setPeriodChangeHandler = this._setPeriodChangeHandler.bind(this);
@@ -108,6 +108,8 @@ export default class Statistics extends AbstractSmartComponent {
   }
 
   getTemplate() {
+    this._movies = getMoviesForPeriod(this._model.getAllMovies(), Period.ALL);
+    this._moviesForPeriod = this._movies;
     const statsData = getStats(this._moviesForPeriod, this._currentPeriod);
     return `<section class="statistic">
     <p class="statistic__rank">
@@ -263,7 +265,7 @@ export default class Statistics extends AbstractSmartComponent {
   }
 
   show() {
-    super.show();
+    this.rerender();
     this.updateChart();
   }
 }
