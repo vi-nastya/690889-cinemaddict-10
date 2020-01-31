@@ -22,7 +22,7 @@ render(mainContainer, loadingComponent);
 const filtersController = new FiltersController(mainContainer, moviesModel);
 
 api.getMovies().then((movies) => {
-  let moviesWithComments = movies;
+  const moviesWithComments = movies;
 
   // update number in footer
   const footerMoviesNumber = document.querySelector(`.footer__statistics-number`);

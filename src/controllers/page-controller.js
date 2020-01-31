@@ -10,7 +10,7 @@ import {SortType, NUM_EXTRA_MOVIES, NUM_MOVIES_TO_RENDER, ActionType, ActionObje
 const getExtaMovies = (movieData, movieType) => {
   switch (movieType) {
     case ExtraType.TOP_RATED: {
-      let copyData = [...movieData];
+      const copyData = [...movieData];
       copyData.sort(
           (m1, m2) => m2.filmInfo.totalRating - m1.filmInfo.totalRating
       );
@@ -20,7 +20,7 @@ const getExtaMovies = (movieData, movieType) => {
       return copyData.slice(0, NUM_EXTRA_MOVIES);
     }
     case ExtraType.MOST_COMMENTED: {
-      let copyData = [...movieData];
+      const copyData = [...movieData];
       copyData.sort((m1, m2) => m2.comments.length - m1.comments.length);
 
       // return empty if all movies have 0 comments
