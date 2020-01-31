@@ -30,7 +30,7 @@ const getMoviesForPeriod = (moviesData, period) => {
       minTimestamp = 0;
       break;
     case Period.TODAY:
-      minTimestamp = Date.parse(new Date().setHours(0, 0, 0, 0)); // TODO
+      minTimestamp = new Date().setHours(0, 0, 0, 0);
       break;
     case Period.WEEK:
       minTimestamp = currentTimestamp - MILLISECONDS_IN_WEEK; // TODO
@@ -170,7 +170,6 @@ export default class Statistics extends AbstractSmartComponent {
       this._currentPeriod = evt.target.value;
 
       this._moviesForPeriod = getMoviesForPeriod(this._movies, this._currentPeriod);
-
       const statsValues = getGenresStats(this._moviesForPeriod);
       this._genresLabels = statsValues.labels;
       this._genresValues = statsValues.values;

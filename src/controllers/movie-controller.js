@@ -64,6 +64,9 @@ export default class MovieController {
     this._filmComponent.setWatchedButtonClickHandler(() => {
       const newFilmData = Movie.clone(filmData);
       newFilmData.userDetails.alreadyWatched = !filmData.userDetails.alreadyWatched;
+      if (newFilmData.userDetails.alreadyWatched) {
+        newFilmData.userDetails.watchingDate = new Date().toISOString();
+      }
       this._onDataChange(this, ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
     });
 
@@ -84,9 +87,10 @@ export default class MovieController {
       const newFilmData = Movie.clone(filmData);
       newFilmData.userDetails.alreadyWatched = !filmData.userDetails
         .alreadyWatched;
+      if (newFilmData.userDetails.alreadyWatched) {
+        newFilmData.userDetails.watchingDate = new Date().toISOString();
+      }
       this._onDataChange(this, ActionObject.MOVIE, ActionType.UPDATE, newFilmData);
-
-      // TODO: rerender Movie controller - popup
     });
 
     this._filmDetailsComponent.setFavoriteButtonClickHandler(() => {
