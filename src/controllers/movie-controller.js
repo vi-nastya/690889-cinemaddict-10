@@ -18,6 +18,7 @@ export default class MovieController {
 
     this._changePopupToCard = this._changePopupToCard.bind(this);
     this._changeCardToPopup = this._changeCardToPopup.bind(this);
+    this._onEscKeyDown = this._onEscKeyDown.bind(this);
   }
 
   render(filmData) {
@@ -34,24 +35,15 @@ export default class MovieController {
     this._filmComponent = new FilmCard(filmData);
     this._filmDetailsComponent = new FilmDetails(filmData);
 
-    const onEscKeyDown = (evt) => {
-      if (evt.keyCode === KeyCode.ESC) {
-        evt.preventDefault();
-        this._changePopupToCard();
-        document.removeEventListener(`keydown`, onEscKeyDown);
-      }
-    };
-
     // FilmCard -> open popup
     this._filmComponent.setDetailsOpenClickHandler(() => {
       this._changeCardToPopup();
-      document.addEventListener(`keydown`, onEscKeyDown);
+      document.addEventListener(`keydown`, this._onEscKeyDown);
     });
 
     // Popup -> close
     this._filmDetailsComponent.setCloseButtonClickHandler(() => {
       this._changePopupToCard();
-      document.removeEventListener(`keydown`, onEscKeyDown);
     });
 
     // CARD BUTTONS
@@ -141,7 +133,15 @@ export default class MovieController {
     }
   }
 
+  _onEscKeyDown(evt) {
+    if (evt.keyCode === KeyCode.ESC) {
+      evt.preventDefault();
+      this._changePopupToCard();
+    }
+  }
+
   _changePopupToCard() {
+    document.removeEventListener(`keydown`, this._onEscKeyDown);
     this._bodyElement.removeChild(this._filmDetailsComponent.getElement());
     this._mode = Mode.DEFAULT;
   }

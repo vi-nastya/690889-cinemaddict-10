@@ -7,7 +7,7 @@ import {FilterType} from "./constants";
 import Loading from "./components/loading";
 import Api from "./api";
 
-const AUTHORIZATION = `Basic er173jdzbdw`;
+const AUTHORIZATION = `Basic er193jdzbdw`;
 const END_POINT = `https://htmlacademy-es-10.appspot.com/cinemaddict`;
 
 const api = new Api(END_POINT, AUTHORIZATION);

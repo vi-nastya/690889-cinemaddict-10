@@ -286,7 +286,7 @@ export default class FilmDetails extends AbstractSmartComponent {
   }
 
   _getEmotionById(reactionId) {
-    return EMOJIS.filter((emoji) => emoji.id === reactionId).image;
+    return EMOJIS.find((emoji) => emoji.id === reactionId).image || ``;
   }
 
   _getNewCommentData() {
