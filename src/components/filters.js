@@ -5,7 +5,7 @@ const getFiltersMarkup = (moviesData, activeFilter) => {
   let moviesWatched = 0;
   let moviesWatchlist = 0;
   let moviesFavorite = 0;
-  for (let movie of moviesData) {
+  for (const movie of moviesData) {
     if (movie.userDetails.alreadyWatched) {
       moviesWatched++;
     }

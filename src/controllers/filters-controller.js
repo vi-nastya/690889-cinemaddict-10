@@ -7,7 +7,7 @@ export default class FiltersController {
     this._contaiter = container;
     this._moviesModel = moviesModel;
     this._filtersComponent = null;
-    this._screenChangeHandler = null;
+    this._onScreenChange = null;
 
     this._onFilterChange = this._onFilterChange.bind(this);
 
@@ -30,11 +30,11 @@ export default class FiltersController {
   }
 
   setScreenChangeHandler(handler) {
-    this._screenChangeHandler = handler;
+    this._onScreenChange = handler;
   }
 
   _onFilterChange(newFilterType) {
-    this._screenChangeHandler(newFilterType);
+    this._onScreenChange(newFilterType);
     this._moviesModel.setActiveFilter(newFilterType);
   }
 

@@ -52,7 +52,7 @@ const getGenresStats = (moviesData) => {
   const values = [];
   const stats = {};
 
-  for (let movie of moviesData) {
+  for (const movie of moviesData) {
     if (movie.filmInfo.genres.length > 0) {
       movie.filmInfo.genres.forEach((genre) => {
         if (!(genre in stats)) {
@@ -65,7 +65,7 @@ const getGenresStats = (moviesData) => {
     }
   }
 
-  for (let genre of labels) {
+  for (const genre of labels) {
     values.push(stats[genre]);
   }
 
